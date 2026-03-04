@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox spacing="10" alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="CalculatorController">
+
+    <TextField fx:id="firstNumber" prefWidth="100"/>
+    <Label text="+"/>
+    <TextField fx:id="secondNumber" prefWidth="100"/>
+    <Button text="Calculate" onAction="#handleCalculate"/>
+    <TextField fx:id="calcSolution" prefWidth="100" editable="false"/>
+
+</HBox>
