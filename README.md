@@ -88,7 +88,7 @@ mvn javafx:run
 | **BPĐHQT** (Đặt hàng) | `hung_bpdh` | `123456` | Lê Hoàng Hùng | Chạy phân bổ, Duyệt đơn, Tái phân bổ |
 | **SITE** (Đối tác Seoul) | `site_seoul` | `123456` | Seoul Import Rep | Xác nhận/Từ chối đơn hàng |
 | **SITE** (Đối tác Tokyo) | `site_tokyo` | `123456` | Tokyo Import Rep | Xác nhận/Từ chối đơn hàng |
-| **BPQLK** (Thủ kho) | `thai_bpqlk` | `123456` | Trần Hồng Thái | Kiểm nhận thực tế, Nhập kho |
+| **BPQLK** (Thủ kho) | `thai_bpqlk` | `123456` | Nguyễn Quang Thái | Kiểm nhận thực tế, Nhập kho |
 
 ---
 
