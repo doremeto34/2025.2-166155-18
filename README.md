@@ -83,7 +83,7 @@ mvn javafx:run
 
 | Vai Trò | Tên Đăng Nhập | Mật Khẩu | Họ và Tên Nhân Viên | Ghi Chú |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADMIN** | `admin` | `admin` | Quản Trị Viên Hệ Thống | Toàn quyền cấu hình |
+| **ADMIN** | `admin_sys` | `123456` | Quản Trị Viên Hệ Thống | Toàn quyền cấu hình |
 | **BPBH** (Bán hàng) | `dung_bpbh` | `123456` | Nguyễn Trí Dũng | Lập yêu cầu, xem mặt hàng |
 | **BPĐHQT** (Đặt hàng) | `hung_bpdh` | `123456` | Lê Hoàng Hùng | Chạy phân bổ, Duyệt đơn, Tái phân bổ |
 | **SITE** (Đối tác Seoul) | `site_seoul` | `123456` | Seoul Import Rep | Xác nhận/Từ chối đơn hàng |
