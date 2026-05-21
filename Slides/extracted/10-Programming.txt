@@ -1,0 +1,828 @@
+=== Extracted from: 10-Programming.pdf ===
+=== Total pages: 15 ===
+
+--- Page 1 ---
+1 2
+For Your Amusement
+•“Any fool can write code that a computer can understand.
+Good programmers write code that humans can understand”
+it4490 –Software DESIGN AND CONSTRUCTION
+--Martin Fowler
+10. Programming •“Good code is its own best documentation. As you’re about
+to add a comment, ask yourself, ‘How can I improve the
+code so that this comment isn’t needed?’”--Steve McConnell
+•“Programs must be written for people to read, and only
+incidentally for machines to execute.”--Abelson / Sussman
+•“Everything should be built top-down, except the first time.”
+--Alan Perlis
+2
+1 2
+3 4
+Construction Ways to get your code right
+•Coding •Verification/quality assurance
+•Program style ßwe are here
+•Purpose is to uncover problems and increase confidence
+•Combination of reasoning and test
+•Data structures and algorithms
+•Debugging
+•Code tuning •Finding out why a program is not functioning as intended
+•Debug •Defensive programming
+•Debugging techniques & tools •Programming with validation and debugging in mind
+•Testing ≠ debugging
+•Test
+•test: reveals existence of problem; test suite can also
+•Testing techniques increase overall confidence
+•debug: pinpoint location + cause of problem
+3
+3 4
+1
+
+[Table 1 on Page 1]
+1
+
+it4490 –Software DESIGN AND CONSTRUCTION 10. Programming
+1
+3
+
+Construction •Coding •Program style ßwe are here •Data structures and algorithms •Code tuning •Debug •Debugging techniques & tools •Test •Testing techniques 3
+3
+
+[Table 2 on Page 1]
+2
+
+For Your Amusement •“Any fool can write code that a computer can understand. Good programmers write code that humans can understand” --Martin Fowler •“Good code is its own best documentation. As you’re about to add a comment, ask yourself, ‘How can I improve the code so that this comment isn’t needed?’”--Steve McConnell •“Programs must be written for people to read, and only incidentally for machines to execute.”--Abelson / Sussman •“Everything should be built top-down, except the first time.” --Alan Perlis 2
+2
+4
+
+Ways to get your code right •Verification/quality assurance •Purpose is to uncover problems and increase confidence •Combination of reasoning and test •Debugging •Finding out why a program is not functioning as intended •Defensive programming •Programming with validation and debugging in mind •Testing ≠ debugging •test: reveals existence of problem; test suite can also increase overall confidence •debug: pinpoint location + cause of problem
+4
+
+--- Page 2 ---
+5 6
+Programming style
+Outline
+1. Programming style •Coding
+convention/standard
+2. Code tuning
+3. Debugging
+5 6
+7 8
+Proper programming styles Proper programming styles (2)
+•Use constants for all constant values (e.g. tax rate). •Use brackets for mathematical expressions even if not required so
+that it is clear what was intended. E.g. (3*2) + (4*2)
+•Use variables whenever possible
+•Always declare constants before variables at the beginning of a
+•Always write code as efficiently as possible
+procedure •Make user friendly input and output forms
+•Always comment code (especially ambiguous or misleading code),
+but do not over comment.
+•Use appropriate descriptive names (with/without prefixes) for
+identifiers/objects (e.g. btndone).
+7 8
+2
+
+[Table 1 on Page 2]
+5
+
+Outline 1. Programming style 2. Code tuning 3. Debugging
+5
+7
+
+Proper programming styles •Use constants for all constant values (e.g. tax rate). •Use variables whenever possible •Always declare constants before variables at the beginning of a procedure •Always comment code (especially ambiguous or misleading code), but do not over comment. •Use appropriate descriptive names (with/without prefixes) for identifiers/objects (e.g. btndone).
+7
+
+[Table 2 on Page 2]
+ | 6
+ | 
+Programming style •Coding convention/standard | 
+6 | 
+8 | 
+ | 
+Proper programming styles (2) •Use brackets for mathematical expressions even if not required so that it is clear what was intended. E.g. (3*2) + (4*2) •Always write code as efficiently as possible •Make user friendly input and output forms | 
+8 | 
+
+--- Page 3 ---
+9 10
+Proper programming styles (3) Outline
+•Include a header at the top of your code (using ‘so that it does 1. Programming style
+not get compiled):
+• Programmer’s name 2. Code tuning
+• Date
+3. Debugging
+• Name of saved project
+• Teacher’s name
+• Class name
+• Names of anyone who helped you
+• Brief description of what the program does
+9 10
+11 12
+Code tuning Code Tuning Myths
+•Modifying correct code to make it run more efficiently •Reducing the lines of code in a high-level language improves the
+speed or size of the resulting machine code –false!
+•Not the most effective/cheapest way to improve performance
+•20% of a program’s methods consume 80% of its execution time.
+a[ 1 ] = 1
+a[ 2 ] = 2
+a[ 3 ] = 3
+for i = 1 to 10 a[ 4 ] = 4
+vs
+a[ i ] = i a[ 5 ] = 5
+end for a[ 6 ] = 6
+a[ 7 ] = 7
+a[ 8 ] = 8
+a[ 9 ] = 9
+a[ 10 ] = 10
+11 12
+3
+
+[Table 1 on Page 3]
+9
+
+Proper programming styles (3) •Include a header at the top of your code (using ‘so that it does not get compiled): • Programmer’s name • Date • Name of saved project • Teacher’s name • Class name • Names of anyone who helped you • Brief description of what the program does
+9
+11
+
+Code tuning •Modifying correct code to make it run more efficiently •Not the most effective/cheapest way to improve performance •20% of a program’s methods consume 80% of its execution time.
+11
+
+[Table 2 on Page 3]
+10
+
+Outline 1. Programming style 2. Code tuning 3. Debugging
+10
+12
+
+Code Tuning Myths •Reducing the lines of code in a high-level language improves the speed or size of the resulting machine code –false! a[ 1 ] = 1 a[ 2 ] = 2 a[ 3 ] = 3 for i = 1 to 10 a[ 4 ] = 4 vs a[ i ] = i a[ 5 ] = 5 end for a[ 6 ] = 6 a[ 7 ] = 7 a[ 8 ] = 8 a[ 9 ] = 9 a[ 10 ] = 10
+12
+
+--- Page 4 ---
+13 14
+Code Tuning Myths (2) Code Tuning Myths (3)
+•A fast program is just as important as a correct •Certain operations are probably faster or smaller than others –
+false!
+one – false!
+• Always measure performance!
+13 14
+15 16
+Code Tuning Myths (4) When to tune
+•You should optimize as you go –false! •Use a high-quality design.
+• It is hard to identify bottlenecks before a program is completely working • Make the program right.
+• Focus on optimization detracts from other program objectives • Make it modular and easily modifiable
+• When it’s complete and correct, check the performance.
+•Consider compiler optimizations
+•Measure
+•Write clean code that’s easy to understand and modify.
+15 16
+4
+
+[Table 1 on Page 4]
+13
+
+Code Tuning Myths (2) •A fast program is just as important as a correct one – false!
+13
+15
+
+Code Tuning Myths (4) •You should optimize as you go –false! • It is hard to identify bottlenecks before a program is completely working • Focus on optimization detracts from other program objectives
+15
+
+[Table 2 on Page 4]
+14
+
+Code Tuning Myths (3) •Certain operations are probably faster or smaller than others – false! • Always measure performance!
+14
+16
+
+When to tune •Use a high-quality design. • Make the program right. • Make it modular and easily modifiable • When it’s complete and correct, check the performance. •Consider compiler optimizations •Measure •Write clean code that’s easy to understand and modify.
+16
+
+--- Page 5 ---
+17
+Measurement Optimize in iterations
+•Measure to find bottlenecks •Measure improvement after each optimization
+•Measurements need to be precise •If optimization does not improve performance –revert it
+•Measurements need to be repeatable
+18
+17 18
+19 20
+Code Tuning Techniques Code Tuning Techniques
+•Stop Testing When You Know the Answer •Order Tests by Frequency
+if ( 5 < x ) and ( y < 10 ) then ... Select char Select char
+Case "+", "=" Case "A" To "Z", "a" To "z“
+? ProcessMathSymbol(char) ProcessAlpha(char)
+Case "0" To "9" Case " "
+ProcessDigit(char) ProcessSpace(char)
+Case ",", ".", "!", "?" Case ",", ".", "!", "?"
+ProcessPunctuation(char) ProcessPunctuation(char)
+negativeInputFound = False;
+Case " " Case "0" To "9"
+for ( i = 0; i < iCount; i++ ) {
+ProcessSpace(char) ProcessDigit(char)
+if ( input[ i ] < 0 ) {
+Case "A" To "Z", "a" To "z“ Case "+", "="
+negativeInputFound = True; ?
+ProcessAlpha(char) ProcessMathSymbol(char)
+}
+Case Else Case Else
+}
+ProcessError(char) ProcessError(char)
+End Select End Select
+19 20
+5
+
+[Table 1 on Page 5]
+17
+
+Measurement •Measure to find bottlenecks •Measurements need to be precise •Measurements need to be repeatable
+17
+19
+
+Code Tuning Techniques •Stop Testing When You Know the Answer if ( 5 < x ) and ( y < 10 ) then ... ? negativeInputFound = False; for ( i = 0; i < iCount; i++ ) { if ( input[ i ] < 0 ) { negativeInputFound = True; ? } }
+19
+
+[Table 2 on Page 5]
+ | 
+ | 
+Optimize in iterations •Measure improvement after each optimization •If optimization does not improve performance –revert it 18 | 
+18 | 
+20 | 
+ | 
+Code Tuning Techniques •Order Tests by Frequency Select char Select char Case "+", "=" Case "A" To "Z", "a" To "z“ ProcessMathSymbol(char) ProcessAlpha(char) Case "0" To "9" Case " " ProcessDigit(char) ProcessSpace(char) Case ",", ".", "!", "?" Case ",", ".", "!", "?" ProcessPunctuation(char) ProcessPunctuation(char) Case " " Case "0" To "9" ProcessSpace(char) ProcessDigit(char) Case "A" To "Z", "a" To "z“ Case "+", "=" ProcessAlpha(char) ProcessMathSymbol(char) Case Else Case Else ProcessError(char) ProcessError(char) End Select End Select | 
+ | Select char Case "A" To "Z", "a" To "z“ ProcessAlpha(char) Case " " ProcessSpace(char) Case ",", ".", "!", "?" ProcessPunctuation(char) Case "0" To "9" ProcessDigit(char) Case "+", "=" ProcessMathSymbol(char) Case Else ProcessError(char) End Select
+20 | 
+
+--- Page 6 ---
+21 22
+Code Tuning Techniques Code Tuning Techniques
+•Unswitching loops
+•Minimizing the work inside loops
+for ( i = 0; i < count; i++ ) {
+if ( sumType == SUMTYPE_NET ) {
+for (i = 0; i < rateCount; i++) {
+netSum = netSum + amount[ i ];
+netRate[i] = baseRate[i] * rates->discounts->factors->net;
+}
+}
+else { grossSum = grossSum + amount[ i ]; }
+}
+?
+? for (i = 0; i < rateCount; i++) {
+netRate[i] = baseRate[i] * ?
+}
+21 22
+23
+Code Tuning Techniques Code Tuning Techniques
+•Initialize at Compile Time •Use Lazy Evaluation
+const double Log2 = 0.69314718055994529; public int getSize() {
+if(size == null) {
+size = the_series.size();
+}
+return size;
+}
+24
+23 24
+6
+
+[Table 1 on Page 6]
+21
+
+Code Tuning Techniques •Unswitching loops for ( i = 0; i < count; i++ ) { if ( sumType == SUMTYPE_NET ) { netSum = netSum + amount[ i ]; } else { grossSum = grossSum + amount[ i ]; } } ?
+21
+23
+
+Code Tuning Techniques •Initialize at Compile Time const double Log2 = 0.69314718055994529;
+23
+
+[Table 2 on Page 6]
+22
+
+Code Tuning Techniques •Minimizing the work inside loops for (i = 0; i < rateCount; i++) { netRate[i] = baseRate[i] * rates->discounts->factors->net; } ? for (i = 0; i < rateCount; i++) { netRate[i] = baseRate[i] * ? }
+22
+
+
+Code Tuning Techniques •Use Lazy Evaluation public int getSize() { if(size == null) { size = the_series.size(); } return size; } 24
+24
+
+--- Page 7 ---
+27 28
+Outline 3.1. Overview
+1. Programming style •Error
+•Bug
+2. Code tuning
+•Fault
+3. Debugging •Defect
+•Failure
+27 28
+29 30
+Whence “bug” 3.2. Defense in depth
+•Alan Perlis i •Make errors impossible
+•Java makes memory overwrite errors impossible
+•Don’t introduce defects
+•Correctness: get things right the first time
+•Make errors immediately visible
+•Local visibility of errors: best to fail immediately
+•Example: assertions
+•Last resort is debugging
+Grace Hopper •Needed when failure (effect) is distant from cause (defect)
+i •Scientific method: Design experiments to gain information about the
+defect
+• Fairly easy in a program with good modularity, representation hiding, specs,
+unit tests etc.
+• Much harder and more painstaking with a poor design, e.g., with rampant rep
+exposure
+29 30
+7
+
+[Table 1 on Page 7]
+27
+
+Outline 1. Programming style 2. Code tuning 3. Debugging
+27
+29
+
+Whence “bug” •Alan Perlis i Grace Hopper i
+29
+
+[Table 2 on Page 7]
+28
+
+3.1. Overview •Error •Bug •Fault •Defect •Failure
+28
+30
+
+3.2. Defense in depth •Make errors impossible •Java makes memory overwrite errors impossible •Don’t introduce defects •Correctness: get things right the first time •Make errors immediately visible •Local visibility of errors: best to fail immediately •Example: assertions •Last resort is debugging •Needed when failure (effect) is distant from cause (defect) •Scientific method: Design experiments to gain information about the defect • Fairly easy in a program with good modularity, representation hiding, specs, unit tests etc. • Much harder and more painstaking with a poor design, e.g., with rampant rep exposure
+30
+
+--- Page 8 ---
+31 32
+3.2.1. First defense: Impossible by design 3.2.2. Second defense: Correctness
+•In the language •Get things right the first time
+•Java makes memory overwrite errors impossible • Think before you code. Don’t code before you think!
+• If you're making lots of easy-to-find defects, you're also making hard-to-
+•In the protocols/libraries/modules find defects –don't use the compiler as crutch
+•Especially true, when debugging is going to be hard
+•TCP/IP guarantees that data is not reordered
+• Concurrency, real-time environment, no access to customer environment, etc.
+•BigIntegerguarantees that there is no overflow
+•Simplicity is key
+•In self-imposed conventions • Modularity
+•Banning recursion prevents infinite recursion/insufficient stack – • Divide program into chunks that are easy to understand
+• Use abstract data types with well-defined interfaces
+although it may push the problem elsewhere • Use defensive programming; avoid rep exposure
+•Immutable data structure guarantees behavioral equality • Specification
+• Write specs for all modules, so that an explicit, well-defined contract exists between
+•Caution: You must maintain the discipline each module and its clients
+31 32
+33 34
+Strive for simplicity 3.2.3. Third defense: Immediate visibility
+“There are two ways of constructing a software ¨If we can't prevent errors, we can try to localize them to a
+design: small part of the program
+•One way is to make it so simple that there are ¤Assertions: catch errors early, before they contaminate and are
+obviously no deficiencies, and Sir Anthony Hoare perhaps masked by further computation
+•the other way is to make it so complicated that i ¤Unit testing: when you test a module in isolation, you can be
+there are no obvious deficiencies. confident that any error you find is due to a defect in that unit
+(unless it's in the test driver)
+The first method is far more difficult.”
+¤Regression testing: run tests as often as possible when changing
+code. If there is a failure, chances are there's a mistake in the
+“Debugging is twice as hard as writing the code
+code you just changed
+in the first place. Therefore, if you write the code
+¨When localized to a single method or small module,
+as cleverly as possible, you are, by definition,
+defects can usually be found simply by studying the
+not smart enough to debug it.”
+Brian Kernighan program text
+i
+33 34
+8
+
+[Table 1 on Page 8]
+31
+
+3.2.1. First defense: Impossible by design •In the language •Java makes memory overwrite errors impossible •In the protocols/libraries/modules •TCP/IP guarantees that data is not reordered •BigIntegerguarantees that there is no overflow •In self-imposed conventions •Banning recursion prevents infinite recursion/insufficient stack – although it may push the problem elsewhere •Immutable data structure guarantees behavioral equality •Caution: You must maintain the discipline
+31
+33
+
+Strive for simplicity “There are two ways of constructing a software design: •One way is to make it so simple that there are obviously no deficiencies, and Sir Anthony Hoare •the other way is to make it so complicated that i there are no obvious deficiencies. The first method is far more difficult.” “Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” Brian Kernighan i
+33
+
+[Table 2 on Page 8]
+32
+
+3.2.2. Second defense: Correctness •Get things right the first time • Think before you code. Don’t code before you think! • If you're making lots of easy-to-find defects, you're also making hard-to- find defects –don't use the compiler as crutch •Especially true, when debugging is going to be hard • Concurrency, real-time environment, no access to customer environment, etc. •Simplicity is key • Modularity • Divide program into chunks that are easy to understand • Use abstract data types with well-defined interfaces • Use defensive programming; avoid rep exposure • Specification • Write specs for all modules, so that an explicit, well-defined contract exists between each module and its clients
+32
+34
+
+3.2.3. Third defense: Immediate visibility ¨If we can't prevent errors, we can try to localize them to a small part of the program ¤Assertions: catch errors early, before they contaminate and are perhaps masked by further computation ¤Unit testing: when you test a module in isolation, you can be confident that any error you find is due to a defect in that unit (unless it's in the test driver) ¤Regression testing: run tests as often as possible when changing code. If there is a failure, chances are there's a mistake in the code you just changed ¨When localized to a single method or small module, defects can usually be found simply by studying the program text
+34
+
+--- Page 9 ---
+35 36
+Benefits of immediate visibility Don't hide errors
+•The key difficulty of debugging is to find the defect: the // k is guaranteed to be present in a
+code fragment responsible for an observed problem int i = 0;
+while (true) {
+•A method may return an erroneous result, but be itself error-
+if (a[i]==k) break;
+free, if there is prior corruption of representation i++;
+•The earlier a problem is observed, the easier it is to fix }
+•Frequently checking the rep invariant helps
+•General approach: fail-fast •This code fragment searches an array a for a value k.
+•Check invariants, don't just assume them •Value is guaranteed to be in the array
+•Don't (usually) try to recover from errors –it may just mask them •What if that guarantee is broken (by a defect)?
+•Temptation: make code more “robust”by not failing
+35 36
+37 38
+Don't hide errors
+Don't hide errors
+// k is guaranteed to be present in a
+// k is guaranteed to be present in a
+int i = 0;
+int i = 0; while (i<a.length) {
+while (i<a.length) { if (a[i]==k) break;
+i++;
+if (a[i]==k) break;
+}
+i++; assert (i=a.length) : "key not found";
+}
+•Assertions let us document and check invariants
+¨Now at least the loop will always terminate • Abort/debug program as soon as problem is detected: turn an error into a failure
+¤But it is no longer guaranteed that a[i]==k •But the assertion is not checked until we use the data, which might be a long
+time after the original error
+¤If other code relies on this, then problems arise later • “whyisn’t the key in the array?”
+¤This makes it harder to see the link between the defect and
+the failure
+37 38
+9
+
+[Table 1 on Page 9]
+35
+
+Benefits of immediate visibility •The key difficulty of debugging is to find the defect: the code fragment responsible for an observed problem •A method may return an erroneous result, but be itself error- free, if there is prior corruption of representation •The earlier a problem is observed, the easier it is to fix •Frequently checking the rep invariant helps •General approach: fail-fast •Check invariants, don't just assume them •Don't (usually) try to recover from errors –it may just mask them
+35
+37
+
+Don't hide errors // k is guaranteed to be present in a int i = 0; while (i<a.length) { if (a[i]==k) break; i++; } ¨Now at least the loop will always terminate ¤But it is no longer guaranteed that a[i]==k ¤If other code relies on this, then problems arise later ¤This makes it harder to see the link between the defect and the failure
+37
+
+[Table 2 on Page 9]
+36
+
+Don't hide errors // k is guaranteed to be present in a int i = 0; while (true) { if (a[i]==k) break; i++; } •This code fragment searches an array a for a value k. •Value is guaranteed to be in the array •What if that guarantee is broken (by a defect)? •Temptation: make code more “robust”by not failing
+36
+38
+
+Don't hide errors // k is guaranteed to be present in a int i = 0; while (i<a.length) { if (a[i]==k) break; i++; } assert (i=a.length) : "key not found"; •Assertions let us document and check invariants • Abort/debug program as soon as problem is detected: turn an error into a failure •But the assertion is not checked until we use the data, which might be a long time after the original error • “whyisn’t the key in the array?”
+38
+
+--- Page 10 ---
+39 40
+Checks In Production Code 3.2.3. Debugging: Last resort
+•Should you include assertions and checks in production •Defects happen –people are imperfect
+code? •Industry average: 10 defects per 1000 lines of code (“kloc”)
+•Defects that are not immediately localizable happen
+•Yes: stop program if check fails -don’t want to take chance
+program will do something wrong
+•Found during integration testing
+•Or reported by user
+•No: may need program to keep going, maybe defect does not
+•The cost of finding and fixing an error usually goes up by an
+have such bad consequences (the failure is acceptable)
+order of magnitude for each lifecycle phase it passes through
+•Correct answer depends on context!
+•step 1 –Clarify symptom (simplify input), create test
+Ariane 5 –program halted because of
+•step 2 –Find and understand cause, create better test
+•step 3 –Fix
+overflow in unused value, exception thrown but
+not handled until top level, rocket crashes…
+•step 4 –Rerun all tests
+[although the full story is more complicated]
+39 40
+41 42
+3.3. Debugging Debugging and the scientific method
+•Step 1 –find a small, repeatable test case that produces the •Debugging should be systematic
+failure (may take effort, but helps clarify the defect, and also
+gives you something for regression) • Carefully decide what to do –flailing can be an instance of an epic fail
+•Don't move on to next step until you have a repeatable test • Keep a record of everything that you do
+•Step 2 –narrow down location and proximate cause • Don’t get sucked into fruitless avenues
+•Study the data / hypothesize / experiment / repeat •Formulate a hypothesis
+•May change the code to get more information •Design an experiment
+•Don't move on to next step until you understand the cause
+•Perform the experiment
+•Step 3 –fix the defect
+•Adjust your hypothesis and continue
+•Is it a simple typo, or design flaw? Does it occur elsewhere?
+•Step 4 –add test case to regression suite
+•Is this failure fixed? Are any other new failures introduced?
+41 42
+10
+
+[Table 1 on Page 10]
+39
+
+Checks In Production Code •Should you include assertions and checks in production code? •Yes: stop program if check fails -don’t want to take chance program will do something wrong •No: may need program to keep going, maybe defect does not have such bad consequences (the failure is acceptable) •Correct answer depends on context! Ariane 5 –program halted because of overflow in unused value, exception thrown but not handled until top level, rocket crashes… [although the full story is more complicated]
+39
+41
+
+3.3. Debugging •Step 1 –find a small, repeatable test case that produces the failure (may take effort, but helps clarify the defect, and also gives you something for regression) •Don't move on to next step until you have a repeatable test •Step 2 –narrow down location and proximate cause •Study the data / hypothesize / experiment / repeat •May change the code to get more information •Don't move on to next step until you understand the cause •Step 3 –fix the defect •Is it a simple typo, or design flaw? Does it occur elsewhere? •Step 4 –add test case to regression suite •Is this failure fixed? Are any other new failures introduced?
+41
+
+[Table 2 on Page 10]
+40
+
+3.2.3. Debugging: Last resort •Defects happen –people are imperfect •Industry average: 10 defects per 1000 lines of code (“kloc”) •Defects that are not immediately localizable happen •Found during integration testing •Or reported by user •The cost of finding and fixing an error usually goes up by an order of magnitude for each lifecycle phase it passes through •step 1 –Clarify symptom (simplify input), create test •step 2 –Find and understand cause, create better test •step 3 –Fix •step 4 –Rerun all tests
+40
+42
+
+Debugging and the scientific method •Debugging should be systematic • Carefully decide what to do –flailing can be an instance of an epic fail • Keep a record of everything that you do • Don’t get sucked into fruitless avenues •Formulate a hypothesis •Design an experiment •Perform the experiment •Adjust your hypothesis and continue
+42
+
+--- Page 11 ---
+43 44
+Reducing input size example Reducing absolute input size
+// returns true iff sub is a substring of full •Find a simple test case by divide-and-conquer
+// (i.e. iff there exists A,B s.t.full=A+sub+B)
+boolean contains(String full, String sub); •Pare test down –can't find "very happy" within
+•User bug report • "Fáilte, you are very welcome! Hi Seán! I am very very
+happy to see you all."
+•It can't find the string "very happy" within:
+"Fáilte, you are very welcome! Hi Seán! I am very very •"I am very very happy to see you all."
+happy to see you all."
+•"very very happy"
+•Less than ideal responses
+•See accented characters, about not having thought about •Can find "very happy" within
+unicode, and go diving for your Java texts to see how that is •"very happy"
+handled
+•Can't find "ab"within "aab"
+•Try to trace the execution of this example
+•Better response: simplify/clarify the symptom
+43 44
+45 46
+Reducing relative input size General strategy: simplify
+•Sometimes it is helpful to find two almost identical test cases •In general: find simplest input that will provoke failure
+where one gives the correct answer and the other does not
+•Usually not the input that revealed existence of the defect
+• Can't find "very happy" within
+•Start with data that revealed defect
+•"I am very very happy to see you all."
+•Keep paring it down (binary search “by you”can help)
+• Can find "very happy" within
+•"I am very happy to see you all." •Often leads directly to an understanding of the cause
+•When not dealing with simple method calls
+•The “test input”is the set of steps that reliably trigger the
+failure
+•Same basic idea
+45 46
+11
+
+[Table 1 on Page 11]
+43
+
+Reducing input size example // returns true iff sub is a substring of full // (i.e. iff there exists A,B s.t.full=A+sub+B) boolean contains(String full, String sub); •User bug report •It can't find the string "very happy" within: "Fáilte, you are very welcome! Hi Seán! I am very very happy to see you all." •Less than ideal responses •See accented characters, about not having thought about unicode, and go diving for your Java texts to see how that is handled •Try to trace the execution of this example •Better response: simplify/clarify the symptom
+43
+45
+
+Reducing relative input size •Sometimes it is helpful to find two almost identical test cases where one gives the correct answer and the other does not • Can't find "very happy" within •"I am very very happy to see you all." • Can find "very happy" within •"I am very happy to see you all."
+45
+
+[Table 2 on Page 11]
+44
+
+Reducing absolute input size •Find a simple test case by divide-and-conquer •Pare test down –can't find "very happy" within • "Fáilte, you are very welcome! Hi Seán! I am very very happy to see you all." •"I am very very happy to see you all." •"very very happy" •Can find "very happy" within •"very happy" •Can't find "ab"within "aab"
+44
+46
+
+General strategy: simplify •In general: find simplest input that will provoke failure •Usually not the input that revealed existence of the defect •Start with data that revealed defect •Keep paring it down (binary search “by you”can help) •Often leads directly to an understanding of the cause •When not dealing with simple method calls •The “test input”is the set of steps that reliably trigger the failure •Same basic idea
+46
+
+--- Page 12 ---
+47 48
+binary search on buggy code
+Localizing a defect
+¨Take advantage of modularity public class MotionDetector { no problem yet
+private boolean first = true;
+¤Start with everything, take away pieces until failure goes
+private Matrix prev = new Matrix();
+¤Start with nothing, add pieces back in until failure appears
+public Point apply(Matrix current) {
+¨Take advantage of modular reasoning
+if (first) {
+¤Trace through program, viewing intermediate results prev = current; Check
+} intermediate
+¨Binary search speeds up the process
+Matrix motion = new Matrix(); result
+¤Error happens somewhere between first and last statement getDifference(prev,current,motion); at half-way point
+applyThreshold(motion,motion,10);
+¤Do binary search on that ordered set of statements
+labelImage(motion,motion);
+Hist hist = getHistogram(motion);
+int top = hist.getMostFrequent();
+applyThreshold(motion,motion,top,top);
+Point result = getCentroid(motion); problem exists
+prev.copy(current);
+return result;
+}
+}
+47 48
+49 50
+binary search on buggy code
+Detecting Bugs in the Real World
+public class MotionDetector { ¨Real Systems
+private boolean first = true;
+private Matrix prev = new Matrix(); no problem yet ¤Large and complex (duh!)
+¤Collection of modules, written by multiple people
+publi i c f P ( o f i i n r t s t a ) p p { ly(Matrix current) { inte C rm he e c d k ia te ¤Complex input
+prev = current; at hal r f- e w s a u y lt point ¤Many external interactions
+} ¤Non-deterministic
+Matrix motion = new Matrix();
+getDifference(prev,current,motion); problem exists ¨Replication can be an issue
+applyThreshold(motion,motion,10); ¤Infrequent failure
+labelImage(motion,motion);
+¤Instrumentation eliminates the failure
+Hist hist = getHistogram(motion); Quickly home in
+int top = hist.getMostFrequent(); on defect in O(log n) time ¨Defects cross abstraction barriers
+applyThreshold(motion,motion,top,top); by repeated subdivision
+Point result = getCentroid(motion); ¨Large time lag from corruption (defect) to detection
+prev.copy(current); (failure)
+return result;
+}
+}
+49 50
+12
+
+[Table 1 on Page 12]
+47
+
+Localizing a defect ¨Take advantage of modularity ¤Start with everything, take away pieces until failure goes ¤Start with nothing, add pieces back in until failure appears ¨Take advantage of modular reasoning ¤Trace through program, viewing intermediate results ¨Binary search speeds up the process ¤Error happens somewhere between first and last statement ¤Do binary search on that ordered set of statements
+47
+49
+
+binary search on buggy code public class MotionDetector { private boolean first = true; private Matrix prev = new Matrix(); no problem yet public Point apply(Matrix current) { Check if (first) { intermediate result prev = current; at half-way point } Matrix motion = new Matrix(); getDifference(prev,current,motion); problem exists applyThreshold(motion,motion,10); labelImage(motion,motion); Hist hist = getHistogram(motion); Quickly home in int top = hist.getMostFrequent(); on defect in O(log n) time applyThreshold(motion,motion,top,top); by repeated subdivision Point result = getCentroid(motion); prev.copy(current); return result; }
+} 49
+
+[Table 2 on Page 12]
+48
+
+binary search on buggy code public class MotionDetector { no problem yet private boolean first = true; private Matrix prev = new Matrix(); public Point apply(Matrix current) { if (first) { prev = current; Check } intermediate Matrix motion = new Matrix(); result getDifference(prev,current,motion); at half-way point applyThreshold(motion,motion,10); labelImage(motion,motion); Hist hist = getHistogram(motion); int top = hist.getMostFrequent(); applyThreshold(motion,motion,top,top); Point result = getCentroid(motion); problem exists prev.copy(current); return result; }
+} 48
+50
+
+Detecting Bugs in the Real World ¨Real Systems ¤Large and complex (duh!) ¤Collection of modules, written by multiple people ¤Complex input ¤Many external interactions ¤Non-deterministic ¨Replication can be an issue ¤Infrequent failure ¤Instrumentation eliminates the failure ¨Defects cross abstraction barriers ¨Large time lag from corruption (defect) to detection (failure)
+50
+
+--- Page 13 ---
+51 52
+Heisenbugs Logging Events
+•Sequential, deterministic program –failure is repeatable •Build an event log (circular buffer) and log events during
+•But the real world is not that nice… execution of program as it runs at speed
+•Continuous input/environment changes •When detect error, stop program and examine logs to help you
+•Timing dependencies reconstruct the past
+•Concurrency and parallelism •The log may be all you know about a customer’s environment –
+•Failure occurs randomly helps you to reproduce the failure
+•Hard to reproduce
+•Use of debugger or assertions àfailure goes away
+•Only happens when under heavy load
+•Only happens once in a while
+51 52
+53 54
+Tricks for Hard Bugs Where is the bug?
+•Rebuild system from scratch, or restart/reboot ¨If the bugis not where you think it is, ask yourself where it
+•Find the bug in your build system or persistent data structures cannot be; explain why
+•Explain the problem to a friend ¨Look for stupid mistakes first, e.g.,
+•Make sure it is a bug –program may be working
+¤Reversed order of arguments: Collections.copy(src, dest)
+correctly and you don’t realize it!
+¤Spelling of identifiers: int hashcode()
+•Minimize input required to exercise bug (exhibit failure) n@Overridecan help catch method name typos
+•Add checks to the program ¤Same object vs. equal: a == b versus a.equals(b)
+•Minimize distance between error and detection/failure ¤Failure to reinitialize a variable
+•Use binary search to narrow down possible locations ¤Deep vs. shallow copy
+•Use logs to record events in history ¨Make sure that you have correct source code
+¤Recompile everything
+53 54
+13
+
+[Table 1 on Page 13]
+51
+
+Heisenbugs •Sequential, deterministic program –failure is repeatable •But the real world is not that nice… •Continuous input/environment changes •Timing dependencies •Concurrency and parallelism •Failure occurs randomly •Hard to reproduce •Use of debugger or assertions àfailure goes away •Only happens when under heavy load •Only happens once in a while
+51
+53
+
+Tricks for Hard Bugs •Rebuild system from scratch, or restart/reboot •Find the bug in your build system or persistent data structures •Explain the problem to a friend •Make sure it is a bug –program may be working correctly and you don’t realize it! •Minimize input required to exercise bug (exhibit failure) •Add checks to the program •Minimize distance between error and detection/failure •Use binary search to narrow down possible locations •Use logs to record events in history
+53
+
+[Table 2 on Page 13]
+52
+
+Logging Events •Build an event log (circular buffer) and log events during execution of program as it runs at speed •When detect error, stop program and examine logs to help you reconstruct the past •The log may be all you know about a customer’s environment – helps you to reproduce the failure
+52
+54
+
+Where is the bug? ¨If the bugis not where you think it is, ask yourself where it cannot be; explain why ¨Look for stupid mistakes first, e.g., ¤Reversed order of arguments: Collections.copy(src, dest) ¤Spelling of identifiers: int hashcode() n@Overridecan help catch method name typos ¤Same object vs. equal: a == b versus a.equals(b) ¤Failure to reinitialize a variable ¤Deep vs. shallow copy ¨Make sure that you have correct source code ¤Recompile everything
+54
+
+--- Page 14 ---
+55 56
+When the going gets tough Key Concepts in Review
+•Reconsider assumptions •Testing and debugging are different
+•E.g., has the OS changed? Is there room on the hard drive?
+• Testing reveals existence of failures
+•Debug the code, not the comments –ensure the comments and
+specs describe the code • Debugging pinpoints location of defects
+•Start documenting your system
+•Goal is to get program right
+•Gives a fresh angle, and highlights area of confusion •Debugging should be a systematic process
+•Get help • Use the scientific method
+•We all develop blind spots •Understand the source of defects
+•Explaining the problem often helps
+• To find similar ones and prevent them in the future
+•Walk away
+•Trade latency for efficiency –sleep!
+•One good reason to start early
+55 56
+57 58
+Supporting Tools: Eclipse plug-in Findbugs features
+•Checkstyle: Help programmers write Java code that adheres to a •Not concerned by formatting or coding standards
+coding standard
+•Detecting potential bugs and performance issues
+•FindBugs: Uses static analysis to look for bugs in Java code
+•Can detect many types of common, hard-to-find bugs
+• Standalone Swing application •Use “bug patterns”
+• Eclipse plug-in
+Address address = client.getAddress();
+• Integrated into the build process (Ant or Maven)
+if ((address != null) || (address.getPostCode() != null)) {
+NullPointerException
+...
+}
+public class ShoppingCart {
+private List items;
+Uninitialized field public addItem(Item item) {
+items.add(item);
+}
+}
+57 58
+14
+
+[Table 1 on Page 14]
+55
+
+When the going gets tough •Reconsider assumptions •E.g., has the OS changed? Is there room on the hard drive? •Debug the code, not the comments –ensure the comments and specs describe the code •Start documenting your system •Gives a fresh angle, and highlights area of confusion •Get help •We all develop blind spots •Explaining the problem often helps •Walk away •Trade latency for efficiency –sleep! •One good reason to start early
+55
+57
+
+Supporting Tools: Eclipse plug-in •Checkstyle: Help programmers write Java code that adheres to a coding standard •FindBugs: Uses static analysis to look for bugs in Java code • Standalone Swing application • Eclipse plug-in • Integrated into the build process (Ant or Maven)
+57
+
+[Table 2 on Page 14]
+56
+
+Key Concepts in Review •Testing and debugging are different • Testing reveals existence of failures • Debugging pinpoints location of defects •Goal is to get program right •Debugging should be a systematic process • Use the scientific method •Understand the source of defects • To find similar ones and prevent them in the future
+56
+58
+
+Findbugs features •Not concerned by formatting or coding standards •Detecting potential bugs and performance issues •Can detect many types of common, hard-to-find bugs •Use “bug patterns” Address address = client.getAddress(); if ((address != null) || (address.getPostCode() != null)) { NullPointerException ... } public class ShoppingCart { private List items; Uninitialized field public addItem(Item item) { items.add(item); } }
+58
+
+--- Page 15 ---
+59 60
+How Findbug works? What Finbugs can do?
+•FindBugs comes with over 200 rules divided into different
+categories:
+INPUT PROCESSING OUTPUT uCorrectness
+• E.g. infinite recursive loop, reads a field that is never written
+• Set of “.class” • Bug Pattern Code
+uBad practice
+files containing
+byte-code • Source Line • E.g. code that drops exceptions or fails to close file
+Number uPerformance
+• Configurations
+• Descriptive • Multithreaded correctness
+Message uDodgy
+• E.g. unused local variables or unchecked casts
+Detectors
+59 60
+61
+61
+15
+
+[Table 1 on Page 15]
+59
+
+How Findbug works? INPUT PROCESSING OUTPUT • Set of “.class” • Bug Pattern Code files containing byte-code • Source Line Number • Configurations • Descriptive Message Detectors
+59
+61
+
+
+61
+
+[Table 2 on Page 15]
+60
+
+What Finbugs can do? •FindBugs comes with over 200 rules divided into different categories: uCorrectness • E.g. infinite recursive loop, reads a field that is never written uBad practice • E.g. code that drops exceptions or fails to close file uPerformance • Multithreaded correctness uDodgy • E.g. unused local variables or unchecked casts
+60
+
+[Table 3 on Page 15]
+INPUT • Set of “.class” files containing byte-code • Configurations | PROCESSING Detectors | OUTPUT • Bug Pattern Code • Source Line Number • Descriptive Message

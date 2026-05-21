@@ -1,0 +1,32 @@
+# Maven
+target/
+*.releaseBackup
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+.metadata/
+
+# Database Local (SQLite)
+*.db
+*.db-journal
+*.db-wal
+
+# Temporary / Scratch Files
+scratch/
+search_results.txt
+scratch_search_transcript.py

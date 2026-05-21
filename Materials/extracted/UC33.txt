@@ -1,0 +1,174 @@
+Phân tích yêu cầu
+Phân tích yêu cầu
+Nguyễn Quang Thái - UC33 — Xác nhận đơn hàng BPQLK
+
+
+
+Đặc tả usecase 33 -” Xác nhận đơn hàng bộ phận quản lý kho” 
+
+Mã Use case | UC33 | Tên Usecase | Xác nhận đơn hàng BPQLK
+Tác nhân | Bộ phận quản lý kho | Bộ phận quản lý kho | Bộ phận quản lý kho
+Tiền điều kiện | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho. | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho. | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho.
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống. | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống. | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống.
+
+
+Activity Diagram
+
+Sequence Diagram
+
+
+
+
+
+
+
+Class Diagram
+
+
+
+
+Sơ đồ chuyển màn hình 
+
+Đặc tả màn hình
+
+Màn hình danh sách đơn nhập hàng 
+
+
+Màn hình chi tiết và đối chiếu đơn nhập hàng
+
+
+
+HW2
+Phân tích yêu cầu
+Nguyễn Quang Thái - UC33 — Xác nhận đơn hàng BPQLK
+
+
+Đặc tả usecase 33 -” Xác nhận đơn hàng bộ phận quản lý kho” 
+
+Mã Use case | UC33 | Tên Usecase | Xác nhận đơn hàng BPQLK
+Tác nhân | Bộ phận quản lý kho | Bộ phận quản lý kho | Bộ phận quản lý kho
+Tiền điều kiện | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho. | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho. | Nhân viên BPQLK đã đăng nhập hệ thống.
+ Nhân viên có quyền xác nhận nhập kho.
+ Đơn hàng đã được Site xác nhận giao hàng.
+ Đơn hàng có ít nhất một mặt hàng cần kiểm tra nhập kho.
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống. | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống. | Đơn hàng được cập nhật trạng thái Đã xác nhận nhập kho.
+Tất cả mặt hàng trong đơn hàng đã được đánh dấu Đã kiểm tra.Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho.
+Kết quả xác nhận nhập kho và thông tin kiểm tra từng mặt hàng được lưu trong hệ thống.
+
+
+Activity Diagram
+
+
+
+Course
+…
+Credit
+…
+Đặc tả phụ trợ
+Chức năng
+Cxxx
+Hiệu năng
+Xxxx
+Độ tin cậy
+… 
+
+
+
+HW3
+Sequence Diagram
+
+
+
+
+
+
+
+
+
+Communication Diagram
+
+
+
+Class Diagram
+
+
+
+HW4
+Sơ đồ chuyển màn hình 
+
+Màn hình danh sách đơn nhập hàng
+
+
+Đặc tả 
+
+STT | Thành phần | Loại | Bắt buộc | Mô tả
+1 | Tiêu đề màn hình | Label | Có | Ví dụ: “Danh sách đơn nhập hàng” hoặc “Receiving Orders”.
+2 | Ô tìm kiếm | Textbox | Không | Tìm theo mã đơn hàng, tên Site hoặc mã mặt hàng.
+3 | Bộ lọc trạng thái | Combobox | Không | Lọc theo trạng thái: Chờ nhập kho, Đã nhập kho, Chờ đồng bộ, Lỗi đồng bộ.
+4 | Bộ lọc ngày dự kiến giao | Date range | Không | Lọc đơn hàng theo ngày dự kiến hàng về.
+5 | Bảng danh sách đơn hàng | Table | Có | Hiển thị các đơn hàng cần xử lý.
+6 | Nút “Xem chi tiết” | Button | Có | Mở màn hình chi tiết của đơn hàng được chọn.
+
+
+
+Màn hình chi tiết và đối chiếu đơn nhập hàng
+
+
+
+
+Đặc tả 
+
+
+
+STT | Trường dữ liệu | Mô tả | Bắt buộc | Điều kiện hợp lệ | Ví dụ
+1 | Checkbox “Đã kiểm tra” | Xác nhận người dùng đã kiểm tra mặt hàng | Có | Phải được tích trước khi xác nhận nhập kho | Đã tích
+2 | Mã mặt hàng | Mã định danh mặt hàng | Có | Tồn tại trong chi tiết đơn hàng | SP001
+3 | Tên mặt hàng | Tên mặt hàng trong đơn | Có | Lấy từ danh mục mặt hàng | Laptop Computer
+4 | Số lượng đặt | Số lượng ban đầu trong đơn hàng | Có | Số nguyên ≥ 0 | 100
+5 | Số lượng Site xác nhận giao | Số lượng Site xác nhận có thể giao | Có | Số nguyên ≥ 0 | 95
+6 | Số lượng thực nhận | Số lượng thực tế kho
+ nhận được | Có | Số nguyên ≥ 0, không được để trống | 90
+7 | Chênh lệch | Sai lệch giữa số lượng Site xác nhận giao và số lượng thực nhận | Không | Có thể tự tính: thực nhận - Site xác nhận giao | -5
+8 | Ghi chú sai lệch | Ghi chú lý do nếu có chênh lệch | Không | Nên bắt buộc nếu số lượng thực nhận khác số lượng Site xác nhận giao | Thiếu 5 sản phẩm
+9 | Trạng thái kiểm tra | Trạng thái của từng dòng mặt hàng | Có | Chưa kiểm tra / Đã kiểm tra | Đã kiểm tra
+
+
+HW5
+

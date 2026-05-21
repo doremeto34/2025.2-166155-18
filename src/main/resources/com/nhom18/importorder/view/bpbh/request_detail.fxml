@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpbh.RequestDetailController"
+      spacing="20" styleClass="content-panel">
+    
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button text="⬅ Quay Lại" onAction="#handleBack" styleClass="button-secondary" style="-fx-padding: 8px 16px;"/>
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="🔍 CHI TIẾT PHIẾU YÊU CẦU" styleClass="title-main" />
+            <Label text="Xem danh sách chi tiết các mặt hàng và ngày giao mong muốn trong phiếu yêu cầu." styleClass="title-sub" />
+        </VBox>
+    </HBox>
+    
+    <GridPane hgap="30" vgap="15" styleClass="card">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="15" />
+            <ColumnConstraints percentWidth="35" />
+            <ColumnConstraints percentWidth="15" />
+            <ColumnConstraints percentWidth="35" />
+        </columnConstraints>
+        
+        <Label text="Mã Phiếu Yêu Cầu:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblRequestId" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -accent-cyan;"/>
+        
+        <Label text="Trạng Thái Phiếu:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+        <StackPane fx:id="paneStatusBadge" alignment="CENTER_LEFT" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        
+        <Label text="Nhân Viên Tạo:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblCreatorName" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        
+        <Label text="Ngày Tạo Lập:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblCreatedDate" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+    </GridPane>
+    
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="10">
+        <Label text="DANH SÁCH CHI TIẾT SẢN PHẨM" styleClass="label" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: -accent-indigo;"/>
+        <TableView fx:id="tblRequestItems" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colMerchandiseCode" text="Mã Mặt Hàng" prefWidth="150" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colMerchandiseName" text="Tên Mặt Hàng" prefWidth="300" />
+                <TableColumn fx:id="colQuantity" text="Số Lượng Yêu Cầu" prefWidth="180" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colUnit" text="Đơn Vị Tính" prefWidth="150" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colDesiredDate" text="Ngày Giao Mong Muốn" prefWidth="200" style="-fx-alignment: CENTER;" />
+            </columns>
+        </TableView>
+    </VBox>
+    
+</VBox>

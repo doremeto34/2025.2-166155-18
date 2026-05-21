@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpbh.MerchandiseDialogController"
+      spacing="20" style="-fx-padding: 25px; -fx-background-color: #f8fafc;" prefWidth="500.0">
+    
+    <!-- Title -->
+    <VBox spacing="5">
+        <Label fx:id="lblTitle" text="➕ THÊM MỚI MẶT HÀNG" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="label" />
+        <Label text="Vui lòng điền chính xác các thông tin của mặt hàng nhập khẩu." styleClass="title-sub" />
+    </VBox>
+    
+    <Separator style="-fx-opacity: 0.2;" />
+    
+    <!-- Form Fields -->
+    <GridPane hgap="15" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints minWidth="130" prefWidth="140" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+        </columnConstraints>
+        
+        <children>
+            <Label text="Mã mặt hàng: *" styleClass="label-secondary" style="-fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtCode" promptText="Ví dụ: M_CPU_I9" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            
+            <Label text="Tên mặt hàng: *" styleClass="label-secondary" style="-fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="txtName" promptText="Nhập tên mặt hàng đầy đủ..." styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            
+            <Label text="Đơn vị tính: *" styleClass="label-secondary" style="-fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="txtUnit" promptText="Ví dụ: Cái, Thanh, Hộp..." styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            
+            <Label text="Đơn giá ($): *" styleClass="label-secondary" style="-fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPrice" promptText="Nhập đơn giá sản phẩm..." styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            
+            <Label text="Mô tả sản phẩm:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <TextArea fx:id="txtDescription" promptText="Mô tả tóm tắt tính năng sản phẩm..." prefHeight="80" wrapText="true" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        </children>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+    
+    <Separator style="-fx-opacity: 0.2;" />
+    
+    <!-- Actions -->
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button text="❌ Hủy bỏ" onAction="#handleCancel" styleClass="button-secondary" />
+        <Button text="💾 Lưu thông tin" onAction="#handleSave" styleClass="button" />
+    </HBox>
+    
+</VBox>

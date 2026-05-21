@@ -1,0 +1,393 @@
+=== Extracted from: 14-DesignPattern.pdf ===
+=== Total pages: 6 ===
+
+--- Page 1 ---
+Content
+Introduction
+1.
+Singleton
+2.
+14 - Design patterns
+Factory Method
+3.
+TS. Trịnh Tuấn Đạt
+Bộ môn CNPM, Viện CNTT,
+ĐHBK Hà Nội
+2
+1 2
+Content Introduction
+Introduction In the late 70’s, an architect named
+1. n
+Singleton Christopher Alexander started the concept of
+2.
+patterns. Alexander’s work focused on finding
+Factory
+3.
+patterns of solutions to particular sets of
+forces within particular contexts
+Christopher Alexander was a civil engineer
+n
+and an architect, his patterns were related to
+architects of buildings, but the work done by
+him inspired an interest in the object-oriented
+(OO) community
+3 4
+3 4
+1
+
+[Table 1 on Page 1]
+14 - Design patterns TS. Trịnh Tuấn Đạt Bộ môn CNPM, Viện CNTT, ĐHBK Hà Nội
+1
+
+Content Introduction 1. Singleton 2. Factory 3. 3
+3
+
+[Table 2 on Page 1]
+Content Introduction 1. Singleton 2. Factory Method 3. 2
+2
+
+Introduction In the late 70’s, an architect named n Christopher Alexander started the concept of patterns. Alexander’s work focused on finding patterns of solutions to particular sets of forces within particular contexts Christopher Alexander was a civil engineer n and an architect, his patterns were related to architects of buildings, but the work done by him inspired an interest in the object-oriented (OO) community 4
+4
+
+[Table 3 on Page 1]
+
+
+
+[Table 4 on Page 1]
+
+
+
+[Table 5 on Page 1]
+
+
+
+--- Page 2 ---
+Introduction What is Gang of Four (GOF)
+Design patterns represent the best practices In 1994, four authors Erich Gamma, Richard
+n n
+used by experienced object-oriented software Helm, Ralph Johnson and John Vlissides
+developers published a book titled Design Patterns -
+Design patterns are solutions to general Elements of Reusable Object-Oriented
+n
+problems that software developers faced Software which initiated the concept of
+Design Pattern in Software development
+during software development. These
+solutions were obtained by trial and error by
+numerous software developers over quite a
+substantial period of time.
+5 6
+5 6
+GoF patterns: three categories Main elements of a design pattern
+n Creational Patterns – these abstract the object- n Pattern Name:
+instantiation process n A common name to talk about
+n Factory Method, Abstract Factory, Singleton, n Problem:
+Builder, Prototype n Context: when to apply the pattern
+n Structural Patterns – these abstract how n May include a list of conditions for applying the pattern
+objects/classes can be combined n Solution:
+n Adapter, Bridge, Composite, Decorator, Façade, n Abstract description of a design problem and how a general arrangement of
+Flyweight, Proxy elements solves it
+n Behavioral Patterns – these abstract n Elements making up the design, their relationships/responsibilities and
+communication between objects collaborations
+n Like a template, language-neutral
+n C S o t m a m t a e n , d , S t I r n a t t e e r g p y r , e t C e h r a , i n I t o e f r a R t e o s r p , o n M s e i d b i i a l t i o t r y , , O V b i s s e i r t v o e r r , , n Consequences:
+Template Method n Results and tradeoff of applying patterns
+n Impacts on system’s flexibility, extensibility or portability
+7 8
+7 8
+2
+
+[Table 1 on Page 2]
+Introduction Design patterns represent the best practices n used by experienced object-oriented software developers Design patterns are solutions to general n problems that software developers faced during software development. These solutions were obtained by trial and error by numerous software developers over quite a substantial period of time. 5
+5
+
+GoF patterns: three categories Creational Patterns – these abstract the object- n instantiation process n Factory Method, Abstract Factory, Singleton, Builder, Prototype Structural Patterns – these abstract how n objects/classes can be combined n Adapter, Bridge, Composite, Decorator, Façade, Flyweight, Proxy Behavioral Patterns – these abstract n communication between objects n Command, Interpreter, Iterator, Mediator, Observer, State, Strategy, Chain of Responsibility, Visitor, Template Method 7
+7
+
+[Table 2 on Page 2]
+What is Gang of Four (GOF) In 1994, four authors Erich Gamma, Richard n Helm, Ralph Johnson and John Vlissides published a book titled Design Patterns - Elements of Reusable Object-Oriented Software which initiated the concept of Design Pattern in Software development 6
+6
+
+Main elements of a design pattern n Pattern Name: n A common name to talk about n Problem: n Context: when to apply the pattern n May include a list of conditions for applying the pattern n Solution: n Abstract description of a design problem and how a general arrangement of elements solves it n Elements making up the design, their relationships/responsibilities and collaborations n Like a template, language-neutral n Consequences: n Results and tradeoff of applying patterns n Impacts on system’s flexibility, extensibility or portability 8
+8
+
+[Table 3 on Page 2]
+
+
+
+[Table 4 on Page 2]
+
+
+
+[Table 5 on Page 2]
+
+
+
+[Table 6 on Page 2]
+
+
+
+--- Page 3 ---
+Content Motivation
+Introduction Only one instance for a class?
+1. n
+Singleton Centralized management of internal or
+2. n
+Factory Method external resources: provide a global point of
+3.
+access to themselves
+Only one class:
+n
+responsible to instantiate itself, to make sure it
+n
+creates not more than one instance;
+provides a global point of access to that instance
+n
+9 10
+9 10
+Intent Implementation
+Ensure that only one instance of a class is class Singleton {
+n private static Singleton instance;
+created. private Singleton() {
+...
+n Provide a global point of access to the object }
+public static synchronized Singleton getInstance() {
+if (instance == null)
+instance = new Singleton();
+return instance;
+}
+...
+public void doSomething() {
+...
+}
+}
+11 12
+11 12
+3
+
+[Table 1 on Page 3]
+Content Introduction 1. Singleton 2. Factory Method 3. 9
+9
+
+Intent Ensure that only one instance of a class is n created. Provide a global point of access to the object n 11
+11
+
+[Table 2 on Page 3]
+Motivation Only one instance for a class? n Centralized management of internal or n external resources: provide a global point of access to themselves Only one class: n responsible to instantiate itself, to make sure it n creates not more than one instance; provides a global point of access to that instance n 10
+10
+
+Implementation class Singleton { private static Singleton instance; private Singleton() { ... } public static synchronized Singleton getInstance() { if (instance == null) instance = new Singleton(); return instance; } ... public void doSomething() { ... } } 12
+12
+
+[Table 3 on Page 3]
+
+
+
+[Table 4 on Page 3]
+
+
+
+[Table 5 on Page 3]
+
+
+
+[Table 6 on Page 3]
+
+
+
+--- Page 4 ---
+Lazy instantiation using double locking mechanism Early instantiation using
+class Singleton { implementation with static field
+private static Singleton instance;
+class Singleton{
+private Singleton(){
+private static Singleton instance = new Singleton();
+System.out.println("Singleton(): Initializing Instance");
+}
+private Singleton(){
+public static Singleton getInstance(){ System.out.println("Singleton(): Initializing Instance");
+if (instance == null){ }
+synchronized(Singleton.class){
+if (instance == null){
+instance = new Singleton(); public static Singleton getInstance(){
+} return instance;
+} }
+}
+public void doSomething(){
+return instance;
+} // …
+}
+public void doSomething(){ }
+System.out.println("doSomething(): Singleton does something!");
+}
+} 13 14
+13 14
+Content Intent
+Introduction creates objects without exposing the
+1. n
+Singleton instantiation logic to the client.
+2.
+3. Factory Method n refers to the newly created object through a
+common interface
+15 16
+15 16
+4
+
+[Table 1 on Page 4]
+Lazy instantiation using double locking mechanism class Singleton { private static Singleton instance; private Singleton(){ System.out.println("Singleton(): Initializing Instance"); } public static Singleton getInstance(){ if (instance == null){ synchronized(Singleton.class){ if (instance == null){ instance = new Singleton(); } } } return instance; } public void doSomething(){ System.out.println("doSomething(): Singleton does something!"); } } 13
+13
+
+Content Introduction 1. Singleton 2. Factory Method 3. 15
+15
+
+[Table 2 on Page 4]
+Early instantiation using implementation with static field class Singleton{ private static Singleton instance = new Singleton(); private Singleton(){ System.out.println("Singleton(): Initializing Instance"); } public static Singleton getInstance(){ return instance; } public void doSomething(){ // … } } 14
+14
+
+Intent creates objects without exposing the n instantiation logic to the client. refers to the newly created object through a n common interface 16
+16
+
+[Table 3 on Page 4]
+
+
+
+[Table 4 on Page 4]
+
+
+
+[Table 5 on Page 4]
+
+
+
+[Table 6 on Page 4]
+
+
+
+--- Page 5 ---
+Implementation Example: a graphical framework
+works with shapes
+Client: drawing framework
+n
+Product: Shape with 2 methods draw() and move()
+n
+Framework
+<<<interface>>
+Shape
++ draw() Factory
++ move()
++ createShape(type: String)
+Circle
++ draw()
+17 + move() 18
+17 18
+Switch/case noob instantiation Class Registration - using reflection
+class ProductFactory {
+private HashMap m_RegisteredProducts = new HashMap();
+public class ProductFactory{ public void registerProduct(String productID, Class productClass){
+public Product createProduct(String ProductID){ m_RegisteredProducts.put(productID, productClass);
+if (id==ID1) }
+return new OneProduct(); public Product createProduct(StringproductID){
+if (id==ID2) return Class productClass = (Class)m_RegisteredProducts.get(productID);
+return new AnotherProduct(); Constructor productConstructor = productClass.
+... // so on for the other Ids getDeclaredConstructor(new Class[] {String.class});
+return (Product)productConstructor.newInstance(new Object[] { });
+return null; //if the id doesn't have any of the expected values }
+} }
+...
+} public static void main(String args[]){
+Factory.instance().registerProduct("ID1", OneProduct.class);
+}
+class OneProduct implements Product{
+static {
+Factory.instance().registerProduct("ID1",OneProduct.class);
+}
+...
+19 } 20
+19 20
+5
+
+[Table 1 on Page 5]
+Implementation 17
+17
+
+Switch/case noob instantiation public class ProductFactory{ public Product createProduct(String ProductID){ if (id==ID1) return new OneProduct(); if (id==ID2) return return new AnotherProduct(); ... // so on for the other Ids return null; //if the id doesn't have any of the expected values } ... } 19
+19
+
+[Table 2 on Page 5]
+Example: a graphical framework works with shapes Client: drawing framework n Product: Shape with 2 methods draw() and move() n Framework <<<interface>> Shape + draw() Factory + move() + createShape(type: String) Circle + draw() + move() 18
+18
+
+Class Registration - using reflection class ProductFactory { private HashMap m_RegisteredProducts = new HashMap(); public void registerProduct(String productID, Class productClass){ m_RegisteredProducts.put(productID, productClass); } public Product createProduct(StringproductID){ Class productClass = (Class)m_RegisteredProducts.get(productID); Constructor productConstructor = productClass. getDeclaredConstructor(new Class[] {String.class}); return (Product)productConstructor.newInstance(new Object[] { }); } } public static void main(String args[]){ Factory.instance().registerProduct("ID1", OneProduct.class); } class OneProduct implements Product{ static { Factory.instance().registerProduct("ID1",OneProduct.class); } ... } 20
+20
+
+[Table 3 on Page 5]
+
+
+
+[Table 4 on Page 5]
+
+
+
+[Table 5 on Page 5]
+<<<interface>> Shape
++ draw() + move()
+
+[Table 6 on Page 5]
+Factory
++ createShape(type: String)
+
+[Table 7 on Page 5]
+Circle
++ draw() + move()
+
+[Table 8 on Page 5]
+
+
+
+[Table 9 on Page 5]
+
+
+
+--- Page 6 ---
+To ensure correct class loading Class Registration – avoiding reflection
+abstract class Product {
+public abstract Product createProduct();
+class Main { ...
+}
+static {
+try{ class OneProduct extends Product {
+...
+Class.forName("OneProduct"); static {
+Class.forName("AnotherProduct"); ProductFactory.instance().registerProduct("ID1", new OneProduct());
+}
+} public OneProduct createProduct() {
+catch (ClassNotFoundException any){ return new OneProduct();
+}
+any.printStackTrace(); ...
+} }
+} class ProductFactory {
+public static void main(String args[]) { private HashMap m_RegisteredProducts = new HashMap();
+... public void registerProduct(String productID, Product p){
+} m_RegisteredProducts.put(productID, p);
+}
+} public Product createProduct(String productID){
+((Product)m_RegisteredProducts.get(productID)).createProduct();
+21 } 22
+}
+21 22
+6
+
+[Table 1 on Page 6]
+To ensure correct class loading class Main { static { try{ Class.forName("OneProduct"); Class.forName("AnotherProduct"); } catch (ClassNotFoundException any){ any.printStackTrace(); } } public static void main(String args[]) { ... } } 21
+21
+
+[Table 2 on Page 6]
+Class Registration – avoiding reflection abstract class Product { public abstract Product createProduct(); ... } class OneProduct extends Product { ... static { ProductFactory.instance().registerProduct("ID1", new OneProduct()); } public OneProduct createProduct() { return new OneProduct(); } ... } class ProductFactory { private HashMap m_RegisteredProducts = new HashMap(); public void registerProduct(String productID, Product p){ m_RegisteredProducts.put(productID, p); } public Product createProduct(String productID){ ((Product)m_RegisteredProducts.get(productID)).createProduct(); } 22 }
+22
+
+[Table 3 on Page 6]
+
+
+
+[Table 4 on Page 6]
+
+

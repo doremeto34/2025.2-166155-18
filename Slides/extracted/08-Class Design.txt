@@ -1,0 +1,1326 @@
+=== Extracted from: 08-Class Design.pdf ===
+=== Total pages: 18 ===
+
+--- Page 1 ---
+2
+Class Design Overview
+Design Classes
+it4490 -Software DeSIGN AND CONSTRUCTION
+8. CLASS DESIGN Project Specific
+Guidelines
+Class
+Design
+Design Model
+Supplementary
+Specifications
+Analysis Classes
+Some slides extracted from IBM coursewares
+1 2
+3 4
+Content Class Design Considerations
+1. Create Initial Design Classes •Class stereotype
+2. Define Operations/Methods •Boundary
+•Entity
+3. Define Relationships Between Classes
+•Control
+4. Define States •Applicable design patterns
+5. Define Attributes
+6. Class Diagram
+3 4
+1
+
+[Table 1 on Page 1]
+
+
+it4490 -Software DeSIGN AND CONSTRUCTION 8. CLASS DESIGN Some slides extracted from IBM coursewares
+1
+3
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+3
+
+[Table 2 on Page 1]
+2
+
+Class Design Overview Design Classes Project Specific Guidelines Class Design Design Model Supplementary Specifications Analysis Classes
+2
+4
+
+Class Design Considerations •Class stereotype •Boundary •Entity •Control •Applicable design patterns
+4
+
+[Table 3 on Page 1]
+ | 
+ | 
+
+--- Page 2 ---
+5 6
+How Many Classes Are Needed? Strategies for Designing Boundary Classes
+•Many, simple classes means that each class
+•User interface (UI) boundary classes
+• Encapsulates less of the overall system intelligence
+• Is more reusable
+•What user interface development tools will be used?
+•How much of the interface can be created by the
+• Is easier to implement
+development tool?
+•A few, complex classes means that each class
+•External system interface boundary classes
+• Encapsulates a large portion of the overall system •Usually model as subsystem
+intelligence
+• Is less likely to be reusable MainWindow SubWindow
+• Is more difficult to implement
+<<subsystem>>
+MainForm
+A class should have a single well-focused purpose.
+Button DropDownList
+A class should do one thing and do it well!
+5 6
+7 8
+Strategies for Designing Entity Classes Strategies for Designing Control Classes
+•Entity objects are often passive and persistent •What happens to Control Classes?
+•Performance requirements may force some re-factoring •Are they really needed?
+Analysis Design •Should they be split?
+<< Entity >> FatClass
+FatClass •How do you decide?
+-privateAttr
+-privateAttr
+-
+-
+c
+c
+o
+o
+m
+m
+m
+m
+o
+o
+n
+n
+l
+l
+y
+y
+U
+U
+s
+s
+e
+e
+d
+d
+A
+A
+t
+t
+t
+t
+r
+r
+1
+2 +
++
+g
+g
+e
+e
+t
+t
+C
+C
+o
+o
+m
+m
+m
+m
+o
+o
+n
+n
+l
+l
+y
+y
+U
+U
+s
+s
+e
+e
+d
+d
+A
+A
+t
+t
+t
+t
+r
+r
+2
+1
+(
+(
+)
+) •Complexity
+-rarelyUsed1 + getRarelyUsedAtt1()
+-rarelyUsed2 + getRarelyUsedAtt2() •Change probability
+•Distribution and performance
+1 0..1
+FatClassDataHelper FatClassLazyDataHelper •Transaction management
+-commonlyUsedAttr1 -rarelyUsedAttr1
+-commonlyUsedAttr2 -rarelyUsedAttr2
+7 8
+2
+
+[Table 1 on Page 2]
+5
+
+How Many Classes Are Needed? •Many, simple classes means that each class • Encapsulates less of the overall system intelligence • Is more reusable • Is easier to implement •A few, complex classes means that each class • Encapsulates a large portion of the overall system intelligence • Is less likely to be reusable • Is more difficult to implement A class should have a single well-focused purpose. A class should do one thing and do it well!
+5
+7
+
+Strategies for Designing Entity Classes •Entity objects are often passive and persistent •Performance requirements may force some re-factoring Analysis Design << Entity >> FatClass FatClass -privateAttr -privateAttr -commonlyUsedAttr1 + getCommonlyUsedAttr1() -commonlyUsedAttr2 + getCommonlyUsedAttr2() -rarelyUsed1 + getRarelyUsedAtt1() -rarelyUsed2 + getRarelyUsedAtt2() 1 0..1 FatClassDataHelper FatClassLazyDataHelper -commonlyUsedAttr1 -rarelyUsedAttr1 -commonlyUsedAttr2 -rarelyUsedAttr2
+7
+
+[Table 2 on Page 2]
+6
+
+Strategies for Designing Boundary Classes •User interface (UI) boundary classes •What user interface development tools will be used? •How much of the interface can be created by the development tool? •External system interface boundary classes •Usually model as subsystem MainWindow SubWindow <<subsystem>> MainForm Button DropDownList
+6
+8
+
+Strategies for Designing Control Classes •What happens to Control Classes? •Are they really needed? •Should they be split? •How do you decide? •Complexity •Change probability •Distribution and performance •Transaction management
+8
+
+[Table 3 on Page 2]
+<<subsystem>> MainForm
+
+
+--- Page 3 ---
+9 10
+Content 2.1. Define Operations
+•Messages displayed in interaction diagrams
+1. Create Initial Design Classes
+2. Define Operations/Methods
+:CourseRegistrationController :: SSuubbjjeeccttIInnffoo
+3. Define Relationships Between Classes
+SubjectInfo
+4. Define States getSubjectPrerequisites()
+5. Define Attributes getSubjectPrerequisites()
+•Other implementation dependent functionality
+6. Class Diagram
+•Manager functions
+•Need for class copies
+•Need to test for equality
+9 10
+11 12
+Name and Describe the Operations Guidelines: Designing Operation Signatures
+•Create appropriate operation names
+•When designing operation signatures, consider if
+•Indicate the outcome parameters are:
+•Use client perspective
+•Passed by value or by reference
+•Are consistent across classes
+•Changed by the operation
+•Define operation signatures
+•Optional
+•operationName([direction]parameter: class,..) : •Set to default values
+returnType
+•In valid parameter ranges
+•Direction is in (default), outor inout
+•The fewer the parameters, the better
+•Provide short description, including meaning of all parameters
+•Pass objects instead of “data bits”
+11 12
+3
+
+[Table 1 on Page 3]
+9
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+9
+11
+
+Name and Describe the Operations •Create appropriate operation names •Indicate the outcome •Use client perspective •Are consistent across classes •Define operation signatures •operationName([direction]parameter: class,..) : returnType •Direction is in (default), outor inout •Provide short description, including meaning of all parameters
+11
+
+[Table 2 on Page 3]
+10
+
+2.1. Define Operations •Messages displayed in interaction diagrams :CourseRegistrationController :: SSuubbjjeeccttIInnffoo SubjectInfo getSubjectPrerequisites() getSubjectPrerequisites() •Other implementation dependent functionality •Manager functions •Need for class copies •Need to test for equality
+10
+12
+
+Guidelines: Designing Operation Signatures •When designing operation signatures, consider if parameters are: •Passed by value or by reference •Changed by the operation •Optional •Set to default values •In valid parameter ranges •The fewer the parameters, the better •Pass objects instead of “data bits”
+12
+
+--- Page 4 ---
+13
+How Is Visibility Noted?
+Operation Visibility
+•The following symbols are used to specify export
+•Visibility is used to enforce encapsulation
+control:
+•May be public, protected, or private
+• + Public access
+• # Protected access
+Private • - Private access
+operations
+Class1
+-privateAttribute
++ publicAttribute
+# protectedAttribute
+Public Protected -privateOperation ()
++ publicOPeration ()
+operations operations # protecteOperation ()
+13 14
+15 16
+Course Registration CS: Operations for
+Scope
+CourseOffering. and CourseRegistrationController
+•Determines number of instances of the
+CourseOffering
+attribute/operation
+•Instance: one instance for each class instance + getCourseOffering(String): CourseOffering.
+•Classifier: one instance for all class instances
+•Classifier scope is denoted by underlining the
+attribute/operation name CourseRegistrationController
+Class1 + registerForCourse(String, String): void
+-classifierScopeAttr -checkPrerequisiteCondition(): boolean
+-instanceScopeAttr
++ classifierScopeOp () -checkTimeAndSubjectConfliction(): boolean
++ instanceScopeOp () -checkCapacityConfliction(): boolean
+15 16
+4
+
+[Table 1 on Page 4]
+13
+
+Operation Visibility •Visibility is used to enforce encapsulation •May be public, protected, or private Private operations Public Protected operations operations
+13
+15
+
+Scope •Determines number of instances of the attribute/operation •Instance: one instance for each class instance •Classifier: one instance for all class instances •Classifier scope is denoted by underlining the attribute/operation name Class1 -classifierScopeAttr -instanceScopeAttr + classifierScopeOp () + instanceScopeOp ()
+15
+
+[Table 2 on Page 4]
+
+
+How Is Visibility Noted? •The following symbols are used to specify export control: • + Public access • # Protected access • - Private access Class1 -privateAttribute + publicAttribute # protectedAttribute -privateOperation () + publicOPeration () # protecteOperation ()
+14
+16
+
+Course Registration CS: Operations for CourseOffering. and CourseRegistrationController CourseOffering + getCourseOffering(String): CourseOffering. CourseRegistrationController + registerForCourse(String, String): void -checkPrerequisiteCondition(): boolean -checkTimeAndSubjectConfliction(): boolean -checkCapacityConfliction(): boolean
+16
+
+[Table 3 on Page 4]
+CourseOffering
++ getCourseOffering(String): CourseOffering.
+
+[Table 4 on Page 4]
+CourseRegistrationController
++ registerForCourse(String, String): void -checkPrerequisiteCondition(): boolean -checkTimeAndSubjectConfliction(): boolean
+-checkCapacityConfliction(): boolean
+
+--- Page 5 ---
+17 18
+2.2. Define Methods Operation vs. Method
+•What is a method? •An operation isnota method. A UMLoperationis
+adeclaration, with a name, parameters, return type,
+•Describes operation implementation
+exceptions list, and possibly a set ofconstraintsof pre
+•Purpose
+and post-conditions. But, it isn’t an implementation —
+•Define special aspects of operation implementation rather, methods are implementations
+•Things to consider: •A method may be illustrated several ways, including:
+•Special algorithms • in interaction diagrams, by the details and sequence of messages
+• in class diagrams, with a UML note symbol stereotyped with
+•Other objects and operations to be used
+«method»
+•How attributes and parameters are to be implemented
+and used
+•How relationships are to be implemented and used
+17 18
+19 20
+Content Class Relationships
+1. Create Initial Design Classes •Association
+2. Define Operations/Methods
+3. Define Relationships Between Classes
+•Aggregation
+4. Define States
+•Composition
+5. Define Attributes
+6. Class Diagram
+•Inheritance
+•Dependency
+19 20
+5
+
+[Table 1 on Page 5]
+17
+
+2.2. Define Methods •What is a method? •Describes operation implementation •Purpose •Define special aspects of operation implementation •Things to consider: •Special algorithms •Other objects and operations to be used •How attributes and parameters are to be implemented and used •How relationships are to be implemented and used
+17
+19
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+19
+
+[Table 2 on Page 5]
+18
+
+Operation vs. Method •An operation isnota method. A UMLoperationis adeclaration, with a name, parameters, return type, exceptions list, and possibly a set ofconstraintsof pre and post-conditions. But, it isn’t an implementation — rather, methods are implementations •A method may be illustrated several ways, including: • in interaction diagrams, by the details and sequence of messages • in class diagrams, with a UML note symbol stereotyped with «method»
+18
+20
+
+Class Relationships •Association •Aggregation •Composition •Inheritance •Dependency
+20
+
+--- Page 6 ---
+21 22
+3.1. What is an Association? Finding Association
+Communication Diagram
+•The semantic relationship between two or more PerformResponsibility
+classifiers that specifies connections among :Client :Supplier
+their instances
+Link
+•A structural relationship, specifying that objects
+of one thing are connected to objects of another Client Supplier
+Class Diagram
+<<entity>> <<entity>> <<entity>>
+CourseOffering StudyHistory SubjectInfo Client 0..* 0..* Supplier
+PerformResponsibility()
+Association
+Relationship for every link!
+21 22
+23 24
+Name and direction of association 3.1.1. What Are Roles?
+•The “face”that a class plays in the association
+User Computer
+Uses
+<<entity>> <<entity>> <<entity>>
+CourseOffering Instructor Lecturer Department
+Department Head
+Person Car
+Owns
+Role Name
+<<entity>>
+Person Car SubjectInfo
+Owns
+Ownedby
+Prerequisites
+23 24
+6
+
+[Table 1 on Page 6]
+21
+
+3.1. What is an Association? •The semantic relationship between two or more classifiers that specifies connections among their instances •A structural relationship, specifying that objects of one thing are connected to objects of another <<entity>> <<entity>> <<entity>> CourseOffering StudyHistory SubjectInfo
+21
+23
+
+Name and direction of association User Computer Uses Person Car Owns Person Car Owns Ownedby
+23
+
+[Table 2 on Page 6]
+22
+
+Finding Association Communication Diagram PerformResponsibility :Client :Supplier Link Client Supplier Class Diagram Client 0..* 0..* Supplier PerformResponsibility() Association Relationship for every link!
+22
+24
+
+3.1.1. What Are Roles? •The “face”that a class plays in the association <<entity>> <<entity>> <<entity>> CourseOffering Instructor Lecturer Department Department Head Role Name <<entity>> SubjectInfo Prerequisites
+24
+
+--- Page 7 ---
+25 26
+3.1.2. What Is Multiplicity? Multiplicity Indicators
+•Multiplicity is the number of instances one class
+Unspecified
+relates to ONE instance of another class.
+Exactly One
+•For each association, there are two multiplicity 1
+decisions to make, one for each end of the Zero or More
+0..*
+association.
+Zero or More
+*
+•For each instance of Professor, many Course Offerings
+may be taught. One or More 1..*
+•For each instance of Course Offering, there may be either
+one or zero Professor as the instructor. Zero or One (optional value) 0..1
+Specified Range
+instructor 2..4
+Lecturer CourseOffering
+00....11 00....** Multiple, Disjoint Ranges 2, 4..6
+25 26
+27 28
+What Does Multiplicity Mean? 3.1.3. Association Types
+•Multiplicity answers two questions: •Association Car Driver
+•use-a
+•Is the association mandatory or optional?
+•Objects of one class are associated with objects of
+•What is the minimum and maximum number of another class
+instances that can be linked to one instance? •Aggregation Car Door
+•has-a/is-a-part
+•Strong association, an instance of one class is made
+up of instances of another class
+<<entity>> <<entity>>
+0..* 1
+CourseOffering Subject •Composition
+0..* •Strong aggregation, the composed object can’t be
+shared by other objects and dies with its composer
+Prerequisites 0..3
+•Share life-time
+Car Body
+27 28
+7
+
+[Table 1 on Page 7]
+25
+
+3.1.2. What Is Multiplicity? •Multiplicity is the number of instances one class relates to ONE instance of another class. •For each association, there are two multiplicity decisions to make, one for each end of the association. •For each instance of Professor, many Course Offerings may be taught. •For each instance of Course Offering, there may be either one or zero Professor as the instructor. instructor Lecturer CourseOffering 00....11 00....**
+25
+27
+
+What Does Multiplicity Mean? •Multiplicity answers two questions: •Is the association mandatory or optional? •What is the minimum and maximum number of instances that can be linked to one instance? <<entity>> <<entity>> 0..* 1 CourseOffering Subject 0..* Prerequisites 0..3
+27
+
+[Table 2 on Page 7]
+26
+
+Multiplicity Indicators Unspecified Exactly One 1 Zero or More 0..* Zero or More * One or More 1..* Zero or One (optional value) 0..1 Specified Range 2..4 Multiple, Disjoint Ranges 2, 4..6
+26
+28
+
+3.1.3. Association Types •Association Car Driver •use-a •Objects of one class are associated with objects of another class •Aggregation Car Door •has-a/is-a-part •Strong association, an instance of one class is made up of instances of another class •Composition •Strong aggregation, the composed object can’t be shared by other objects and dies with its composer •Share life-time Car Body
+28
+
+[Table 3 on Page 7]
+Unspecified | 
+Exactly One | 1
+Zero or More | 0..*
+Zero or More | *
+One or More | 1..*
+Zero or One (optional value) | 0..1
+Specified Range | 2..4
+Multiple, Disjoint Ranges | 2, 4..6
+ | 
+
+[Table 4 on Page 7]
+Lecturer
+
+
+
+[Table 5 on Page 7]
+CourseOffering
+
+
+
+--- Page 8 ---
+29 30
+Review: What Is Aggregation? Review: What is Composition?
+•A special form of association that models a •A special form of aggregation with strong ownership
+whole-part relationship between an aggregate and coincident lifetimes of the part with the
+(the whole) and its parts aggregate.
+•An aggregation is an “is a part-of”relationship. •The whole “owns”the part and is responsible for the
+•Multiplicity is represented like other associations. creation and destruction of the part.
+Whole/aggregate Part •The part is removed when the whole is removed.
+•The part may be removed (by the whole) before the whole is
+removed.
+<<entity>> <<entity>> <<entity>> Whole Part
+Student Schedule 0..* CourseOffering
+11 0..* 0..2
+29 30
+32
+“Register for course”Use case Association or Aggregation?
+•If two objects are tightly bound by a whole-part
+Student 1 Schedule relationship
+0..* •The relationship is an aggregation.
+Car Door
+1 0..2,4
+RegisterForCoursesForm 1 RegistrationController
+•If two objects are usually considered as
+1
+independent, although they are often linked
+•The relationship is an association.
+Car Door
+1 0..2,4
+31 When in doubt, use association.
+31 32
+8
+
+[Table 1 on Page 8]
+29
+
+Review: What Is Aggregation? •A special form of association that models a whole-part relationship between an aggregate (the whole) and its parts •An aggregation is an “is a part-of”relationship. •Multiplicity is represented like other associations. Whole/aggregate Part <<entity>> <<entity>> <<entity>> Student Schedule 0..* CourseOffering 11 0..* 0..2
+29
+
+
+“Register for course”Use case Student 1 Schedule 0..* RegisterForCoursesForm 1 RegistrationController 1 31
+31
+
+[Table 2 on Page 8]
+30
+
+Review: What is Composition? •A special form of aggregation with strong ownership and coincident lifetimes of the part with the aggregate. •The whole “owns”the part and is responsible for the creation and destruction of the part. •The part is removed when the whole is removed. •The part may be removed (by the whole) before the whole is removed. Whole Part
+30
+32
+
+Association or Aggregation? •If two objects are tightly bound by a whole-part relationship •The relationship is an aggregation. Car Door 1 0..2,4 •If two objects are usually considered as independent, although they are often linked •The relationship is an association. Car Door 1 0..2,4 When in doubt, use association.
+32
+
+[Table 3 on Page 8]
+Car
+
+
+
+[Table 4 on Page 8]
+Door
+
+
+
+[Table 5 on Page 8]
+Car
+
+
+
+[Table 6 on Page 8]
+Door
+
+
+
+--- Page 9 ---
+33 34
+Navigability: Which Directions Are Really
+3.1.4. Navigability
+Needed?
+•Indicates that it is possible to navigate from an associating
+class to the target class using the association
+•Explore interaction diagrams
+•Even when both directions seem required, one
+may work
+•Navigability in one direction is infrequent
+<<control>>
+CourseRegistrationController •Number of instances of one class is small
+Schedule + primaryCourses CourseOffering
+0..* 0..4
+?
+<<entity>>
+CourseOffering
+Schedule + primaryCourses CourseOffering Schedule + primaryCourses CourseOffering
+0..* 0..4 0..* 0..4
+33 34
+35 36
+Example: Navigability Refinement
+3.2. Dependency
+• Total number of Schedules is
+small, or
+•What Is a Dependency?
+• Never need a list of the
+Schedules on which the Schedule + primaryCourses CourseOffering •A relationship between two objects
+CourseOffering appears
+0..* 0..4
+Client Supplier
+• Total number of CourseOffering
+is small, or
+• N C e o v u e rs r e n O e f e fe d r i a n g lis o t n o f a Schedule Schedule + primaryCourses CourseOffering •Purpose
+0..* 0..4 •Determine where structural relationships are NOT
+• Total number of CourseOffering required
+and Schedules are not small
+•Things to look for :
+• Must be able to navigate in both
+directions Schedule + primaryCourses CourseOffering •What causes the supplier to be visible to the client
+0..* 0..4
+35 36
+9
+
+[Table 1 on Page 9]
+33
+
+3.1.4. Navigability •Indicates that it is possible to navigate from an associating class to the target class using the association <<control>> CourseRegistrationController <<entity>> CourseOffering
+33
+35
+
+Example: Navigability Refinement • Total number of Schedules is small, or • Never need a list of the Schedules on which the Schedule + primaryCourses CourseOffering CourseOffering appears 0..* 0..4 • Total number of CourseOffering is small, or • Never need a list of CourseOffering on a Schedule Schedule + primaryCourses CourseOffering 0..* 0..4 • Total number of CourseOffering and Schedules are not small • Must be able to navigate in both directions Schedule + primaryCourses CourseOffering 0..* 0..4
+35
+
+[Table 2 on Page 9]
+34
+
+Navigability: Which Directions Are Really Needed? •Explore interaction diagrams •Even when both directions seem required, one may work •Navigability in one direction is infrequent •Number of instances of one class is small Schedule + primaryCourses CourseOffering 0..* 0..4 ? Schedule + primaryCourses CourseOffering Schedule + primaryCourses CourseOffering 0..* 0..4 0..* 0..4
+34
+36
+
+3.2. Dependency •What Is a Dependency? •A relationship between two objects Client Supplier •Purpose •Determine where structural relationships are NOT required •Things to look for : •What causes the supplier to be visible to the client
+36
+
+[Table 3 on Page 9]
+<<control>> CourseRegistrationController
+
+
+
+[Table 4 on Page 9]
+<<entity>> CourseOffering
+
+
+
+--- Page 10 ---
+37 38
+Associations vs. Dependencies in
+Dependencies vs. Associations
+Collaborations
+•Associations are structural
+•An instance of an association is a link
+relationships
+•Dependencies are non-structural
+•All links become associations unless they have
+global, local, or parameter visibility
+relationships
+Supplier2
+•In order for objects to “know
+•Relationships are context-dependent
+each other”they must be visible •Dependencies are transient links with:
+•Local variable reference •A limited duration
+Client
+•Parameter reference Dependency •A context-independent relationship
+•Global reference
+•A summary relationship
+•Field reference Association
+Supplier1 A dependency is a secondary type of relationship in that it doesn't tell
+you much about the relationship. For details you need to consult the
+collaborations.
+37 38
+39 40
+3.2.1. Local Variable Visibility 3.2.2. Parameter Visibility
+•The op1() operation contains a local variable of •The ClassB instance is passed to the ClassA
+type ClassB instance
+ClassA
+ClassA
++ op1 ([in] aParam : ClassB)
++ op1 ( )
+ClassB
+ClassB
+39 40
+10
+
+[Table 1 on Page 10]
+37
+
+Dependencies vs. Associations •Associations are structural relationships •Dependencies are non-structural relationships Supplier2 •In order for objects to “know each other”they must be visible •Local variable reference Client •Parameter reference Dependency •Global reference •Field reference Association Supplier1
+37
+39
+
+3.2.1. Local Variable Visibility •The op1() operation contains a local variable of type ClassB ClassA + op1 ( ) ClassB
+39
+
+[Table 2 on Page 10]
+38
+
+Associations vs. Dependencies in Collaborations •An instance of an association is a link •All links become associations unless they have global, local, or parameter visibility •Relationships are context-dependent •Dependencies are transient links with: •A limited duration •A context-independent relationship •A summary relationship A dependency is a secondary type of relationship in that it doesn't tell you much about the relationship. For details you need to consult the collaborations.
+38
+40
+
+3.2.2. Parameter Visibility •The ClassB instance is passed to the ClassA instance ClassA + op1 ([in] aParam : ClassB) ClassB
+40
+
+--- Page 11 ---
+41 42
+3.2.3. Global Visibility Identifying Dependencies: Considerations
+•The ClassUtility instance is visible because it is •Permanent relationships —Association (field visibility)
+global •Transient relationships —Dependency
+• Multiple objects share the same instance
+ClassA • Pass instance as a parameter (parameter visibility)
+• Make instance a managed global (global visibility)
++ op1 ( )
+• Multiple objects don’t share the same instance (local
+visibility)
+•How long does it take to create/destroy?
+• Expensive? Use field, parameter, or global visibility
+ClassB
+• Strive for the lightest relationships possible
++ utilityOp ( )
+41 42
+43 44
+3.3. Generalization Example: Single Inheritance
+•A relationship among classes where one class •One class inherits from another
+shares the structure and/or behavior of one or Ancestor
+more classes. Account
+-balance
+•Defines a hierarchy of abstractions where a Superclass -name
+(parent) -number
+subclass inherits from one or more superclasses.
++ withdraw()
+•Single inheritance + createStatement()
+Generalization
+•Multiple inheritance
+Relationship
+•Is an “is a kind of”relationship.
+Subclasses
+(children)
+Savings Checking
+Descendents
+43 44
+11
+
+[Table 1 on Page 11]
+41
+
+3.2.3. Global Visibility •The ClassUtility instance is visible because it is global ClassA + op1 ( ) ClassB + utilityOp ( )
+41
+43
+
+3.3. Generalization •A relationship among classes where one class shares the structure and/or behavior of one or more classes. •Defines a hierarchy of abstractions where a subclass inherits from one or more superclasses. •Single inheritance •Multiple inheritance •Is an “is a kind of”relationship.
+43
+
+[Table 2 on Page 11]
+42
+
+Identifying Dependencies: Considerations •Permanent relationships —Association (field visibility) •Transient relationships —Dependency • Multiple objects share the same instance • Pass instance as a parameter (parameter visibility) • Make instance a managed global (global visibility) • Multiple objects don’t share the same instance (local visibility) •How long does it take to create/destroy? • Expensive? Use field, parameter, or global visibility • Strive for the lightest relationships possible
+42
+44
+
+Example: Single Inheritance •One class inherits from another Ancestor Account -balance Superclass -name (parent) -number + withdraw() + createStatement() Generalization Relationship Subclasses (children) Savings Checking Descendents
+44
+
+[Table 3 on Page 11]
+Account
+-balance -name -number
++ withdraw() + createStatement()
+
+[Table 4 on Page 11]
+Savings
+
+
+
+[Table 5 on Page 11]
+Checking
+
+
+
+--- Page 12 ---
+45 46
+Content 4. Define States
+1. Create Initial Design Classes •Purpose
+2. Define Operations/Methods
+•Design how an object’s state affects its
+behavior
+3. Define Relationships Between Classes
+•Develop state machines to model this behavior
+4. Define States
+•Things to consider:
+5. Define Attributes
+•Which objects have significant state?
+6. Class Diagram •How to determine an object’s possible states?
+•How do state machines map to the rest of the
+model?
+45 46
+47 48
+What is a State Machine? Pseudo States
+•A directed graph of states (nodes) connected by
+•Initial state
+Initial State
+• The state entered when an object
+transitions (directed arcs)
+is created
+State1
+•Describes the life history of a reactive object • Mandatory, can only have one initial
+state
+Guard Condition
+•Choice
+Choice
+Event Activity • Dynamic evaluation of subsequent
+guard conditions
+State1 State2
+Event(args)[guard condition]/activity • Only first segment has a trigger
+•Final state Final State
+Transition • Indicates the object’s end
+of life State2
+State State
+• Optional, may have more than one
+47 48
+12
+
+[Table 1 on Page 12]
+45
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+45
+47
+
+What is a State Machine? •A directed graph of states (nodes) connected by transitions (directed arcs) •Describes the life history of a reactive object Guard Condition Event Activity State1 State2 Event(args)[guard condition]/activity Transition State State
+47
+
+[Table 2 on Page 12]
+46
+
+4. Define States •Purpose •Design how an object’s state affects its behavior •Develop state machines to model this behavior •Things to consider: •Which objects have significant state? •How to determine an object’s possible states? •How do state machines map to the rest of the model?
+46
+48
+
+Pseudo States •Initial state Initial State • The state entered when an object is created State1 • Mandatory, can only have one initial state •Choice Choice • Dynamic evaluation of subsequent guard conditions • Only first segment has a trigger •Final state Final State • Indicates the object’s end of life State2 • Optional, may have more than one
+48
+
+--- Page 13 ---
+49 50
+Identify and Define the States Identify the Events
+•Significant, dynamic attributes •Look at the class interface operations
+The minimum number of students per course is 3
+numStudents >=3 numStudents < 3
+CourseOffering 0..*
+Opened Closed Lecturer
++ addLecturer() 0..1
++ removeLecturer()
+•Existence and non-existence of certain links
+Lecturer Link to Professor Link to Professor
+exists doesn’t exist
+Events: addLecturer,
+0..1 Assigned Unassigned removeLecturer
+0..*
+CourseOffering
+49 50
+51 52
+Identify the Transitions Add Activities
+•For each state, determine what events cause •Entry StateA
+transitions to what states, including guard •Executed when the state Entry/anAction
+is entered
+conditions, when needed
+•Transitions describe what happens in response to
+the receipt of an event •Do
+•Ongoing execution
+CourseOffering 0..*
+Lecturer StateB StateC
++ addLecturer() 0..1
++ removeLecturer() •Exit Do/anActivity Exit/someAction
+•Executed when the state
+Unassigned is exited
+removeLecturer addLecturer
+Assigned
+51 52
+13
+
+[Table 1 on Page 13]
+49
+
+Identify and Define the States •Significant, dynamic attributes The minimum number of students per course is 3 numStudents >=3 numStudents < 3 Opened Closed •Existence and non-existence of certain links Lecturer Link to Professor Link to Professor exists doesn’t exist 0..1 Assigned Unassigned 0..* CourseOffering
+49
+51
+
+Identify the Transitions •For each state, determine what events cause transitions to what states, including guard conditions, when needed •Transitions describe what happens in response to the receipt of an event CourseOffering 0..* Lecturer + addLecturer() 0..1 + removeLecturer() Unassigned removeLecturer addLecturer Assigned
+51
+
+[Table 2 on Page 13]
+50
+
+Identify the Events •Look at the class interface operations CourseOffering 0..* Lecturer + addLecturer() 0..1 + removeLecturer() Events: addLecturer, removeLecturer
+50
+52
+
+Add Activities •Entry StateA •Executed when the state Entry/anAction is entered •Do •Ongoing execution StateB StateC •Exit Do/anActivity Exit/someAction •Executed when the state is exited
+52
+
+--- Page 14 ---
+53 54
+Example: State Machines
+Which Objects Have Significant State?
+addStudent / numStudents = numStudents + 1
+/ numStudents = 0 removeStudent [numStudents >0]/ numStudents = numStudents -1
+•Objects whose role is clarified by state
+Unassigned
+transitions
+closeRegistration
+addLecturer cancel Canceled
+•Complex use cases that are state-controlled
+do/ Send cancellation notices
+•It is not necessary to model objects such as:
+addStudent /
+removeLecturer
+closeRe
+c
+g
+a
+is
+n
+tr
+c
+a
+e
+t
+l ion[
+[
+n
+n
+u
+u
+m
+m
+S
+S
+tu
+t
+d
+u
+e
+d
+n
+e
+ts
+n
+<
+ts
+3
+=
+]
+30 ]
+[ num
+c
+S
+lo
+tu
+se
+d
+R
+en
+e
+t
+g
+s
+i s
+=
+t r
+3
+a
+0
+ti o
+]
+n [ ha
+c
+s
+a
+P
+n F c
+ro
+u e
+f
+l l
+e
+l
+ssor assigned ]
+•
+•
+O i
+O
+m b
+b
+p j
+j
+e
+e
+le c
+c
+m t
+t
+s
+s
+e w
+t
+n
+h
+t i
+a
+t a h
+t
+t i
+a
+o s
+r
+t n r
+e
+a
+n
+ig
+o
+h
+t
+t
+s
+fo
+ta
+rw
+te
+a
+-
+r
+c
+d
+o n
+m
+tr
+a
+o
+p
+ll
+p
+e
+i
+d
+ng to
+numStudents = numStudents + 1 •Objects with only one computational state
+Assigned closeRegistration[ numStudents >= 3 ] Committed
+do/ Generate class roster
+removeStudent[ numStudents > 0] / numStudents = numStudents -1
+53 54
+55 56
+How Do State Machines Map to the Rest of the Model? Content
+•Events may map to operations
+1. Create Initial Design Classes
+•Methods should be updated with state-specific
+2. Define Operations/Methods
+information
+3. Define Relationships Between Classes
+•States are often represented using attributes
+•This serves as input into the “Define Attributes”step 4. Define States
+5. Define Attributes
+CourseInfo.
+-numStudents 6. Class Diagram
++ addStudent()
+OpenedaddStudent / numStudents = numStudents + 1
+Closed
+[numStudents<10] [numStudents>=10]
+55 56
+14
+
+[Table 1 on Page 14]
+53
+
+Example: State Machines addStudent / numStudents = numStudents + 1 / numStudents = 0 removeStudent [numStudents >0]/ numStudents = numStudents -1 Unassigned closeRegistration addLecturer cancel Canceled do/ Send cancellation notices removeLecturer c a n c e l ion[ n u m S tu d e n ts < 3 ] [ num S tu d en t s = 3 0 ] c a n F c u e l l l addStudent / closeRe g is tr a t [ n u m S t u d e n ts = 30 ] c lo se R e g i s t r a ti o n [ ha s P ro f e ssor assigned ] numStudents = numStudents + 1 Assigned closeRegistration[ numStudents >= 3 ] Committed do/ Generate class roster removeStudent[ numStudents > 0] / numStudents = numStudents -1
+53
+55
+
+How Do State Machines Map to the Rest of the Model? •Events may map to operations •Methods should be updated with state-specific information •States are often represented using attributes •This serves as input into the “Define Attributes”step CourseInfo. -numStudents + addStudent() OpenedaddStudent / numStudents = numStudents + 1 Closed [numStudents<10] [numStudents>=10]
+55
+
+[Table 2 on Page 14]
+54
+
+Which Objects Have Significant State? •Objects whose role is clarified by state transitions •Complex use cases that are state-controlled •It is not necessary to model objects such as: •Objects with straightforward mapping to implementation •Objects that are not state-controlled •Objects with only one computational state
+54
+56
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+56
+
+--- Page 15 ---
+57 58
+Review: What Is an Attribute? 5.1. Finding Attributes
+C
+<<
+l
+s
+a
+t
+s
+er
+s
+e
+N
+oty
+a
+p
+m
+e>
+e
+> •Properties/characteristics of identified
+classes
+Attribute : Type = InitValue
+Attribute : Type = InitValue
+Attribute : Type = InitValue •Information retained by identified classes
+•“Nouns” that did not become classes
+<<entity>>
+CourseInfo. •Information whose value is the important thing
+courseID: String •Information that is uniquely "owned”by an
+description: String
+attribute startDate: DateTime object
+endDate: DateTime
+lecturer: Lecturer •Information that has no behavior
+location: String
+57 58
+59 60
+5.1. Finding Attributes (2) 5.2. Attribute Representations
+•Examine method descriptions •Specify name, type, and optional default value
+•Examine states •attributeName : Type = Default
+•Follow naming conventions of implementation
+•Examine any information the class itself
+language and project
+needs to maintain
+•Type should be an elementary data type in
+implementation language
+•Built-in data type, user-defined data type, or user-
+defined class
+•Specify visibility
+•Public: + Private: - Protected: #
+59 60
+15
+
+[Table 1 on Page 15]
+57
+
+Review: What Is an Attribute? <<stereotype>> ClassName Attribute : Type = InitValue Attribute : Type = InitValue Attribute : Type = InitValue <<entity>> CourseInfo. courseID: String description: String attribute startDate: DateTime endDate: DateTime lecturer: Lecturer location: String
+57
+59
+
+5.1. Finding Attributes (2) •Examine method descriptions •Examine states •Examine any information the class itself needs to maintain
+59
+
+[Table 2 on Page 15]
+58
+
+5.1. Finding Attributes •Properties/characteristics of identified classes •Information retained by identified classes •“Nouns” that did not become classes •Information whose value is the important thing •Information that is uniquely "owned”by an object •Information that has no behavior
+58
+60
+
+5.2. Attribute Representations •Specify name, type, and optional default value •attributeName : Type = Default •Follow naming conventions of implementation language and project •Type should be an elementary data type in implementation language •Built-in data type, user-defined data type, or user- defined class •Specify visibility •Public: + Private: - Protected: #
+60
+
+--- Page 16 ---
+61 62
+5.3. Derived Attributes Example: Define Attributes
+•What is a derived attribute? <<entity>> <<boundary>> <<controll>>
+Schedule CourseRegistrationForm CourseRegistrationController
+•An attribute whose value may be calculated based on
+-scheduleID: int -courseID: String -courseID: String
+the value of other attribute(s) -day: String -studentID: String -studentID: String
+-teachingPeriod: int
+•When do you use it?
+•When there is not enough time to re-calculate the value
+every time it is needed <<entity>> <<entity>> <<entity>>
+StudyHistory CourseOffering SubjectInfo.
+•When you must trade-off runtime performance versus
+-historyNo: int -courseID: String -subjectID: String
+memory required -pass: boolean -description: String -subjectName: String
+-result: int -startDate: DateTime -goal: String
+-studentID: String -endDate: DateTime -description: String
+-studentName: String -lecturer: Lecturer -numberOfCredits: int
+-location: String
+61 62
+63 64
+Content 6. Class diagram
+1. Create Initial Design Classes •Static view of a system
+2. Define Operations/Methods •When modeling the static view of a system,
+3. Define Relationships Between Classes class diagrams are typically used in one of
+three ways, to model:
+4. Define States
+•The vocabulary of a system
+5. Define Attributes
+•Collaborations
+6. Class Diagram
+•A logical database schema
+63 64
+16
+
+[Table 1 on Page 16]
+61
+
+5.3. Derived Attributes •What is a derived attribute? •An attribute whose value may be calculated based on the value of other attribute(s) •When do you use it? •When there is not enough time to re-calculate the value every time it is needed •When you must trade-off runtime performance versus memory required
+61
+63
+
+Content 1. Create Initial Design Classes 2. Define Operations/Methods 3. Define Relationships Between Classes 4. Define States 5. Define Attributes 6. Class Diagram
+63
+
+[Table 2 on Page 16]
+62
+
+Example: Define Attributes <<entity>> <<boundary>> <<controll>> Schedule CourseRegistrationForm CourseRegistrationController -scheduleID: int -courseID: String -courseID: String -day: String -studentID: String -studentID: String -teachingPeriod: int <<entity>> <<entity>> <<entity>> StudyHistory CourseOffering SubjectInfo. -historyNo: int -courseID: String -subjectID: String -pass: boolean -description: String -subjectName: String -result: int -startDate: DateTime -goal: String -studentID: String -endDate: DateTime -description: String -studentName: String -lecturer: Lecturer -numberOfCredits: int -location: String
+62
+64
+
+6. Class diagram •Static view of a system •When modeling the static view of a system, class diagrams are typically used in one of three ways, to model: •The vocabulary of a system •Collaborations •A logical database schema
+64
+
+--- Page 17 ---
+65 66
+Class diagram for
+Review: What Is a Package?
+Register for course UC
+•A general purpose mechanism for organizing
+elements into groups.
+•A model element that can contain other model
+elements.
+•A package can be used:
+•To organize the model under development
+•As a unit of configuration management
+University
+Artifacts
+65 66
+Review points: Classes Review points: Operations
+•Clear class names •Operations are easily understood
+•One well-defined abstraction •State description is correct
+•Functionally coupled attributes/behavior •Required behavior is offered
+•Generalizations were made •Parameters are defined correctly
+•All class requirements were addressed •Messages are completely assigned operations
+•Demands are consistent with state machines •Implementation specifications are correct
+•Complete class instance life cycle is described •Signatures conform to standards
+•The class has the required behavior •All operations are needed by Use-Case
+Realizations
+67 68
+17
+
+[Table 1 on Page 17]
+65
+
+Class diagram for Register for course UC
+
+65
+
+
+Review points: Classes •Clear class names •One well-defined abstraction •Functionally coupled attributes/behavior •Generalizations were made •All class requirements were addressed •Demands are consistent with state machines •Complete class instance life cycle is described •The class has the required behavior
+67
+
+[Table 2 on Page 17]
+66
+
+Review: What Is a Package? •A general purpose mechanism for organizing elements into groups. •A model element that can contain other model elements. •A package can be used: •To organize the model under development •As a unit of configuration management University Artifacts
+66
+
+
+Review points: Operations •Operations are easily understood •State description is correct •Required behavior is offered •Parameters are defined correctly •Messages are completely assigned operations •Implementation specifications are correct •Signatures conform to standards •All operations are needed by Use-Case Realizations
+68
+
+[Table 3 on Page 17]
+
+University Artifacts
+
+--- Page 18 ---
+Review points: Attributes Review points: Relationships
+•A single concept
+•Descriptive role names
+•Descriptive names
+•Correct multiplicities
+•All attributes are needed by Use-Case
+Realizations
+69 70
+71
+Question?
+71
+18
+
+[Table 1 on Page 18]
+
+
+Review points: Attributes •A single concept •Descriptive names •All attributes are needed by Use-Case Realizations
+69
+71
+
+Question?
+71
+
+[Table 2 on Page 18]
+
+
+Review points: Relationships •Descriptive role names •Correct multiplicities
+70

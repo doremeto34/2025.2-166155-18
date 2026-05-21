@@ -1,0 +1,596 @@
+=== Extracted from: 06-Interface Design.pdf ===
+=== Total pages: 11 ===
+
+--- Page 1 ---
+1 2
+Interface design
+1. Graphical user interface design
+IT4490 -SOFTWARE DESIGN AND CONSTRUCTION 2. System/Device interface design
+6. INTERFACE DESIGN
+1 2
+3 4
+References 1. Graphical user interface design
+[1] Textbook for Software Design & Development 1.1. Standardizing the screen configuration
+Engineers, No. 3 –System Development, Operations
+1.2. Creating screen images
+and Maintenance, 2ndEdition; Japan Information
+Processing Development Corporation, Japan 1.3. Creating a screen transition diagram
+Information-Technology Engineers Examination Center.
+1.4. Creating screen specifications
+3 4
+1
+
+[Table 1 on Page 1]
+1
+
+IT4490 -SOFTWARE DESIGN AND CONSTRUCTION 6. INTERFACE DESIGN
+1
+3
+
+References [1] Textbook for Software Design & Development Engineers, No. 3 –System Development, Operations and Maintenance, 2ndEdition; Japan Information Processing Development Corporation, Japan Information-Technology Engineers Examination Center.
+3
+
+[Table 2 on Page 1]
+2
+
+Interface design 1. Graphical user interface design 2. System/Device interface design
+2
+4
+
+1. Graphical user interface design 1.1. Standardizing the screen configuration 1.2. Creating screen images 1.3. Creating a screen transition diagram 1.4. Creating screen specifications
+4
+
+--- Page 2 ---
+5 6
+Standardizing Standardizing
+uDisplay
+•Control
+•Physical size, resolution, and number of colors
+supported by displays •Style, size, color, and characters displayed
+uScreen: divided into displayed objects called •Input check process
+windows (Window) •Sequence of moving the focus (e.g., defining the tab
+•Location of standard buttons (e.g., OK, Cancel, sequence)
+Register, Search) •Menu
+•Display location of messages, etc.
+•Design menus with consideration of the standard
+•Display of screen title and menus specification (common client area) of the screen
+•Consistency in expression of alphanumeric characters
+•Direct input from a keyboard
+•Expression of sentences and detailed items
+•Maintain consistency in the assignment of shortcut keys
+•Color coordination
+5 6
+7 8
+Standardizing 1. Graphical user interface design
+•Messages 1.1. Standardizing the screen configuration
+•Determine how messages are displayed when a time- 1.2. Creating screen images
+consuming process is executed (busy).
+1.3. Creating a screen transition diagram
+•Error
+•Execute standardized processing if an error occurs 1.4. Creating screen specifications
+•Help
+•Develop detailed Help information in accordance with
+the manual, and maintain consistency in terminology,
+descriptions, and explanations of methods.
+7 8
+2
+
+[Table 1 on Page 2]
+5
+
+Standardizing uDisplay •Physical size, resolution, and number of colors supported by displays uScreen: divided into displayed objects called windows (Window) •Location of standard buttons (e.g., OK, Cancel, Register, Search) •Display location of messages, etc. •Display of screen title and menus •Consistency in expression of alphanumeric characters •Expression of sentences and detailed items •Color coordination
+5
+7
+
+Standardizing •Messages •Determine how messages are displayed when a time- consuming process is executed (busy). •Error •Execute standardized processing if an error occurs •Help •Develop detailed Help information in accordance with the manual, and maintain consistency in terminology, descriptions, and explanations of methods.
+7
+
+[Table 2 on Page 2]
+6
+
+Standardizing •Control •Style, size, color, and characters displayed •Input check process •Sequence of moving the focus (e.g., defining the tab sequence) •Menu •Design menus with consideration of the standard specification (common client area) of the screen •Direct input from a keyboard •Maintain consistency in the assignment of shortcut keys
+6
+8
+
+1. Graphical user interface design 1.1. Standardizing the screen configuration 1.2. Creating screen images 1.3. Creating a screen transition diagram 1.4. Creating screen specifications
+8
+
+--- Page 3 ---
+9 10
+From use case GUI Design tools
+•Based on use case and boundary classes which •Simple tools
+interact with users • Notepad
+•Map these boundary classes to screens • Microsoft Excel/Powerpoint/Word/FrontPage
+•Based on input/output description in use case
+•Professional tools
+specification/scenario •Free
+•InVision
+•IDEs: Eclipse, NetBean
+=> Design screen using tools •Commercial
+•Adobe Dreamweaver
+•Axure RP
+•Photoshop
+•IDEs: Visual Studio
+9 10
+11 12
+1. Graphical user interface design
+1.1. Standardizing the screen configuration
+1.2. Creating screen images
+1.3. Creating a screen transition diagram
+1.4. Creating screen specifications
+11 12
+3
+
+[Table 1 on Page 3]
+9
+
+From use case •Based on use case and boundary classes which interact with users •Map these boundary classes to screens •Based on input/output description in use case specification/scenario => Design screen using tools
+9
+11
+
+
+11
+
+[Table 2 on Page 3]
+10
+
+GUI Design tools •Simple tools • Notepad • Microsoft Excel/Powerpoint/Word/FrontPage •Professional tools •Free •InVision •IDEs: Eclipse, NetBean •Commercial •Adobe Dreamweaver •Axure RP •Photoshop •IDEs: Visual Studio
+10
+12
+
+1. Graphical user interface design 1.1. Standardizing the screen configuration 1.2. Creating screen images 1.3. Creating a screen transition diagram 1.4. Creating screen specifications
+12
+
+--- Page 4 ---
+13 14
+Display transition diagram Four transition patterns
+•Summarize the correlation of screens in the u1. Simple screen transition:
+screen transition diagram •A conventional simple transition to an independent
+•Classify the screens into the four patterns by focusing screen
+on the transition pattern
+•Link the screens in accordance with the classifications
+View Slide Show
+Edit Slide
+(From Start)
+13 14
+15 16
+Four transition patterns (4) Four transition patterns (3)
+•2. Transition to a dependent screen: •3. Transition to an independent child screen:
+•Start a dependent new screen with data •Move to a pop-up screen,
+•Parent screen and other screens can be operated while
+the child screen is displayed.
+Selected
+slide
+Edit Slide Duplicate Slide
+Edit Slide Replace Text
+15 16
+4
+
+[Table 1 on Page 4]
+13
+
+Display transition diagram •Summarize the correlation of screens in the screen transition diagram •Classify the screens into the four patterns by focusing on the transition pattern •Link the screens in accordance with the classifications
+13
+15
+
+Four transition patterns (4) •2. Transition to a dependent screen: •Start a dependent new screen with data Selected slide Edit Slide Duplicate Slide
+15
+
+[Table 2 on Page 4]
+14
+
+Four transition patterns u1. Simple screen transition: •A conventional simple transition to an independent screen View Slide Show Edit Slide (From Start)
+14
+16
+
+Four transition patterns (3) •3. Transition to an independent child screen: •Move to a pop-up screen, •Parent screen and other screens can be operated while the child screen is displayed. Edit Slide Replace Text
+16
+
+[Table 3 on Page 4]
+Edit Slide | Selected slide
+
+--- Page 5 ---
+17 18
+Four transition patterns (2) Link the screen: Screen transition diagram
+•4. Transition to a dependent child screen:
+Edit Slide
+•Move to a pop-up screen
+•When a child screen is displayed on the parent screen, Show From Start
+the underlying parent screen cannot be operated
+Format Text
+View Slide Master
+Edit Slide Format Text Selected
+Replace Text slide Duplicate Slide
+Selected
+slide
+Show Current Slide
+17 18
+20 21
+1. Graphical user interface design 4. Screen specification
+1.1. Standardizing the screen configuration •Decide on a detailed format for a screen
+1.2. Creating screen images specification
+•Define field attributes based on the new screen
+1.3. Creating a screen transition diagram
+information identified while deciding on screen
+1.4. Creating screen specifications images and the screen transition diagram
+20 21
+5
+
+[Table 1 on Page 5]
+17
+
+Four transition patterns (2) •4. Transition to a dependent child screen: •Move to a pop-up screen •When a child screen is displayed on the parent screen, the underlying parent screen cannot be operated Edit Slide Format Text
+17
+20
+
+1. Graphical user interface design 1.1. Standardizing the screen configuration 1.2. Creating screen images 1.3. Creating a screen transition diagram 1.4. Creating screen specifications
+20
+
+[Table 2 on Page 5]
+18
+
+Link the screen: Screen transition diagram Edit Slide Show From Start Format Text View Slide Master Selected Replace Text slide Duplicate Slide Selected slide Show Current Slide
+18
+21
+
+4. Screen specification •Decide on a detailed format for a screen specification •Define field attributes based on the new screen information identified while deciding on screen images and the screen transition diagram
+21
+
+--- Page 6 ---
+22 23
+Screen specification
+Screen specification
+•Screen image
+example
+•This is the screen image to be displayed. If screen
+images are created in advance with the screen design
+tool, attach a hardcopy.
+•List of functions
+•Defines the names of parts such as the buttons on the
+screen, and summarizes their functions.
+•Provide descriptions of events for individual screens,
+attributes of parts, input check specifications and output
+specifications, etc.
+•Defining the field attributes
+[1]: Section 3.2.1, pp 3-54
+22 23
+24 25
+Example: Defining the field attributes
+Defining the field attributes
+[1]
+•Decide on the field attributes of input and output
+items
+•Summarize them in descriptions of items for
+screen display.
+•The screen consists of multiple fields.
+•Each field consists of a one-byte (equivalent to a
+single character) attribute at the beginning and a
+variable item
+[1]: Section 3.2.1, pp 3-57
+24 25
+6
+
+[Table 1 on Page 6]
+22
+
+Screen specification •Screen image •This is the screen image to be displayed. If screen images are created in advance with the screen design tool, attach a hardcopy. •List of functions •Defines the names of parts such as the buttons on the screen, and summarizes their functions. •Provide descriptions of events for individual screens, attributes of parts, input check specifications and output specifications, etc. •Defining the field attributes
+22
+24
+
+Defining the field attributes •Decide on the field attributes of input and output items •Summarize them in descriptions of items for screen display. •The screen consists of multiple fields. •Each field consists of a one-byte (equivalent to a single character) attribute at the beginning and a variable item
+24
+
+[Table 2 on Page 6]
+23
+
+Screen specification example [1]: Section 3.2.1, pp 3-54
+23
+25
+
+Example: Defining the field attributes [1] [1]: Section 3.2.1, pp 3-57
+25
+
+--- Page 7 ---
+26 27
+Interface design 2. System/Device interface design
+1. Graphical user interface design 2.1. Identify subsystem
+2.2. Identify subsystem interfaces
+2. System/Device interface design
+2.3. Subsystem design
+26 27
+Subsystems and Interfaces (continued)
+Review: Subsystems and Interfaces
+•Subsystems :
+•Realizes one or more interfaces that define its behavior •Completely encapsulate behavior
+•Represent an independent capability with clear interfaces
+<<interface>> (potential for reuse)
+Interface Name
+<<subsystem>> •Model multiple implementation variants
+Subsystem Name
+Realization (Canonical form) <<subsystem>>
+SubsystemA
+Interface Subsystem
+ClassA1 ClassA2
+<<subsystem>> <<Interface>> W() X()
+Interface Name Subsystem Name InterfaceK
+Realization (Elided form) X() <<subsystem>>
+W() SubsystemB
+ClassB1 ClassB2 ClassB3
+W() X() Z()
+Y()
+28 29
+7
+
+[Table 1 on Page 7]
+26
+
+Interface design 1. Graphical user interface design 2. System/Device interface design
+26
+
+
+Review: Subsystems and Interfaces •Realizes one or more interfaces that define its behavior <<interface>> Interface Name <<subsystem>> Subsystem Name Realization (Canonical form) Interface Subsystem <<subsystem>> Interface Name Subsystem Name Realization (Elided form)
+28
+
+[Table 2 on Page 7]
+27
+
+2. System/Device interface design 2.1. Identify subsystem 2.2. Identify subsystem interfaces 2.3. Subsystem design
+27
+
+
+Subsystems and Interfaces (continued) •Subsystems : •Completely encapsulate behavior •Represent an independent capability with clear interfaces (potential for reuse) •Model multiple implementation variants <<subsystem>> SubsystemA ClassA1 ClassA2 <<Interface>> W() X() InterfaceK X() <<subsystem>> W() SubsystemB ClassB1 ClassB2 ClassB3 W() X() Z() Y()
+29
+
+[Table 3 on Page 7]
+<<Interface>> InterfaceK
+X() W()
+
+[Table 4 on Page 7]
+ClassB2 X() | ClassB3 Z()
+
+--- Page 8 ---
+Packages versus Subsystems
+Subsystem Usage
+Subsystems Packages
+•Provide behavior §Don’t provide behavior •Subsystems can be used to partition the system into parts
+•Completely §Don’t completely that can be independently:
+encapsulate their encapsulate their • ordered, configured, or delivered
+contents
+contents • developed, as long as the interfaces remain unchanged
+§May not be easily
+•Are easily replaced
+replaced
+• deployed across a set of distributed computational nodes
+• changed without breaking other parts of the systems
+Client Class
+•Subsystems can also be used to:
+• partition the system into units which can provide restricted
+security over key resources
+Package B
+ClassB1 • represent existing products or external systems in the
+ClassB2 design (e.g. components)
+<<subsystem>>
+Subsystem A
+Subsystems raise the level of abstraction.
+Encapsulation is the key!
+30 31
+Candidate Subsystems Identifying Subsystems
+•Analysis classes which may evolve into subsystems: “Superman
+• Classes providing complex services and/or utilities Class” << C co la n s tr s o A l>>
+• Boundary classes (user interfaces and external system X()
+interfaces) W()
+•Existing products or external systems in the design
+(e.g., components):
+• Communication software <<subsystem>>
+Subsystem A
+• Database access support <<Interface>>
+InterfaceK <<subsystem>>
+• Types and data structures <<subsystem>> SubsystemA
+Subsystem B
+• Common utilities ClassA1 ClassA2
+X()
+• Application-specific products <<subsystem>> W() X() W()
+Subsystem C
+33 34
+8
+
+[Table 1 on Page 8]
+
+
+Packages versus Subsystems Subsystems Packages •Provide behavior §Don’t provide behavior •Completely §Don’t completely encapsulate their encapsulate their contents contents §May not be easily •Are easily replaced replaced Client Class Package B ClassB1 ClassB2 <<subsystem>> Subsystem A Encapsulation is the key!
+30
+
+
+Candidate Subsystems •Analysis classes which may evolve into subsystems: • Classes providing complex services and/or utilities • Boundary classes (user interfaces and external system interfaces) •Existing products or external systems in the design (e.g., components): • Communication software <<subsystem>> Subsystem A • Database access support • Types and data structures <<subsystem>> Subsystem B • Common utilities • Application-specific products <<subsystem>> Subsystem C
+33
+
+[Table 2 on Page 8]
+
+
+Subsystem Usage •Subsystems can be used to partition the system into parts that can be independently: • ordered, configured, or delivered • developed, as long as the interfaces remain unchanged • deployed across a set of distributed computational nodes • changed without breaking other parts of the systems •Subsystems can also be used to: • partition the system into units which can provide restricted security over key resources • represent existing products or external systems in the design (e.g. components) Subsystems raise the level of abstraction.
+31
+
+
+Identifying Subsystems “Superman Class” << C co la n s tr s o A l>> X() W() <<Interface>> InterfaceK <<subsystem>> SubsystemA ClassA1 ClassA2 X() W() X() W()
+34
+
+[Table 3 on Page 8]
+
+Package B ClassB1 ClassB2
+
+[Table 4 on Page 8]
+<<control>> ClassA
+
+X() W()
+
+[Table 5 on Page 8]
+<<Interface>> InterfaceK
+
+X() W()
+
+--- Page 9 ---
+35
+2. System/Device interface design Identifying Interfaces
+2.1. Identify subsystem •Purpose
+• To identify the interfaces of the subsystems based on
+2.2. Identify subsystem interfaces their responsibilities
+•Steps
+2.3. Subsystem design
+• Identify a set of candidate interfaces for all
+subsystems.
+• Look for similarities between interfaces.
+• Define interface dependencies.
+• Map the interfaces to subsystems.
+• Define the behavior specified by the interfaces.
+• Package the interfaces.
+Stable, well-defined interfaces are key to a stable,
+resilient architecture.
+35 36
+Example: Design Subsystems and Interfaces
+Interface Guidelines
+Analysis Design
+•Interface name <<boundary>>
+•Reflects role in system BillingSystem < B < i s l u li b n s g y S st y e s m te > m >
+•Interface description
+//submit bill()
+•Conveys responsibilities IBillingSystem
+•Operation definition submitBill(forTuition : Double, forStudent : Student)
+•Name should reflect operation result <<boundary>>
+•Describes what operation does, all CourseCatalogSystem <<subsystem>>
+parameters and result CourseCatalogSystem
+//get course offerings()
+•Interface documentation
+•Package supporting info: sequence and ICourseCatalogSystem
+state diagrams, test plans, etc. g in e i t t C ia o l u i r z s e e ( O ) fferings(forSemester : Semester, forStudent : Student) : CourseOfferingList
+All other analysis classes map directly to design classes.
+37 38
+9
+
+[Table 1 on Page 9]
+35
+
+2. System/Device interface design 2.1. Identify subsystem 2.2. Identify subsystem interfaces 2.3. Subsystem design
+35
+
+
+Interface Guidelines •Interface name •Reflects role in system •Interface description •Conveys responsibilities •Operation definition •Name should reflect operation result •Describes what operation does, all parameters and result •Interface documentation •Package supporting info: sequence and state diagrams, test plans, etc.
+37
+
+[Table 2 on Page 9]
+
+
+Identifying Interfaces •Purpose • To identify the interfaces of the subsystems based on their responsibilities •Steps • Identify a set of candidate interfaces for all subsystems. • Look for similarities between interfaces. • Define interface dependencies. • Map the interfaces to subsystems. • Define the behavior specified by the interfaces. • Package the interfaces. Stable, well-defined interfaces are key to a stable, resilient architecture.
+36
+
+
+Example: Design Subsystems and Interfaces Analysis Design <<boundary>> BillingSystem <<subsystem>> BillingSystem //submit bill() IBillingSystem submitBill(forTuition : Double, forStudent : Student) <<boundary>> CourseCatalogSystem <<subsystem>> CourseCatalogSystem //get course offerings() ICourseCatalogSystem getCourseOfferings(forSemester : Semester, forStudent : Student) : CourseOfferingList initialize() All other analysis classes map directly to design classes.
+38
+
+--- Page 10 ---
+Modeling Convention: Subsystems and
+Example: Analysis-Class-To-Design-Element Map
+Interfaces
+Analysis Class Design Element <<subsystem>>
+CourseCatalogSystem
+CourseCatalogSystem CourseCatalogSystem Subsystem
+ICourseCatalogSystem + initialize ()
+BillingSystem BillingSystem Subsystem + getCourseOfferings ()
+All other analysis classes map
+directly to design classes
+Interfaces start with an “I”
+ICou < r < s i e n C te a rf t a a c l e o > g > System Cour < s < e s C ub a s ta y l s o te g m S > y > stem
++ getCourseOfferings () + initialize ()
++ initialize () + getCourseOfferings ()
+39 40
+Example: Subsystem Context: CourseCatalogSystem Example: Subsystem Context: Billing System
+<<control>> <<control>>
+<<control>> Required interface RegistrationController CloseRegistrationController
+CloseRegistrationController defined
++ getCurrentSchedule() + // is registration open?()
++ // is registration open?() + deleteCurrentSchedule() + // close registration()
++ // close registration() + submitSchedule()
++ saveSchedule() 0..1
+0..1 + getCourseOfferings()
++courseCatalog 1 + setSession() + Biller 1
++ <<class>> new() <<Interface>>
+ICours < e < C In a t t e a r l f o ac g e S > y > stem + getStudent() IBillingSystem < S <e tu n d ti e ty n > t >
++ submitBill(forStudent : Student, forTuition : double)
++ getCourseOfferings ( for Semester: Semester )
++ initialize ()
+CourseOfferingList
+Provided
+interface + new()
+defined <<subsystem>> + add() B << il s l u in bs g y S s y te s m te > m >
+CourseCatalogSystem
++ submitBill(forStudent : Student, forTuition : double)
++ initialize ()
++ getCourseOfferings ()
+41 42
+10
+
+[Table 1 on Page 10]
+
+
+Example: Analysis-Class-To-Design-Element Map Analysis Class Design Element CourseCatalogSystem CourseCatalogSystem Subsystem BillingSystem BillingSystem Subsystem All other analysis classes map directly to design classes
+39
+
+
+Example: Subsystem Context: CourseCatalogSystem <<control>> <<control>> Required interface RegistrationController CloseRegistrationController defined + getCurrentSchedule() + // is registration open?() + deleteCurrentSchedule() + // close registration() + submitSchedule() + saveSchedule() 0..1 + getCourseOfferings() +courseCatalog 1 + setSession() + <<class>> new() ICours < e < C In a t t e a r l f o ac g e S > y > stem + getStudent() + getCourseOfferings ( for Semester: Semester ) + initialize () CourseOfferingList Provided interface + new() defined + add() <<subsystem>> CourseCatalogSystem + initialize () + getCourseOfferings ()
+41
+
+[Table 2 on Page 10]
+
+
+Modeling Convention: Subsystems and Interfaces <<subsystem>> CourseCatalogSystem ICourseCatalogSystem + initialize () + getCourseOfferings () Interfaces start with an “I” ICou < r < s i e n C te a rf t a a c l e o > g > System Cour < s < e s C ub a s ta y l s o te g m S > y > stem + getCourseOfferings () + initialize () + initialize () + getCourseOfferings ()
+40
+
+
+Example: Subsystem Context: Billing System <<control>> CloseRegistrationController + // is registration open?() + // close registration() 0..1 + Biller 1 <<Interface>> IBillingSystem <<entity>> Student + submitBill(forStudent : Student, forTuition : double) <<subsystem>> BillingSystem + submitBill(forStudent : Student, forTuition : double)
+42
+
+[Table 3 on Page 10]
+Analysis Class CourseCatalogSystem BillingSystem All other analysis classes map directly to design classes | Design Element CourseCatalogSystem Subsystem BillingSystem Subsystem
+
+--- Page 11 ---
+43 44
+2. System/Device interface design Subsytem design
+2.1. Identify subsystem •Refer to 12-Subsystem Design (IBM).pdf
+2.2. Identify subsystem interfaces
+2.3. Subsystem design
+43 44
+45 46
+Question? Bài tập tuần
+•Tất cả các use case
+• Tìm các lớp phân tích cho từng use case
+• Gom nhóm thành các package, giải thích lý do
+• Vẽ biểu đồ lớp (không cần thuộc tính, hành vi) cho từng package,
+vẽ biểu đồ phụ thuộc giữa các package
+• Chú ý với các use case có người phụ trách cần có hành vi cho lớp phân
+tích
+• Vẽ biểu đồ dịch chuyển màn hình của các lớp GUI
+•Với 2 use case của cá nhân
+• Biểu đồ tương tác (1 trong 2 hoặc cả hai loại: Trình tự / Giao tiếp)
+• Biểu đồ lớp phân tích cho từng use case (có hành vi)
+• Thiết kế, đặc tả màn hình cho các lớp GUI
+45 46
+11
+
+[Table 1 on Page 11]
+43
+
+2. System/Device interface design 2.1. Identify subsystem 2.2. Identify subsystem interfaces 2.3. Subsystem design
+43
+45
+
+Question?
+45
+
+[Table 2 on Page 11]
+44
+
+Subsytem design •Refer to 12-Subsystem Design (IBM).pdf
+44
+46
+
+Bài tập tuần •Tất cả các use case • Tìm các lớp phân tích cho từng use case • Gom nhóm thành các package, giải thích lý do • Vẽ biểu đồ lớp (không cần thuộc tính, hành vi) cho từng package, vẽ biểu đồ phụ thuộc giữa các package • Chú ý với các use case có người phụ trách cần có hành vi cho lớp phân tích • Vẽ biểu đồ dịch chuyển màn hình của các lớp GUI •Với 2 use case của cá nhân • Biểu đồ tương tác (1 trong 2 hoặc cả hai loại: Trình tự / Giao tiếp) • Biểu đồ lớp phân tích cho từng use case (có hành vi) • Thiết kế, đặc tả màn hình cho các lớp GUI
+46

@@ -1,0 +1,884 @@
+=== Extracted from: SRS nhóm.pdf ===
+=== Total pages: 24 ===
+
+--- Page 1 ---
+Phân tích yêu cầu
+Nhóm18
+- Nguyễn Trí Dũng - UC2 — Xem yêu cầu nhập hàng BPBH
+- Đỗ Thành Hưng - UC17 — Tạo đơn hàng
+- Nguyễn Vũ Minh - UC20 - Xử lý đơn hàng hủy
+- Nguyễn Thiện Nam - UC29 — Xem đơn hàng Site
+- Lê Hoàng Tùng - UC16 — Xem đơn hàng BPĐHQT
+- Nguyễn Quang Thái - UC33 — Xác nhận đơn hàng BPQLK
+1 Biểu đồ use case
+1.1 Biểu đồ use case tổng quan
+Giải thích về các tác nhân
+- Bộ phận bán hàng (BPBH): Là bộ phận chịu trách nhiệm bán sản phẩm, và biết cần
+nhập mặt hàng nào với số lượng bao nhiêu. Có thể tạo và gửi yêu cầu nhập hàng đến
+Bộ phận đặt hàng quốc tế để đặt hàng. Ngoài ra, bộ phận này còn quản lý danh mục
+mặt hàng đang kinh doanh (thêm, sửa, ngừng kinh doanh).
+- Bộ phận đặt hàng quốc tế (BPĐHQT): Là bộ phận có nhiệm vụ tiếp nhận và xử lý
+yêu cầu nhập hàng từ Bộ phận bán hàng gửi đến, sau đó tạo và quản lý đơn hàng gửi
+đến các Site nhập khẩu. Ngoài ra, bộ phận này còn chịu trách nhiệm quản lý danh
+sách các Site liên kết với hệ thống (tạo mới, ngừng hợp tác).
+- Site nhập khẩu: Bao gồm các Site cung cấp dịch vụ nhập khẩu hàng hóa có liên kết
+với hệ thống. Site nhận đơn hàng từ Bộ phận đặt hàng quốc tế, thực hiện xác nhận
+đơn hàng và cập nhật các thông tin liên quan về hàng hóa, số lượng tồn kho về hệ
+thống.
+- Quản trị viên hệ thống: Là người hoặc nhóm người có nhiệm vụ quản lý thông tin tài
+khoản và quyền truy cập hệ thống của các tài khoản, bao gồm tạo mới, chỉnh sửa và
+ngừng hoạt động tài khoản người dùng. Quản trị viên không tham gia trực tiếp vào
+luồng nghiệp vụ đặt hàng.
+- Bộ phận quản lý kho (BPQLK): Là bộ phận có nhiệm vụ kiểm tra và xác nhận đơn
+hàng khi nhập vào kho hàng. Bộ phận này có trách nhiệm báo cáo, thống kê và cập
+nhật thông tin hàng hóa lên hệ thống quản lý kho sau khi hàng về đến nơi.
+- Hệ thống quản lý kho: Là hệ thống bên ngoài dùng để lưu trữ và quản lý thông tin,
+lịch sử về kho hàng. Hệ thống có thể tự động đồng bộ và thông báo thông tin vừa
+được cập nhật cho các bên liên quan mà không cần thao tác thủ công.
+Giải thích về các use case:
+Quản lý yêu cầu nhập hàng BPBH (Bộ phận bán hàng)
+UC1 — Xem danh sách yêu cầu nhập hàng BPBH: Hiển thị danh sách tất cả yêu cầu nhập
+hàng do BPBH tạo ra, có thể lọc theo trạng thái, ngày tạo, mặt hàng.
+
+--- Page 2 ---
+UC2 — Xem yêu cầu nhập hàng BPBH: Hiển thị chi tiết một yêu cầu nhập hàng cụ thể bao
+gồm thông tin mặt hàng, số lượng, trạng thái xử lý (chờ xử lý / đã duyệt / từ chối). Nếu đã
+được duyệt, hiển thị thêm thông tin vận chuyển bao gồm đơn vị vận chuyển, mã vận đơn và
+ngày dự kiến về hàng.
+UC3 — Tạo yêu cầu nhập hàng: Cho phép BPBH tạo mới yêu cầu nhập hàng bằng cách
+chọn mặt hàng, nhập số lượng cần nhập và gửi đến BPĐHQT.
+UC4 — Sửa yêu cầu nhập hàng: Cho phép chỉnh sửa thông tin yêu cầu nhập hàng khi yêu
+cầu chưa được BPĐHQT xử lý.
+UC5 — Xóa yêu cầu nhập hàng: Xóa vĩnh viễn yêu cầu nhập hàng khỏi hệ thống khi yêu cầu
+chưa được gửi hoặc chưa xử lý.
+UC6 — Hủy yêu cầu nhập hàng: Hủy yêu cầu nhập hàng đã gửi. Chỉ được phép hủy khi yêu
+cầu đang ở trạng thái chờ xử lý, chưa được BPĐHQT duyệt. Hệ thống kiểm tra ràng buộc
+trạng thái và thông báo đến BPĐHQT sau khi hủy thành công.
+Quản lý mặt hàng (Bộ phận bán hàng)
+UC7 — Xem danh sách mặt hàng: Hiển thị toàn bộ danh sách mặt hàng trong hệ thống, có
+thể lọc theo trạng thái kinh doanh, danh mục.
+UC8 — Xem mặt hàng: Hiển thị chi tiết thông tin một mặt hàng bao gồm mô tả, giá, tồn kho
+hiện tại, trạng thái kinh doanh và lịch sử nhập hàng.
+UC9 — Thêm mặt hàng: Cho phép tạo mới mặt hàng vào hệ thống với đầy đủ thông tin như
+tên, mô tả, đơn vị tính, giá.
+UC10 — Sửa mặt hàng: Cho phép chỉnh sửa thông tin mặt hàng đã có trong hệ thống.
+UC11 — Ngừng kinh doanh mặt hàng: Đánh dấu mặt hàng không còn được kinh doanh,
+kiểm tra các yêu cầu nhập hàng đang xử lý liên quan trước khi ngừng.
+Quản lý yêu cầu nhập hàng BPĐHQT (Bộ phận đặt hàng quốc tế)
+UC12 — Xem danh sách yêu cầu nhập hàng BPĐHQT: Hiển thị danh sách tất cả yêu cầu
+nhập hàng từ BPBH gửi lên, có thể lọc theo trạng thái, ngày gửi, mặt hàng.
+UC13 — Xem yêu cầu nhập hàng BPĐHQT: Hiển thị chi tiết yêu cầu nhập hàng từ BPBH
+kèm lịch sử phê duyệt và trạng thái xử lý hiện tại.
+UC14 — Xử lý yêu cầu nhập hàng: BPĐHQT xem danh sách yêu cầu nhập hàng sau đó xử lý
+và chọn các phương án phân bố tới các Site để tạo đơn hàng gửi cho các Site
+Quản lý đơn hàng BPĐHQT (Bộ phận đặt hàng quốc tế)
+
+--- Page 3 ---
+UC15 — Xem danh sách đơn hàng: Hiển thị danh sách tất cả đơn hàng do BPĐHQT tạo ra,
+có thể lọc theo trạng thái, Site, ngày tạo.
+UC16 — Xem đơn hàng BPĐHQT: Hiển thị chi tiết đơn hàng bao gồm thông tin mặt hàng, số
+lượng, danh sách các yêu cầu gốc được gom vào đơn, Site xử lý, trạng thái xác nhận từ Site,
+trạng thái nhập kho từ BPQLK và thông tin vận chuyển bao gồm đơn vị vận chuyển, mã vận
+đơn, ngày dự kiến giao hàng và trạng thái lô hàng đang trên đường.
+UC17 — Tạo đơn hàng: Cho phép BPĐHQT xem danh sách các yêu cầu đã duyệt đang chờ
+tạo đơn, chọn một hoặc nhiều yêu cầu để gom vào cùng một đơn hàng. Hệ thống tổng hợp
+danh sách mặt hàng và số lượng, nhân viên chọn Site cung cấp phù hợp và phương thức vận
+chuyển, sau đó xác nhận để hệ thống tạo đơn hàng và thông báo đến Site được chọn.
+UC18 — Sửa đơn hàng: Cho phép chỉnh sửa thông tin đơn hàng khi đơn hàng chưa được
+Site xác nhận.
+UC19 — Hủy đơn hàng: Hủy đơn hàng với giao diện cảnh báo trạng thái hiện tại, xác nhận
+nhiều bước, nhập lý do hủy và thông báo đến Site và các bên liên quan.
+UC20 — Xử lý đơn hàng hủy: Xử lý các nghiệp vụ phát sinh sau khi đơn hàng bị hủy, phân
+bố lại site cho các mặt hàng trong đơn bị hủy.
+Quản lý Site (Bộ phận đặt hàng quốc tế)
+UC21 — Xem danh sách Site: Hiển thị danh sách tất cả Site đang liên kết với hệ thống, có
+thể lọc theo trạng thái hoạt động, quốc gia.
+UC22 — Xem thông tin Site: Hiển thị chi tiết thông tin Site bao gồm thông tin liên hệ, lịch sử
+đơn hàng, trạng thái hoạt động và các thông số kết nối.
+UC23 — Tạo Site: Cho phép tạo mới Site vào hệ thống với đầy đủ thông tin, cấu hình liên kết
+và thiết lập thông số kết nối với đối tác nước ngoài.
+UC24 — Ngừng kinh doanh Site: Đánh dấu Site ngừng hoạt động, kiểm tra các đơn hàng
+đang xử lý với Site đó trước khi ngừng và thông báo cho các bên liên quan.
+(Site nhập khẩu — Use case đơn lẻ)
+UC25 — Cập nhật thông tin Site: Site tự cập nhật các thông số cơ bản của mình lên hệ
+thống như thông tin liên hệ, địa chỉ, thông tin vận chuyển.
+UC26 — Cập nhật mặt hàng kinh doanh: Site cập nhật danh sách mặt hàng mà Site có khả
+năng cung cấp lên hệ thống để BPĐHQT nắm được.
+UC27 — Cập nhật số lượng hàng trong kho: Site cập nhật số lượng tồn kho thực tế của
+từng mặt hàng lên hệ thống để phục vụ việc đặt hàng chính xác.
+Quản lý đơn hàng Site (Site nhập khẩu)
+
+--- Page 4 ---
+UC28 — Xem danh sách đơn hàng Site: Hiển thị danh sách các đơn hàng mà Site nhận
+được từ BPĐHQT, có thể lọc theo trạng thái xác nhận, ngày nhận.
+UC29 — Xem đơn hàng Site: Hiển thị chi tiết đơn hàng mà Site được giao, tổng hợp danh
+sách mặt hàng, số lượng yêu cầu, trạng thái xác nhận và thông tin vận chuyển mà Site cập
+nhật bao gồm đơn vị vận chuyển, mã vận đơn và ngày dự kiến giao hàng đến kho.
+UC30 — Xác nhận đơn hàng Site: Cho phép Site xác nhận hoặc từ chối đơn hàng kèm lý
+do, cập nhật số lượng thực tế có thể giao và đồng bộ trạng thái về hệ thống.
+Quản lý đơn hàng BPQLK (Bộ phận quản lý kho)
+UC31 — Xem danh sách đơn hàng BPQLK: Hiển thị danh sách các đơn hàng cần kiểm tra
+và xác nhận nhập kho, có thể lọc theo trạng thái, ngày dự kiến về hàng.
+UC32 — Xem đơn hàng BPQLK: Hiển thị chi tiết đơn hàng kèm thông tin hàng hóa, số lượng
+đặt, số lượng Site xác nhận giao và trạng thái nhập kho.
+UC33 — Xác nhận đơn hàng BPQLK: Cho phép đối chiếu số lượng thực nhận với đơn hàng,
+nhập số lượng thực tế, ghi chú sai lệch và xác nhận hoàn tất nhập kho, đồng bộ tồn kho sang
+hệ thống quản lý kho.
+(Hệ thống quản lý kho — Use case đơn lẻ)
+UC34 — Đồng bộ dữ liệu kho: Hệ thống tự động đồng bộ dữ liệu tồn kho, lịch sử xuất nhập
+giữa hệ thống hiện tại và hệ thống quản lý kho bên ngoài, xử lý conflict và thông báo cho các
+bên khi có thay đổi.
+Quản lý tài khoản người dùng (Quản trị hệ thống)
+UC35 — Xem danh sách tài khoản: Hiển thị danh sách tất cả tài khoản trong hệ thống, có
+thể lọc theo vai trò, trạng thái hoạt động.
+UC36 — Xem tài khoản: Hiển thị chi tiết thông tin tài khoản bao gồm thông tin cá nhân, vai
+trò, phân quyền và lịch sử hoạt động.
+UC37 — Tạo tài khoản: Cho phép tạo mới tài khoản người dùng với đầy đủ thông tin, gán vai
+trò và phân quyền truy cập phù hợp.
+UC38 — Sửa tài khoản: Cho phép chỉnh sửa thông tin tài khoản, thay đổi vai trò và cập nhật
+phân quyền truy cập.
+UC39 — Ngừng hoạt động tài khoản: Vô hiệu hóa tài khoản người dùng, xử lý các phiên
+đăng nhập đang hoạt động và kiểm tra các tác vụ đang thực hiện dở của tài khoản đó.
+
+--- Page 5 ---
+[No text found on this page]
+
+--- Page 6 ---
+1.2 Biểu đồ use case phân rã Quản lý yêu cầu nhập hàng BPBH
+
+--- Page 7 ---
+1.3 Biểu đồ use case phân rã Quản lý mặt hàng
+1.4 Biểu đồ use case phân rã Quản lý yêu cầu nhập hàng BHĐTQT
+
+--- Page 8 ---
+1.5 Biểu đồ use case phân rã Quản lý đơn hàng BPĐHQT
+Thêm tạo đơn hàng
+1.6 Biểu đồ use case phân rã Quản lý Site
+
+--- Page 9 ---
+1.7 Biểu đồ use case phân rã Quản lý đơn hàng Site
+
+--- Page 10 ---
+1.8 Biểu đồ use case phân rã Quản lý đơn hàng BPQLK
+1.9 Biểu đồ use case phân rã Quản lý tài khoản người dùng
+
+--- Page 11 ---
+2 Đặc tả Use case
+2.1 Use case “Xem yêu cầu nhập hàng BPBH”
+Mã Use case UC02 Tên Usecase Xem yêu cầu
+nhập hàng
+BPBH
+Tác nhân Bộ phận bán hàng
+Tiền điều kiện
+● Nhân viên BPBH đã đăng nhập vào hệ thống thành công.
+● Danh mục thông tin mặt hàng (mã, đơn vị) đã có sẵn trên hệ thống.
+Luồng sự kiện chính
+S Thực hiện bởi Hành động
+(Thành công)
+T
+T
+Nhấn vào mã yêu cầu
+1 Bộ phận bán
+hoặc nút "Xem chi tiết"
+hàng
+trên một bản ghi.
+
+[Table 1 on Page 11]
+Mã Use case | UC02 | Tên Usecase | Xem yêu cầu nhập hàng BPBH
+Tác nhân | Bộ phận bán hàng |  | 
+Tiền điều kiện | ● Nhân viên BPBH đã đăng nhập vào hệ thống thành công. ● Danh mục thông tin mặt hàng (mã, đơn vị) đã có sẵn trên hệ thống. |  | 
+Luồng sự kiện chính (Thành công) | S Thực hiện bởi Hành động T T Nhấn vào mã yêu cầu 1 Bộ phận bán hoặc nút "Xem chi tiết" hàng trên một bản ghi. |  | 
+
+[Table 2 on Page 11]
+S T T | Thực hiện bởi | Hành động | 
+1 | Nhấn vào mã yêu cầu Bộ phận bán hoặc nút "Xem chi tiết" hàng trên một bản ghi. |  | 
+
+--- Page 12 ---
+Mã Use case UC02 Tên Usecase Xem yêu cầu
+nhập hàng
+BPBH
+Gửi yêu cầu lấy dữ liệu chi
+2 Bộ phận bán
+tiết của mã yêu cầu đó về
+hàng
+phía Server/Database.
+Hệ thống Hiển thị màn hình chi tiết
+3
+bao gồm:
+- Thông tin chung: Mã yêu
+cầu, Ngày tạo, Người tạo,
+Trạng thái tổng quát.
+- Danh sách mặt hàng: Mã
+hàng, Tên hàng, Số lượng,
+Đơn vị, Ngày nhận mong
+muốn.
+Bộ phận bán Xem các thông tin chi tiết
+4
+hàng của từng mặt hàng và tình
+trạng phản hồi từ Bộ phận
+đặt hàng quốc tế (nếu có).
+Bộ phận bán Nhấn nút "Đóng" hoặc
+5
+hàng "Quay lại" để trở về danh
+sách.
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+2a. Hệ thống Nếu không tìm thấy dữ liệu chi tiết (lỗi
+đường truyền hoặc bản ghi bị xóa), hệ
+thống hiển thị thông báo lỗi và quay về
+trang danh sách.
+Hậu điều kiện ● Thông tin chi tiết của yêu cầu đặt hàng được hiển thị đầy đủ trên
+màn hình
+Activity diagram
+
+[Table 1 on Page 12]
+Mã Use case | UC02 | Tên Usecase | Xem yêu cầu nhập hàng BPBH
+ | Gửi yêu cầu lấy dữ liệu chi 2 Bộ phận bán tiết của mã yêu cầu đó về hàng phía Server/Database. Hệ thống Hiển thị màn hình chi tiết 3 bao gồm: - Thông tin chung: Mã yêu cầu, Ngày tạo, Người tạo, Trạng thái tổng quát. - Danh sách mặt hàng: Mã hàng, Tên hàng, Số lượng, Đơn vị, Ngày nhận mong muốn. Bộ phận bán Xem các thông tin chi tiết 4 hàng của từng mặt hàng và tình trạng phản hồi từ Bộ phận đặt hàng quốc tế (nếu có). Bộ phận bán Nhấn nút "Đóng" hoặc 5 hàng "Quay lại" để trở về danh sách. |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 2a. Hệ thống Nếu không tìm thấy dữ liệu chi tiết (lỗi đường truyền hoặc bản ghi bị xóa), hệ thống hiển thị thông báo lỗi và quay về trang danh sách. |  | 
+Hậu điều kiện | ● Thông tin chi tiết của yêu cầu đặt hàng được hiển thị đầy đủ trên màn hình |  | 
+
+[Table 2 on Page 12]
+2 | Gửi yêu cầu lấy dữ liệu chi Bộ phận bán tiết của mã yêu cầu đó về hàng phía Server/Database.
+3 | Hệ thống Hiển thị màn hình chi tiết bao gồm: - Thông tin chung: Mã yêu cầu, Ngày tạo, Người tạo, Trạng thái tổng quát. - Danh sách mặt hàng: Mã hàng, Tên hàng, Số lượng, Đơn vị, Ngày nhận mong muốn.
+4 | Bộ phận bán Xem các thông tin chi tiết hàng của từng mặt hàng và tình trạng phản hồi từ Bộ phận đặt hàng quốc tế (nếu có).
+5 | Bộ phận bán Nhấn nút "Đóng" hoặc hàng "Quay lại" để trở về danh sách.
+
+[Table 3 on Page 12]
+STT | Thực hiện bởi | Hành động
+2a. | Hệ thống Nếu không tìm thấy dữ liệu chi tiết (lỗi đường truyền hoặc bản ghi bị xóa), hệ thống hiển thị thông báo lỗi và quay về trang danh sách. | 
+
+--- Page 13 ---
+Sequence diagram
+
+--- Page 14 ---
+Communication diagram
+Class diagram
+
+--- Page 15 ---
+2.2 Use case “Tạo đơn hàng”
+Mã Use case UC17 Tên Usecase Tạo đơn hàng
+Tác nhân ● Bộ phận đặt hàng quốc tế
+● Hệ thống
+Tiền điều kiện ● Người dùng đã đăng nhập hệ thống
+● Người dùng có quyền xử lý yêu cầu đặt hàng
+Luồng sự kiện chính
+ST Thực hiện bởi Hành động
+(Thành công)
+T
+Người dùng Truy cập chức năng “Quản lý yêu cầu đặt
+1
+hàng quốc tế”
+Hệ thống Hiển thị danh sách yêu cầu
+2
+Người dùng Ấn nút tạo yêu cầu mới
+3
+Hệ thống Hiển thị trang tạo yêu cầu đặt hàng
+4
+Người dùng Ấn nút thêm mặt hàng
+5
+Hệ thống Hiển thị catalog mặt hàng
+6
+Người dùng Chọn mặt hàng, số lượng
+7
+Người dùng Ấn nút tự động phân bổ
+8
+Hệ thống Phân bổ kế hoạch đặt hàng và tạo ra nhiều
+9
+yêu cầu nếu phải nhập từ nhiều site
+
+[Table 1 on Page 15]
+Mã Use case | UC17 | Tên Usecase | Tạo đơn hàng
+Tác nhân | ● Bộ phận đặt hàng quốc tế ● Hệ thống |  | 
+Tiền điều kiện | ● Người dùng đã đăng nhập hệ thống ● Người dùng có quyền xử lý yêu cầu đặt hàng |  | 
+Luồng sự kiện chính (Thành công) | ST Thực hiện bởi Hành động T Người dùng Truy cập chức năng “Quản lý yêu cầu đặt 1 hàng quốc tế” Hệ thống Hiển thị danh sách yêu cầu 2 Người dùng Ấn nút tạo yêu cầu mới 3 Hệ thống Hiển thị trang tạo yêu cầu đặt hàng 4 Người dùng Ấn nút thêm mặt hàng 5 Hệ thống Hiển thị catalog mặt hàng 6 Người dùng Chọn mặt hàng, số lượng 7 Người dùng Ấn nút tự động phân bổ 8 Hệ thống Phân bổ kế hoạch đặt hàng và tạo ra nhiều 9 yêu cầu nếu phải nhập từ nhiều site |  | 
+
+[Table 2 on Page 15]
+ST T | Thực hiện bởi | Hành động | 
+1 | Người dùng Truy cập chức năng “Quản lý yêu cầu đặt hàng quốc tế” |  | 
+2 | Hệ thống Hiển thị danh sách yêu cầu |  | 
+3 | Người dùng Ấn nút tạo yêu cầu mới |  | 
+4 | Hệ thống Hiển thị trang tạo yêu cầu đặt hàng |  | 
+5 | Người dùng Ấn nút thêm mặt hàng |  | 
+6 | Hệ thống Hiển thị catalog mặt hàng |  | 
+7 | Người dùng Chọn mặt hàng, số lượng |  | 
+8 | Người dùng Ấn nút tự động phân bổ |  | 
+9 | Hệ thống Phân bổ kế hoạch đặt hàng và tạo ra nhiều yêu cầu nếu phải nhập từ nhiều site |  | 
+
+--- Page 16 ---
+Mã Use case UC17 Tên Usecase Tạo đơn hàng
+Hệ thống Hiển thị phương án đặt hàng
+10
+Người dùng Thay đổi thủ công nếu cần nhập hàng từ site
+11
+khác
+Người dùng Chọn xác nhận yêu hàng để gửi
+12
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+9a1 Hệ thống Không tìm thấy site nào còn mặt hàng
+9a1 Hệ thống Hiển thị thông báo không site nào còn mặt
+hàng
+9a2 Hệ thống Các site không đủ số lượng hàng
+9a2 Hệ thống Hệ thống tạo các yêu cầu có thể và thông
+báo người dùng xác nhận hoặc giảm số
+lượng nhập và phân bổ lại
+Hậu điều kiện Thành công:
+Danh sách yêu cầu được cập nhật
+Thông tin được lưu vào hệ thống
+Ghi nhận lịch sử thay đổi
+Thất bại:
+Trạng thái không thay đổi
+Hiển thị thông báo lỗi
+2.3 Use case “Xử lý đơn hàng hủy”
+Mã Use case UC20 Tên Usecase Xử lý đơn hàng hủy
+Tác nhân Bộ phận đặt hàng quốc tế
+Tiền điều kiện - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy”
+Luồng sự kiện chính
+STT Thực hiện bởi Hành động
+(Thành công)
+Bộ phận đặt Truy cập danh sách đơn hàng
+1.
+hàng quốc tế
+Hệ thống Hiển thị danh sách đơn hàng
+2.
+Bộ phận đặt Lọc các đơn có trạng thái “Đã hủy”
+3.
+hàng quốc tế
+Hệ thống Lọc và hiển thị danh sách đơn đã hủy
+4.
+Bộ phận đặt Nhấn vào xem chi tiết đơn
+5.
+hàng quốc tế
+Hệ thống Xác định mã đơn hàng được chọn
+6.
+Hệ thống Lấy chi tiết đơn hàng
+7.
+Hệ thống Hiển thị chi tiết đơn hàng gồm các thông tin
+8.
+sơ bộ (Mã đơn, Site cũ, Tổng tiền)
+
+[Table 1 on Page 16]
+Mã Use case | UC17 | Tên Usecase | Tạo đơn hàng
+ | Hệ thống Hiển thị phương án đặt hàng 10 Người dùng Thay đổi thủ công nếu cần nhập hàng từ site 11 khác Người dùng Chọn xác nhận yêu hàng để gửi 12 |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 9a1 Hệ thống Không tìm thấy site nào còn mặt hàng 9a1 Hệ thống Hiển thị thông báo không site nào còn mặt hàng 9a2 Hệ thống Các site không đủ số lượng hàng 9a2 Hệ thống Hệ thống tạo các yêu cầu có thể và thông báo người dùng xác nhận hoặc giảm số lượng nhập và phân bổ lại |  | 
+Hậu điều kiện | Thành công: Danh sách yêu cầu được cập nhật Thông tin được lưu vào hệ thống Ghi nhận lịch sử thay đổi Thất bại: Trạng thái không thay đổi Hiển thị thông báo lỗi |  | 
+
+[Table 2 on Page 16]
+10 | Hệ thống Hiển thị phương án đặt hàng
+11 | Người dùng Thay đổi thủ công nếu cần nhập hàng từ site khác
+12 | Người dùng Chọn xác nhận yêu hàng để gửi
+
+[Table 3 on Page 16]
+STT | Thực hiện bởi | Hành động
+9a1 | Hệ thống Không tìm thấy site nào còn mặt hàng | 
+9a1 | Hệ thống Hiển thị thông báo không site nào còn mặt hàng | 
+9a2 | Hệ thống Các site không đủ số lượng hàng | 
+9a2 | Hệ thống Hệ thống tạo các yêu cầu có thể và thông báo người dùng xác nhận hoặc giảm số lượng nhập và phân bổ lại | 
+
+[Table 4 on Page 16]
+Mã Use case | UC20 | Tên Usecase | Xử lý đơn hàng hủy
+Tác nhân | Bộ phận đặt hàng quốc tế |  | 
+Tiền điều kiện | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế - Đã tồn tại đơn hàng có trạng thái “Đã hủy” |  | 
+Luồng sự kiện chính (Thành công) | STT Thực hiện bởi Hành động Bộ phận đặt Truy cập danh sách đơn hàng 1. hàng quốc tế Hệ thống Hiển thị danh sách đơn hàng 2. Bộ phận đặt Lọc các đơn có trạng thái “Đã hủy” 3. hàng quốc tế Hệ thống Lọc và hiển thị danh sách đơn đã hủy 4. Bộ phận đặt Nhấn vào xem chi tiết đơn 5. hàng quốc tế Hệ thống Xác định mã đơn hàng được chọn 6. Hệ thống Lấy chi tiết đơn hàng 7. Hệ thống Hiển thị chi tiết đơn hàng gồm các thông tin 8. sơ bộ (Mã đơn, Site cũ, Tổng tiền) |  | 
+
+[Table 5 on Page 16]
+STT | Thực hiện bởi | Hành động
+1. | Bộ phận đặt Truy cập danh sách đơn hàng hàng quốc tế | 
+2. | Hệ thống Hiển thị danh sách đơn hàng | 
+3. | Bộ phận đặt Lọc các đơn có trạng thái “Đã hủy” hàng quốc tế | 
+4. | Hệ thống Lọc và hiển thị danh sách đơn đã hủy | 
+5. | Bộ phận đặt Nhấn vào xem chi tiết đơn hàng quốc tế | 
+6. | Hệ thống Xác định mã đơn hàng được chọn | 
+7. | Hệ thống Lấy chi tiết đơn hàng | 
+8. | Hệ thống Hiển thị chi tiết đơn hàng gồm các thông tin sơ bộ (Mã đơn, Site cũ, Tổng tiền) | 
+
+--- Page 17 ---
+Mã Use case UC20 Tên Usecase Xử lý đơn hàng hủy
+Tác nhân Bộ phận đặt hàng quốc tế
+Tiền điều kiện - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy”
+Bộ phận đặt Nhấn nút “Reallocate”
+9.
+hàng quốc tế
+Hệ thống Hiển thị giao diện tạo đơn hàng với mặt hàng
+10.
+và số lượng từ đơn đã hủy
+Bộ phận đặt Nhập ngày nhận hàng mong muốn
+11.
+hàng quốc tế
+Bộ phận đặt Nhấn nút “Auto-Allocate”
+12.
+hàng quốc tế
+Hệ thống Tìm kiếm Site phù hợp
+13.
+Hệ thống Kiểm tra tồn kho các Site
+14.
+Hệ thống Tính toán thời gian vận chuyển từ các Site
+15.
+đến kho đích dựa trên phương thức vận
+chuyển (Air/Sea/Rail)
+Hệ thống Tách đơn hàng ban đầu thành các đơn con
+16.
+tương ứng với từng Site tối ưu nhất
+Bộ phận đặt Kiểm tra các đơn được đề xuất và nhấn nút
+17.
+hàng quốc tế “Save All”
+Hệ thống Tạo bản ghi các đơn hàng mới trong trạng
+18.
+thái Pending
+Hệ thống Gửi đơn hàng đến các Site
+19.
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+12a. Bộ phận đặt Nhấn “Add Items”
+hàng quốc tế
+12b. Hệ thống Hiển thị danh mục các mặt hàng
+12c. Bộ phận đặt Chọn mặt hàng muốn thêm, nhập số
+hàng quốc tế lượng mong muốn và ấn “Add”
+12d. Hệ thống Hệ thống cập nhật danh sách hàng cần
+phân bổ
+13a. Hệ thống Thông báo không có Site nào có mặt
+hàng yêu cầu
+17a1, Bộ phận đặt Thay đổi Site, Phương thức vận chuyển,
+hàng quốc tế số lượng của từng mặt hàng trong đơn
+hàng mới
+17a2. Hệ thống Tính lại tổng tiền và thời gian dự kiến ứng
+với các thay đổi
+17b1. Bộ phận đặt Nhấn biểu tượng thùng rác (Delete) để
+hàng quốc tế hủy một đơn hàng con hoặc một mặt
+hàng cụ thể trong đơn mà họ quyết định
+không đặt lại nữa
+17b2. Hệ thống Loại bỏ mục đó ra khỏi danh sách hiện
+tại và cập nhật các thông tin tương ứng
+
+[Table 1 on Page 17]
+Mã Use case | UC20 | Tên Usecase | Xử lý đơn hàng hủy
+Tác nhân | Bộ phận đặt hàng quốc tế |  | 
+Tiền điều kiện | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế - Đã tồn tại đơn hàng có trạng thái “Đã hủy” |  | 
+ | Bộ phận đặt Nhấn nút “Reallocate” 9. hàng quốc tế Hệ thống Hiển thị giao diện tạo đơn hàng với mặt hàng 10. và số lượng từ đơn đã hủy Bộ phận đặt Nhập ngày nhận hàng mong muốn 11. hàng quốc tế Bộ phận đặt Nhấn nút “Auto-Allocate” 12. hàng quốc tế Hệ thống Tìm kiếm Site phù hợp 13. Hệ thống Kiểm tra tồn kho các Site 14. Hệ thống Tính toán thời gian vận chuyển từ các Site 15. đến kho đích dựa trên phương thức vận chuyển (Air/Sea/Rail) Hệ thống Tách đơn hàng ban đầu thành các đơn con 16. tương ứng với từng Site tối ưu nhất Bộ phận đặt Kiểm tra các đơn được đề xuất và nhấn nút 17. hàng quốc tế “Save All” Hệ thống Tạo bản ghi các đơn hàng mới trong trạng 18. thái Pending Hệ thống Gửi đơn hàng đến các Site 19. |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 12a. Bộ phận đặt Nhấn “Add Items” hàng quốc tế 12b. Hệ thống Hiển thị danh mục các mặt hàng 12c. Bộ phận đặt Chọn mặt hàng muốn thêm, nhập số hàng quốc tế lượng mong muốn và ấn “Add” 12d. Hệ thống Hệ thống cập nhật danh sách hàng cần phân bổ 13a. Hệ thống Thông báo không có Site nào có mặt hàng yêu cầu 17a1, Bộ phận đặt Thay đổi Site, Phương thức vận chuyển, hàng quốc tế số lượng của từng mặt hàng trong đơn hàng mới 17a2. Hệ thống Tính lại tổng tiền và thời gian dự kiến ứng với các thay đổi 17b1. Bộ phận đặt Nhấn biểu tượng thùng rác (Delete) để hàng quốc tế hủy một đơn hàng con hoặc một mặt hàng cụ thể trong đơn mà họ quyết định không đặt lại nữa 17b2. Hệ thống Loại bỏ mục đó ra khỏi danh sách hiện tại và cập nhật các thông tin tương ứng |  | 
+
+[Table 2 on Page 17]
+9. | Bộ phận đặt Nhấn nút “Reallocate” hàng quốc tế
+10. | Hệ thống Hiển thị giao diện tạo đơn hàng với mặt hàng và số lượng từ đơn đã hủy
+11. | Bộ phận đặt Nhập ngày nhận hàng mong muốn hàng quốc tế
+12. | Bộ phận đặt Nhấn nút “Auto-Allocate” hàng quốc tế
+13. | Hệ thống Tìm kiếm Site phù hợp
+14. | Hệ thống Kiểm tra tồn kho các Site
+15. | Hệ thống Tính toán thời gian vận chuyển từ các Site đến kho đích dựa trên phương thức vận chuyển (Air/Sea/Rail)
+16. | Hệ thống Tách đơn hàng ban đầu thành các đơn con tương ứng với từng Site tối ưu nhất
+17. | Bộ phận đặt Kiểm tra các đơn được đề xuất và nhấn nút hàng quốc tế “Save All”
+18. | Hệ thống Tạo bản ghi các đơn hàng mới trong trạng thái Pending
+19. | Hệ thống Gửi đơn hàng đến các Site
+
+[Table 3 on Page 17]
+STT | Thực hiện bởi | Hành động
+12a. | Bộ phận đặt Nhấn “Add Items” hàng quốc tế | 
+12b. | Hệ thống Hiển thị danh mục các mặt hàng | 
+12c. | Bộ phận đặt Chọn mặt hàng muốn thêm, nhập số hàng quốc tế lượng mong muốn và ấn “Add” | 
+12d. | Hệ thống Hệ thống cập nhật danh sách hàng cần phân bổ | 
+13a. | Hệ thống Thông báo không có Site nào có mặt hàng yêu cầu | 
+17a1, | Bộ phận đặt Thay đổi Site, Phương thức vận chuyển, hàng quốc tế số lượng của từng mặt hàng trong đơn hàng mới | 
+17a2. | Hệ thống Tính lại tổng tiền và thời gian dự kiến ứng với các thay đổi | 
+17b1. | Bộ phận đặt Nhấn biểu tượng thùng rác (Delete) để hàng quốc tế hủy một đơn hàng con hoặc một mặt hàng cụ thể trong đơn mà họ quyết định không đặt lại nữa | 
+17b2. | Hệ thống Loại bỏ mục đó ra khỏi danh sách hiện tại và cập nhật các thông tin tương ứng | 
+
+--- Page 18 ---
+Mã Use case UC20 Tên Usecase Xử lý đơn hàng hủy
+Tác nhân Bộ phận đặt hàng quốc tế
+Tiền điều kiện - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy”
+Hậu điều kiện
+* Dữ liệu đầu vào của thông tin cá nhân gồm các trường dữ liệu sau:
+Trường Bắt
+STT Mô tả Điều kiện hợp lệ Ví dụ
+dữ liệu buộc?
+1.
+2.
+3.
+4.
+2.4 Use case “Xem đơn hàng BPĐHQT”
+Mã Use case UC16 Tên Usecase Xem đơn hàng BPĐHQT
+Tác nhân Bộ phận đặt hàng quốc tế
+Tiền điều kiện Người dùng đã đăng nhập vào hệ thống; mặt hàng tồn tại trong danh mục
+mặt hàng
+Luồng sự kiện chính
+STT Thực hiện bởi Hành động
+(Thành công)
+Bộ phận đặt Chọn chức năng xem danh sách mặt hàng
+1.
+hàng quốc tế theo Site hoặc tìm kiếm mặt hàng
+Hệ thống Hiển thị danh sách các mặt hàng tương ứng
+2.
+Bộ phận đặt Chọn một mặt hàng cụ thể cần xem chi tiết
+3.
+hàng quốc tế
+Hệ thống Truy xuất thông tin chi tiết của mặt hàng từ cơ
+4.
+sở dữ liệu
+Hệ thống Hiển thị đầy đủ thông tin chi tiết của mặt hàng
+5.
+bao gồm: mã mặt hàng, tên, mô tả, số lượng
+tồn kho, danh sách Site cung cấp, giá (nếu
+có), phương thức vận chuyển
+Bộ phận đặt Xem và kiểm tra thông tin mặt hàng
+6.
+hàng quốc tế
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+2a. Hệ thống Thông báo: Không có mặt hàng nào phù hợp
+nếu danh sách trống
+3a. Bộ phận đặt Chọn sai hoặc không chọn mặt hàng
+hàng quốc tế
+4a. Hệ thống Thông báo lỗi: Không tìm thấy thông tin chi
+tiết của mặt hàng
+5a. Hệ thống Hiển thị thông tin không đầy đủ nếu một số
+
+[Table 1 on Page 18]
+Mã Use case | UC20 | Tên Usecase | Xử lý đơn hàng hủy
+Tác nhân | Bộ phận đặt hàng quốc tế |  | 
+Tiền điều kiện | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế - Đã tồn tại đơn hàng có trạng thái “Đã hủy” |  | 
+Hậu điều kiện |  |  | 
+
+[Table 2 on Page 18]
+STT | Trường dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1. |  |  |  |  | 
+2. |  |  |  |  | 
+3. |  |  |  |  | 
+4. |  |  |  |  | 
+
+[Table 3 on Page 18]
+Mã Use case | UC16 | Tên Usecase | Xem đơn hàng BPĐHQT
+Tác nhân | Bộ phận đặt hàng quốc tế |  | 
+Tiền điều kiện | Người dùng đã đăng nhập vào hệ thống; mặt hàng tồn tại trong danh mục mặt hàng |  | 
+Luồng sự kiện chính (Thành công) | STT Thực hiện bởi Hành động Bộ phận đặt Chọn chức năng xem danh sách mặt hàng 1. hàng quốc tế theo Site hoặc tìm kiếm mặt hàng Hệ thống Hiển thị danh sách các mặt hàng tương ứng 2. Bộ phận đặt Chọn một mặt hàng cụ thể cần xem chi tiết 3. hàng quốc tế Hệ thống Truy xuất thông tin chi tiết của mặt hàng từ cơ 4. sở dữ liệu Hệ thống Hiển thị đầy đủ thông tin chi tiết của mặt hàng 5. bao gồm: mã mặt hàng, tên, mô tả, số lượng tồn kho, danh sách Site cung cấp, giá (nếu có), phương thức vận chuyển Bộ phận đặt Xem và kiểm tra thông tin mặt hàng 6. hàng quốc tế |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 2a. Hệ thống Thông báo: Không có mặt hàng nào phù hợp nếu danh sách trống 3a. Bộ phận đặt Chọn sai hoặc không chọn mặt hàng hàng quốc tế 4a. Hệ thống Thông báo lỗi: Không tìm thấy thông tin chi tiết của mặt hàng 5a. Hệ thống Hiển thị thông tin không đầy đủ nếu một số |  | 
+
+[Table 4 on Page 18]
+STT | Thực hiện bởi | Hành động
+1. | Bộ phận đặt Chọn chức năng xem danh sách mặt hàng hàng quốc tế theo Site hoặc tìm kiếm mặt hàng | 
+2. | Hệ thống Hiển thị danh sách các mặt hàng tương ứng | 
+3. | Bộ phận đặt Chọn một mặt hàng cụ thể cần xem chi tiết hàng quốc tế | 
+4. | Hệ thống Truy xuất thông tin chi tiết của mặt hàng từ cơ sở dữ liệu | 
+5. | Hệ thống Hiển thị đầy đủ thông tin chi tiết của mặt hàng bao gồm: mã mặt hàng, tên, mô tả, số lượng tồn kho, danh sách Site cung cấp, giá (nếu có), phương thức vận chuyển | 
+6. | Bộ phận đặt Xem và kiểm tra thông tin mặt hàng hàng quốc tế | 
+
+[Table 5 on Page 18]
+STT | Thực hiện bởi | Hành động
+2a. | Hệ thống Thông báo: Không có mặt hàng nào phù hợp nếu danh sách trống | 
+3a. | Bộ phận đặt Chọn sai hoặc không chọn mặt hàng hàng quốc tế | 
+4a. | Hệ thống Thông báo lỗi: Không tìm thấy thông tin chi tiết của mặt hàng | 
+5a. | Hệ thống Hiển thị thông tin không đầy đủ nếu một số | 
+
+--- Page 19 ---
+Mã Use case UC16 Tên Usecase Xem đơn hàng BPĐHQT
+dữ liệu chưa được cập nhật
+Hậu điều kiện Hệ thống hiển thị thông tin chi tiết của mặt hàng được chọn để người dùng
+tham khảo; không làm thay đổi dữ liệu trong hệ thống
+* Dữ liệu đầu vào của thông tin cá nhân gồm các trường dữ liệu sau:
+Trường Bắt
+STT Mô tả Điều kiện hợp lệ Ví dụ
+dữ liệu buộc?
+1. Mã mặt Mã định danh của Có Tồn tại trong hệ thống MH001
+hàng mặt hàng cần xem
+2. Tên mặt Tên của mặt hàng Không Có thể dùng để tìm Máy in HP
+hàng kiếm
+3. Site Site cung cấp mặt Không Tồn tại trong danh sách Site JP01
+hàng Site
+4. Từ khóa tìm Từ khóa hỗ trợ tìm Không Không vượt quá giới hạn Máy in
+kiếm kiếm mặt hàng ký tự
+5. Bộ lọc Điều kiện lọc danh Không Hợp lệ theo hệ thống Theo Site
+sách mặt hàng
+2.5 Use case “Xem đơn hàng Site”
+Mã Use case UC29 Tên Usecase Xem đơn hàng Site
+Tác nhân Bộ phận đặt hàng quốc tế
+Tiền điều kiện Khi có nhu cầu nhập hàng
+Luồng sự kiện chính
+STT Thực hiện bởi Hành động
+(Thành công)
+Bộ phận bán Chọn chức năng Tạo yêu cầu nhập hàng
+1
+hàng
+Hệ thống hiển thị giao diện nhập yêu cầu
+2
+Bộ phận bán nhập danh sách mặt hàng
+3
+hàng
+Bộ phận bán yêu cầu nhập hàng
+4
+hàng
+Hệ thống kiểm tra xem khách đã nhập các trường bắt
+5
+buộc nhập hay chưa
+Hệ thống kiểm tra dữ liệu hợp lệ (số lượng > 0, ngày hợp
+6
+lệ,...)
+Hệ thống lưu yêu cầu nhập hàng
+7
+Hệ thống chuyển yêu cầu đến Bộ phận đặt hàng quốc
+8
+tế
+Bộ phận đặt nhận yêu cầu nhập hàng
+9
+hàng quốc tế
+
+[Table 1 on Page 19]
+Mã Use case | UC16 | Tên Usecase | Xem đơn hàng BPĐHQT
+ | dữ liệu chưa được cập nhật |  | 
+Hậu điều kiện | Hệ thống hiển thị thông tin chi tiết của mặt hàng được chọn để người dùng tham khảo; không làm thay đổi dữ liệu trong hệ thống |  | 
+
+[Table 2 on Page 19]
+ | dữ liệu chưa được cập nhật
+
+[Table 3 on Page 19]
+STT | Trường dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1. | Mã mặt hàng | Mã định danh của mặt hàng cần xem | Có | Tồn tại trong hệ thống | MH001
+2. | Tên mặt hàng | Tên của mặt hàng | Không | Có thể dùng để tìm kiếm | Máy in HP
+3. | Site | Site cung cấp mặt hàng | Không | Tồn tại trong danh sách Site | Site JP01
+4. | Từ khóa tìm kiếm | Từ khóa hỗ trợ tìm kiếm mặt hàng | Không | Không vượt quá giới hạn ký tự | Máy in
+5. | Bộ lọc | Điều kiện lọc danh sách mặt hàng | Không | Hợp lệ theo hệ thống | Theo Site
+
+[Table 4 on Page 19]
+Mã Use case | UC29 | Tên Usecase | Xem đơn hàng Site
+Tác nhân | Bộ phận đặt hàng quốc tế |  | 
+Tiền điều kiện | Khi có nhu cầu nhập hàng |  | 
+Luồng sự kiện chính (Thành công) | STT Thực hiện bởi Hành động Bộ phận bán Chọn chức năng Tạo yêu cầu nhập hàng 1 hàng Hệ thống hiển thị giao diện nhập yêu cầu 2 Bộ phận bán nhập danh sách mặt hàng 3 hàng Bộ phận bán yêu cầu nhập hàng 4 hàng Hệ thống kiểm tra xem khách đã nhập các trường bắt 5 buộc nhập hay chưa Hệ thống kiểm tra dữ liệu hợp lệ (số lượng > 0, ngày hợp 6 lệ,...) Hệ thống lưu yêu cầu nhập hàng 7 Hệ thống chuyển yêu cầu đến Bộ phận đặt hàng quốc 8 tế Bộ phận đặt nhận yêu cầu nhập hàng 9 hàng quốc tế |  | 
+
+[Table 5 on Page 19]
+STT | Thực hiện bởi | Hành động
+1 | Bộ phận bán Chọn chức năng Tạo yêu cầu nhập hàng hàng | 
+2 | Hệ thống hiển thị giao diện nhập yêu cầu | 
+3 | Bộ phận bán nhập danh sách mặt hàng hàng | 
+4 | Bộ phận bán yêu cầu nhập hàng hàng | 
+5 | Hệ thống kiểm tra xem khách đã nhập các trường bắt buộc nhập hay chưa | 
+6 | Hệ thống kiểm tra dữ liệu hợp lệ (số lượng > 0, ngày hợp lệ,...) | 
+7 | Hệ thống lưu yêu cầu nhập hàng | 
+8 | Hệ thống chuyển yêu cầu đến Bộ phận đặt hàng quốc tế | 
+9 | Bộ phận đặt nhận yêu cầu nhập hàng hàng quốc tế | 
+
+--- Page 20 ---
+Mã Use case UC29 Tên Usecase Xem đơn hàng Site
+Hệ thống thông báo tạo yêu cầu thành công
+10
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+5a Hệ thống thông báo lỗi: thiếu thông tin bắt buộc
+6a. Hệ thống thông báo lỗi: dữ liệu không hợp lệ (số lượng
+≤ 0, sai định dạng ngày,...)
+7a. Hệ thống thông báo lỗi: không thể lưu yêu cầu
+9a Hệ thống không nhận được yêu cầu → hệ thống thông
+báo lỗi gửi
+Hậu điều kiện Không
+Trường Bắt
+STT Mô tả Điều kiện hợp lệ Ví dụ
+dữ liệu buộc?
+1. Mã hàng Mã định danh của Có Tồn tại trong hệ thống MH001
+(Merchandi mặt hàng cần nhập
+se code)
+2. Số lượng Số lượng mặt hàng Có Là số nguyên > 0 100
+(Quantity cần đặt
+ordered)
+3. Đơn vị Đơn vị tính của mặt Có Thuộc danh sách đơn vị Cái, Hộp
+(Unit) hàng hợp lệ
+4. Năm (Year) Năm nhận hàng Có ≥ năm hiện tại 2026
+mong muốn
+5. Tháng Tháng nhận hàng Có 1 – 12 04
+(Month) mong muốn
+6. Ngày (Day) Ngày nhận hàng Có Hợp lệ theo tháng/năm 15
+mong muốn (vd: không có 30/2)
+2.6 Usecase “Xác nhận đơn hàng BPQLK“
+Mã Use case UC33 Tên Usecase Xác nhận đơn hàng
+BPQLK
+Tác nhân Bộ phận quản lý kho
+Tiền điều kiện Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho.
+Luồng sự kiện chính
+STT Thực hiện bởi Hành động
+(Thành công)
+Bộ phận quản Chọn chức năng xem danh sách đơn hàng bộ
+1.
+lý kho phận quản lý kho
+Hệ thống Hiển thị danh sách các đơn hàng cần kiểm tra
+2.
+nhập kho
+Bộ phận quản Chọn đơn hàng cần xác nhận
+3.
+lý kho
+Hệ thống Hiển thị chi tiết đơn hàng gồm mã đơn, danh
+4.
+sách mặt hàng, số lượng đặt, số lượng Site xác
+nhận giao, trạng thái nhập kho
+
+[Table 1 on Page 20]
+Mã Use case | UC29 | Tên Usecase | Xem đơn hàng Site
+ | Hệ thống thông báo tạo yêu cầu thành công 10 |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 5a Hệ thống thông báo lỗi: thiếu thông tin bắt buộc 6a. Hệ thống thông báo lỗi: dữ liệu không hợp lệ (số lượng ≤ 0, sai định dạng ngày,...) 7a. Hệ thống thông báo lỗi: không thể lưu yêu cầu 9a Hệ thống không nhận được yêu cầu → hệ thống thông báo lỗi gửi |  | 
+Hậu điều kiện | Không |  | 
+
+[Table 2 on Page 20]
+10 | Hệ thống thông báo tạo yêu cầu thành công
+
+[Table 3 on Page 20]
+STT | Thực hiện bởi | Hành động
+5a | Hệ thống thông báo lỗi: thiếu thông tin bắt buộc | 
+6a. | Hệ thống thông báo lỗi: dữ liệu không hợp lệ (số lượng ≤ 0, sai định dạng ngày,...) | 
+7a. | Hệ thống thông báo lỗi: không thể lưu yêu cầu | 
+9a | Hệ thống không nhận được yêu cầu → hệ thống thông báo lỗi gửi | 
+ |  | 
+
+[Table 4 on Page 20]
+STT | Trường dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1. | Mã hàng (Merchandi se code) | Mã định danh của mặt hàng cần nhập | Có | Tồn tại trong hệ thống | MH001
+2. | Số lượng (Quantity ordered) | Số lượng mặt hàng cần đặt | Có | Là số nguyên > 0 | 100
+3. | Đơn vị (Unit) | Đơn vị tính của mặt hàng | Có | Thuộc danh sách đơn vị hợp lệ | Cái, Hộp
+4. | Năm (Year) | Năm nhận hàng mong muốn | Có | ≥ năm hiện tại | 2026
+5. | Tháng (Month) | Tháng nhận hàng mong muốn | Có | 1 – 12 | 04
+6. | Ngày (Day) | Ngày nhận hàng mong muốn | Có | Hợp lệ theo tháng/năm (vd: không có 30/2) | 15
+
+[Table 5 on Page 20]
+Mã Use case | UC33 | Tên Usecase | Xác nhận đơn hàng BPQLK
+Tác nhân | Bộ phận quản lý kho |  | 
+Tiền điều kiện | Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho. |  | 
+Luồng sự kiện chính (Thành công) | STT Thực hiện bởi Hành động Bộ phận quản Chọn chức năng xem danh sách đơn hàng bộ 1. lý kho phận quản lý kho Hệ thống Hiển thị danh sách các đơn hàng cần kiểm tra 2. nhập kho Bộ phận quản Chọn đơn hàng cần xác nhận 3. lý kho Hệ thống Hiển thị chi tiết đơn hàng gồm mã đơn, danh 4. sách mặt hàng, số lượng đặt, số lượng Site xác nhận giao, trạng thái nhập kho |  | 
+
+[Table 6 on Page 20]
+STT | Thực hiện bởi | Hành động
+1. | Bộ phận quản Chọn chức năng xem danh sách đơn hàng bộ lý kho phận quản lý kho | 
+2. | Hệ thống Hiển thị danh sách các đơn hàng cần kiểm tra nhập kho | 
+3. | Bộ phận quản Chọn đơn hàng cần xác nhận lý kho | 
+4. | Hệ thống Hiển thị chi tiết đơn hàng gồm mã đơn, danh sách mặt hàng, số lượng đặt, số lượng Site xác nhận giao, trạng thái nhập kho | 
+
+--- Page 21 ---
+Mã Use case UC33 Tên Usecase Xác nhận đơn hàng
+BPQLK
+Tác nhân Bộ phận quản lý kho
+Tiền điều kiện Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho.
+Bộ phận quản Nhập số lượng thực cho từng mặt hàng
+5.
+lý kho
+Bộ phận quản Nhấn nút xác nhận nhập kho
+6.
+lý kho
+Hệ thống Hệ thống kiểm tra tính hợp lệ của dữ liệu nhập
+7.
+Hệ thống Cập nhật trạng thái nhập kho của đơn hàng
+8.
+Hệ thống Cập nhật số lượng tồn kho theo số lượng thực
+9.
+nhận
+Hệ thống Đồng bộ dữ liệu tồn kho sang hệ thống quản
+10.
+lý kho
+Hệ thống Hiển thị thông báo xác nhận thành công
+11.
+Luồng sự kiện thay thế
+STT Thực hiện bởi Hành động
+3a Hệ thống Không tìm thấy đơn hàng,hệ thống báo lỗi
+và quay lại danh sách đơn hàng nhập kho
+6a Bộ phận quản Người dùng hủy thao tác xác nhận nhập kho
+lý kho
+6b Hệ thống Xác nhận đơn hàng nhập kho thất bại, quay
+lại màn hình chi tiết đơn hàng
+7a Hệ thống Dữ liệu số lượng thực nhận không hợp lệ
+hoặc thiếu, hệ thống thông báo lỗi và yêu
+cầu nhập lại.
+9a Hệ thống Cập nhật tồn kho thất bại, hệ thống thông
+báo lỗi
+10a Hệ thống Đồng bộ dữ liệu sang hệ thống quản lý kho
+thất bại, hệ thống thông báo lỗi và đánh dấu
+chờ đồng bộ lại
+
+[Table 1 on Page 21]
+Mã Use case | UC33 | Tên Usecase | Xác nhận đơn hàng BPQLK
+Tác nhân | Bộ phận quản lý kho |  | 
+Tiền điều kiện | Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho. |  | 
+ | Bộ phận quản Nhập số lượng thực cho từng mặt hàng 5. lý kho Bộ phận quản Nhấn nút xác nhận nhập kho 6. lý kho Hệ thống Hệ thống kiểm tra tính hợp lệ của dữ liệu nhập 7. Hệ thống Cập nhật trạng thái nhập kho của đơn hàng 8. Hệ thống Cập nhật số lượng tồn kho theo số lượng thực 9. nhận Hệ thống Đồng bộ dữ liệu tồn kho sang hệ thống quản 10. lý kho Hệ thống Hiển thị thông báo xác nhận thành công 11. |  | 
+Luồng sự kiện thay thế | STT Thực hiện bởi Hành động 3a Hệ thống Không tìm thấy đơn hàng,hệ thống báo lỗi và quay lại danh sách đơn hàng nhập kho 6a Bộ phận quản Người dùng hủy thao tác xác nhận nhập kho lý kho 6b Hệ thống Xác nhận đơn hàng nhập kho thất bại, quay lại màn hình chi tiết đơn hàng 7a Hệ thống Dữ liệu số lượng thực nhận không hợp lệ hoặc thiếu, hệ thống thông báo lỗi và yêu cầu nhập lại. 9a Hệ thống Cập nhật tồn kho thất bại, hệ thống thông báo lỗi 10a Hệ thống Đồng bộ dữ liệu sang hệ thống quản lý kho thất bại, hệ thống thông báo lỗi và đánh dấu chờ đồng bộ lại |  | 
+
+[Table 2 on Page 21]
+5. | Bộ phận quản Nhập số lượng thực cho từng mặt hàng lý kho
+6. | Bộ phận quản Nhấn nút xác nhận nhập kho lý kho
+7. | Hệ thống Hệ thống kiểm tra tính hợp lệ của dữ liệu nhập
+8. | Hệ thống Cập nhật trạng thái nhập kho của đơn hàng
+9. | Hệ thống Cập nhật số lượng tồn kho theo số lượng thực nhận
+10. | Hệ thống Đồng bộ dữ liệu tồn kho sang hệ thống quản lý kho
+11. | Hệ thống Hiển thị thông báo xác nhận thành công
+
+[Table 3 on Page 21]
+STT | Thực hiện bởi | Hành động
+3a | Hệ thống Không tìm thấy đơn hàng,hệ thống báo lỗi và quay lại danh sách đơn hàng nhập kho | 
+6a | Bộ phận quản Người dùng hủy thao tác xác nhận nhập kho lý kho | 
+6b | Hệ thống Xác nhận đơn hàng nhập kho thất bại, quay lại màn hình chi tiết đơn hàng | 
+7a | Hệ thống Dữ liệu số lượng thực nhận không hợp lệ hoặc thiếu, hệ thống thông báo lỗi và yêu cầu nhập lại. | 
+9a | Hệ thống Cập nhật tồn kho thất bại, hệ thống thông báo lỗi | 
+10a | Hệ thống Đồng bộ dữ liệu sang hệ thống quản lý kho thất bại, hệ thống thông báo lỗi và đánh dấu chờ đồng bộ lại | 
+
+--- Page 22 ---
+Mã Use case UC33 Tên Usecase Xác nhận đơn hàng
+BPQLK
+Tác nhân Bộ phận quản lý kho
+Tiền điều kiện Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho.
+Hậu điều kiện
+-Đơn hàng được cập nhật trạng thái đã nhập kho hoặc đã xác nhận nhập
+kho.
+-Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận.
+-Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang
+hệ thống quản lý kho.
+-Kết quả xác nhận nhập kho được lưu trong hệ thống.
+Trường Bắt
+STT Mô tả Điều kiện hợp lệ Ví dụ
+dữ liệu buộc?
+1. Mã mặt Mã mặt hàng cần xác Có Có thể dùng toàn bộ SP001
+hàng nhận nhập kho hoặc một phần tên để
+tìm kiếm
+2. Tên mặt Tên mặt hàng trong Có Thuộc danh sách Site Máy in HP
+hàng kho trong hệ thống
+3. Số lượng Từ khóa hỗ trợ tra Có 100
+đặt cứu
+Là số nguyên lớn hơn
+0
+4. Số lượng Số lượng mặt hàng Có Là số nguyên lớn hơn 0 95
+site xác mà Site xác nhận sẽ
+nhận giao giao
+5. Số lượng Số lượng mặt hàng Có Là số nguyên lớn hơn 0 90
+thực nhận thực tế nhận tại kho
+6. Trạng thái Trạng thái xử lý nhập Có Trạng thái thuộc tập Chờ nhập kho
+nhập kho kho của đơn hàng trạng thái
+7. Ghi chú Ghi chú thông tin sai Không Không vượt quá ký tự Thiếu sản phẩm A
+lệch của hệ thống
+
+[Table 1 on Page 22]
+Mã Use case | UC33 | Tên Usecase | Xác nhận đơn hàng BPQLK
+Tác nhân | Bộ phận quản lý kho |  | 
+Tiền điều kiện | Đơn hàng đang ở trạng thái chờ nhập kho / chờ xác nhận nhập kho. |  | 
+ |  |  | 
+Hậu điều kiện | -Đơn hàng được cập nhật trạng thái đã nhập kho hoặc đã xác nhận nhập kho. -Số lượng tồn kho của các mặt hàng được cập nhật theo số lượng thực nhận. -Dữ liệu tồn kho được đồng bộ hoặc ghi nhận trạng thái chờ đồng bộ sang hệ thống quản lý kho. -Kết quả xác nhận nhập kho được lưu trong hệ thống. |  | 
+
+[Table 2 on Page 22]
+STT | Trường dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1. | Mã mặt hàng | Mã mặt hàng cần xác nhận nhập kho | Có | Có thể dùng toàn bộ hoặc một phần tên để tìm kiếm | SP001
+2. | Tên mặt hàng | Tên mặt hàng trong kho | Có | Thuộc danh sách Site trong hệ thống | Máy in HP
+3. | Số lượng đặt | Từ khóa hỗ trợ tra cứu | Có | Là số nguyên lớn hơn 0 | 100
+4. | Số lượng site xác nhận giao | Số lượng mặt hàng mà Site xác nhận sẽ giao | Có | Là số nguyên lớn hơn 0 | 95
+5. | Số lượng thực nhận | Số lượng mặt hàng thực tế nhận tại kho | Có | Là số nguyên lớn hơn 0 | 90
+6. | Trạng thái nhập kho | Trạng thái xử lý nhập kho của đơn hàng | Có | Trạng thái thuộc tập trạng thái | Chờ nhập kho
+7. | Ghi chú | Ghi chú thông tin sai lệch | Không | Không vượt quá ký tự của hệ thống | Thiếu sản phẩm A
+
+--- Page 23 ---
+Sequence Diagram
+3 Từ điển thuật ngữ
+Introduction to Glossary…
+3.1 Course
+…
+3.2 Credit
+…
+4 Đặc tả phụ trợ
+4.1 Chức năng
+Cxxx
+4.2 Hiệu năng
+Xxxx
+4.3 Độ tin cậy
+…
+
+--- Page 24 ---
+[No text found on this page]

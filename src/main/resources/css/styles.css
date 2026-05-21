@@ -1,0 +1,289 @@
+/* ==========================================================================
+   Import Order Management System - CSS Design Tokens & Premium Light Theme
+   ========================================================================== */
+
+/* Main UI Config */
+.root {
+    -fx-font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    -fx-font-size: 14px;
+    
+    /* Harmonious Light Palette */
+    -primary-bg: #f8fafc;           /* Slate 50 */
+    -card-bg: #ffffff;              /* Pure White */
+    -sidebar-bg: #ffffff;           /* Pure White */
+    
+    -accent-indigo: #4f46e5;        /* Royal Indigo */
+    -accent-cyan: #0891b2;          /* Deep Cyan for High Contrast */
+    
+    -text-primary: #0f172a;         /* Slate 900 */
+    -text-secondary: #475569;       /* Slate 600 */
+    -text-muted: #94a3b8;           /* Slate 400 */
+    
+    -border-color: rgba(15, 23, 42, 0.08);     /* Soft Slate border */
+    -border-color-hover: rgba(79, 70, 229, 0.4);
+    
+    -fx-background-color: -primary-bg;
+}
+
+/* Background Shells */
+.main-shell {
+    -fx-background-color: -primary-bg;
+}
+
+.sidebar {
+    -fx-background-color: -sidebar-bg;
+    -fx-padding: 24px 16px 24px 16px;
+    -fx-border-color: transparent -border-color transparent transparent;
+    -fx-border-width: 1px;
+}
+
+.content-panel {
+    -fx-background-color: -primary-bg;
+    -fx-padding: 30px;
+}
+
+/* Typography & Titles */
+.title-main {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-fill: -text-primary;
+}
+
+.title-sub {
+    -fx-font-size: 14px;
+    -fx-fill: -text-secondary;
+}
+
+.label {
+    -fx-text-fill: -text-primary;
+}
+
+.label-secondary {
+    -fx-text-fill: -text-secondary;
+}
+
+/* Input Fields (TextBox, PasswordBox) */
+.text-input {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: -text-primary;
+    -fx-prompt-text-fill: -text-muted;
+    -fx-background-radius: 8px;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1.5px;
+    -fx-padding: 10px 14px;
+    -fx-transition: all 0.3s ease;
+}
+
+.text-input:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: -accent-indigo;
+    -fx-prompt-text-fill: transparent;
+}
+
+/* Premium Buttons */
+.button {
+    -fx-background-color: -accent-indigo;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease;
+}
+
+.button:hover {
+    -fx-background-color: #4338ca; /* Darker Indigo */
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 70, 229, 0.25), 10, 0, 0, 2);
+}
+
+.button:pressed {
+    -fx-background-color: #3730a3;
+}
+
+.button-cyan {
+    -fx-background-color: -accent-cyan;
+}
+
+.button-cyan:hover {
+    -fx-background-color: #0e7490;
+    -fx-effect: dropshadow(three-pass-box, rgba(8, 145, 178, 0.25), 10, 0, 0, 2);
+}
+
+.button-secondary {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: rgba(15, 23, 42, 0.16);
+}
+
+/* Sidebar Navigation Items */
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-secondary;
+    -fx-font-weight: normal;
+    -fx-alignment: center-left;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-pref-width: 220px;
+}
+
+.nav-item:hover {
+    -fx-background-color: rgba(15, 23, 42, 0.04);
+    -fx-text-fill: -text-primary;
+}
+
+.nav-item:selected, .nav-item-active {
+    -fx-background-color: rgba(79, 70, 229, 0.08); /* Soft indigo tint */
+    -fx-text-fill: -accent-indigo;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent transparent -accent-indigo;
+    -fx-border-width: 0 0 0 4px;
+}
+
+/* Card Panels */
+.card {
+    -fx-background-color: -card-bg;
+    -fx-background-radius: 12px;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 12px;
+    -fx-border-width: 1px;
+    -fx-padding: 24px;
+    -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.03), 15, 0, 0, 2); /* Floating premium card look */
+}
+
+/* Login Panel specifically */
+.login-panel {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Transparent card for bright glassmorphism */
+    -fx-background-radius: 16px;
+    -fx-border-color: rgba(15, 23, 42, 0.08);
+    -fx-border-radius: 16px;
+    -fx-border-width: 1.5px;
+    -fx-padding: 40px;
+    -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.06), 30, 0, 0, 10);
+}
+
+/* Premium TableViews */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f1f5f9; /* Slate 100 header */
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-color: transparent transparent -border-color transparent;
+    -fx-border-width: 1px;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-padding: 8px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -text-secondary;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color transparent transparent transparent;
+    -fx-border-width: 1px;
+    -fx-padding: 8px;
+    -fx-text-fill: -text-primary;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(15, 23, 42, 0.015);
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(79, 70, 229, 0.04);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(79, 70, 229, 0.1);
+    -fx-text-fill: -text-primary;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: -text-secondary;
+}
+
+/* Status Badges */
+.badge {
+    -fx-background-radius: 12px;
+    -fx-padding: 4px 10px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.badge-pending {
+    -fx-background-color: rgba(245, 158, 11, 0.12); /* Orange opacity */
+    -fx-text-fill: #d97706; /* Darker orange for light mode readability */
+}
+
+.badge-approved, .badge-success {
+    -fx-background-color: rgba(16, 185, 129, 0.12); /* Emerald */
+    -fx-text-fill: #059669; /* Darker emerald */
+}
+
+.badge-rejected, .badge-danger {
+    -fx-background-color: rgba(239, 68, 68, 0.12); /* Red */
+    -fx-text-fill: #dc2626; /* Darker red */
+}
+
+.badge-processing, .badge-info {
+    -fx-background-color: rgba(59, 130, 246, 0.12); /* Blue */
+    -fx-text-fill: #2563eb; /* Darker blue */
+}
+
+/* ==========================================================================
+   Top Bar & Sidebar Toggle Styling
+   ========================================================================== */
+.top-bar {
+    -fx-background-color: -sidebar-bg;
+    -fx-padding: 12px 24px;
+    -fx-border-color: transparent transparent -border-color transparent;
+    -fx-border-width: 1px;
+    -fx-alignment: center-left;
+}
+
+.top-bar-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+    -fx-letter-spacing: 1px;
+}
+
+.button-toggle {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-secondary;
+    -fx-font-size: 16px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-font-weight: bold;
+}
+
+.button-toggle:hover {
+    -fx-background-color: rgba(15, 23, 42, 0.04);
+    -fx-text-fill: -text-primary;
+}
+

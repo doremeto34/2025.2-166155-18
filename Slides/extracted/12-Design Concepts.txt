@@ -1,0 +1,1335 @@
+=== Extracted from: 12-Design Concepts.pdf ===
+=== Total pages: 22 ===
+
+--- Page 1 ---
+1
+Content
+1.How do you design?
+SOFTWARE DESIGN AND CONSTRUCTION
+2.Coupling
+12. DESIGN CONCEPTS
+3.Cohesion
+1 2
+3
+Design levels The Process of Design
+•Definition:
+Architectures/Framework • Design is a problem-solving process whose objective is to find and
+(Financial System,J2EE,…) describe a way:
+• To implement the system’s functional requirements...
+OODPatterns • While respecting the constraints imposed by the non-functional
+requirements...
+• including the budget
+OODPrinciples
+• And while adhering to general principles of good quality
+Specific Data Structures
+AlgorithmicApproaches
+General + OOConcepts
+3 4
+1
+
+[Table 1 on Page 1]
+1
+
+SOFTWARE DESIGN AND CONSTRUCTION 12. DESIGN CONCEPTS
+1
+3
+
+Design levels Architectures/Framework (Financial System,J2EE,…) OODPatterns OODPrinciples Specific Data Structures AlgorithmicApproaches General + OOConcepts
+3
+
+[Table 2 on Page 1]
+
+
+Content 1.How do you design? 2.Coupling 3.Cohesion
+2
+
+
+The Process of Design •Definition: • Design is a problem-solving process whose objective is to find and describe a way: • To implement the system’s functional requirements... • While respecting the constraints imposed by the non-functional requirements... • including the budget • And while adhering to general principles of good quality
+4
+
+--- Page 2 ---
+Design as a series of decisions Making decisions
+•A designer is faced with a series of design issues •To make each design decision, the software engineer
+• These are sub-problems of the overall design problem. uses:
+• Each issue normally has several alternative solutions: • Knowledge of
+• design options. • the requirements
+• The designer makes a design decision to resolve each issue. • the design as created so far
+• This process involves choosing the best option from among the • the technology available
+alternatives. • software design principles and ‘best practices’
+• what has worked well in the past
+5 6
+7 8
+Modules Ideals of modular software
+• A moduleis a relatively general term for a class or a type or • Decomposable –can be broken down into
+any kind of design unit in software modules to reduce complexity and allow
+teamwork
+• A modular designfocuses on what modules are defined, what
+their specifications are, how they relate to each other, but not • Composable–“Having divided to conquer, we
+must reunite to rule [M. Jackson].”
+usually on the implementation of the modules themselves
+• Understandable –one module can be
+• Modularity reduces the total complexity a programmer has to examined, reasoned about, developed, etc. in
+deal with at any one time assuming: isolation
+• Functions are assigned to modules in away that groups similar • Continuity –a small change in the
+functions together (Separation of Concerns), and requirements should affect a small number of
+• There are small, simple, well-defined interfaces between modules modules
+(information hiding) • Isolation –an error in one module should be
+• Overall, you’ve been given the modular design so far –and as contained as possible
+now you have to learn more about how to do the design
+7 8
+2
+
+[Table 1 on Page 2]
+
+
+Design as a series of decisions •A designer is faced with a series of design issues • These are sub-problems of the overall design problem. • Each issue normally has several alternative solutions: • design options. • The designer makes a design decision to resolve each issue. • This process involves choosing the best option from among the alternatives.
+5
+7
+
+Modules • A moduleis a relatively general term for a class or a type or any kind of design unit in software • A modular designfocuses on what modules are defined, what their specifications are, how they relate to each other, but not usually on the implementation of the modules themselves • Modularity reduces the total complexity a programmer has to deal with at any one time assuming: • Functions are assigned to modules in away that groups similar functions together (Separation of Concerns), and • There are small, simple, well-defined interfaces between modules (information hiding) • Overall, you’ve been given the modular design so far –and now you have to learn more about how to do the design
+7
+
+[Table 2 on Page 2]
+
+
+Making decisions •To make each design decision, the software engineer uses: • Knowledge of • the requirements • the design as created so far • the technology available • software design principles and ‘best practices’ • what has worked well in the past
+6
+8
+
+Ideals of modular software • Decomposable –can be broken down into modules to reduce complexity and allow teamwork • Composable–“Having divided to conquer, we must reunite to rule [M. Jackson].” • Understandable –one module can be examined, reasoned about, developed, etc. in isolation • Continuity –a small change in the requirements should affect a small number of modules • Isolation –an error in one module should be as contained as possible
+8
+
+--- Page 3 ---
+Top-down and bottom-up design Top-down and bottom-up design
+•Top-down design •Bottom-up design
+• First design the very high level structure of the system. • Make decisions about reusable low-level utilities.
+• Then gradually work down to detailed decisions about low-level • Then decide how these will be put together to create high-level
+constructs. constructs.
+• Finally arrive at detailed decisions such as:
+• the format of particular data items; •A mix of top-down and bottom-up approaches are
+• the individual algorithms that will be used.
+normally used:
+• Top-down design is almost always needed to give the system a
+good structure.
+• Bottom-up design is normally useful so that reusable components
+can be created.
+9 10
+Different aspects of design Good Design
+• Architecture design: •Overall goals of good design:
+• The division into subsystems and components, • Increasing profit by reducing cost and increasing revenue
+• How these will be connected.
+• Ensuring that we actually conform with the requirements
+• How they will interact.
+• Their interfaces. • Accelerating development
+• Class design: • Increasing qualities such as
+• The various features of classes. • Usability
+• User interface design • Efficiency
+• Algorithm design: • Reliability
+• The design of computational mechanisms. • Maintainability
+• Protocol design: • Reusability
+• The design of communications protocol.
+•The principles of cohesionand couplingare probably the
+most important design principles for evaluating the
+effectiveness of a design.
+11 12
+3
+
+[Table 1 on Page 3]
+
+
+Top-down and bottom-up design •Top-down design • First design the very high level structure of the system. • Then gradually work down to detailed decisions about low-level constructs. • Finally arrive at detailed decisions such as: • the format of particular data items; • the individual algorithms that will be used.
+9
+
+
+Different aspects of design • Architecture design: • The division into subsystems and components, • How these will be connected. • How they will interact. • Their interfaces. • Class design: • The various features of classes. • User interface design • Algorithm design: • The design of computational mechanisms. • Protocol design: • The design of communications protocol.
+11
+
+[Table 2 on Page 3]
+
+
+Top-down and bottom-up design •Bottom-up design • Make decisions about reusable low-level utilities. • Then decide how these will be put together to create high-level constructs. •A mix of top-down and bottom-up approaches are normally used: • Top-down design is almost always needed to give the system a good structure. • Bottom-up design is normally useful so that reusable components can be created.
+10
+
+
+Good Design •Overall goals of good design: • Increasing profit by reducing cost and increasing revenue • Ensuring that we actually conform with the requirements • Accelerating development • Increasing qualities such as • Usability • Efficiency • Reliability • Maintainability • Reusability •The principles of cohesionand couplingare probably the most important design principles for evaluating the effectiveness of a design.
+12
+
+--- Page 4 ---
+Cohesion and Coupling Quality Characteristics for Modules
+Coupling
+q
+•independent modules
+Coupling or Dependency is the degree to which each
+• avoid aggregation of multiple tasks per module
+module relies on each one of the othermodules.
+• single-minded function
+classCoupling ===> high COHESION
+Service A Service B w Se h r a v t i ' c s e h A ap - p -> e n S e w rv h i e c n e c B h ? anging • minimal interaction with other modules
+ProductA • simple interface
+Application «i I n P t r e o r d fa u c c e t » ===> low COUPLING
+ProductB
+[Steven, Myers, Constantine]
+Cohesion Looselycoupled
+q
+Cohesion refers to the degree to which the elements of a
+module belong together. Cohesion is a measure of how strongly-
+related or focused the responsibilities of a single moduleare.
+13 14
+Cohesion and Coupling Content
+•The best designs have high cohesion (also called strong 1. How do you design?
+cohesion) within a module and low coupling (also called
+weak coupling) between modules. 2. Coupling
+3. Cohesion
+15 16
+4
+
+[Table 1 on Page 4]
+
+
+Cohesion and Coupling Coupling q Coupling or Dependency is the degree to which each module relies on each one of the othermodules. classCoupling Service A Service B what's happen whenchanging Service A --> ServiceB? ProductA Application «interface» IProduct ProductB Cohesion Looselycoupled q Cohesion refers to the degree to which the elements of a module belong together. Cohesion is a measure of how strongly- related or focused the responsibilities of a single moduleare.
+13
+
+
+Cohesion and Coupling •The best designs have high cohesion (also called strong cohesion) within a module and low coupling (also called weak coupling) between modules.
+15
+
+[Table 2 on Page 4]
+
+
+Quality Characteristics for Modules •independent modules • avoid aggregation of multiple tasks per module • single-minded function ===> high COHESION • minimal interaction with other modules • simple interface ===> low COUPLING [Steven, Myers, Constantine]
+14
+
+
+Content 1. How do you design? 2. Coupling 3. Cohesion
+16
+
+[Table 3 on Page 4]
+Service B | what's happen whenchanging Service A --> ServiceB?
+
+[Table 4 on Page 4]
+Application
+
+
+[Table 5 on Page 4]
+«interface» IProduct
+
+
+[Table 6 on Page 4]
+ProductB
+
+
+--- Page 5 ---
+18
+Coupling: Degree of dependence among
+Coupling evaluation
+components
+• Degree
+• Degree is the number of connections between the module and others.
+With coupling, we want to keep the degree small. For instance, if the
+module needed to connect to other modules through a few parameters
+or narrow interfaces, then the degree would be small, and coupling
+would be loose.
+No dependencies Loosely coupled-some dependencies • Ease
+• Ease is how obvious are the connections between the module and
+others. With coupling, we want the connections to be easy to make
+without needing to understand the implementations of the other
+High coupling makes modifying modules.
+parts of the system difficult, e.g., • Flexibility
+Highly coupled-many dependencies modifying a component affects all • Flexibility is how interchangeable the other modules are for this
+module. With coupling, we want the other modules easily replaceable
+the components to which the
+for something better in the future.
+component is connected.
+17 18
+19
+Disadvantages of tightly coupling Range of Coupling
+•A change in one module usually forces a ripple effect of
+changes in other modules. High Coupling
+Content
+•Assembly of modules might require more effort or time
+due to the increased inter-module dependency. Common
+•A particular module might be harder to reuse or test
+Control
+because dependent modules must be included.
+Loose
+Stamp
+Data
+Uncoupled
+Low
+19 20
+5
+
+[Table 1 on Page 5]
+
+
+Coupling: Degree of dependence among components No dependencies Loosely coupled-some dependencies High coupling makes modifying parts of the system difficult, e.g., Highly coupled-many dependencies modifying a component affects all the components to which the component is connected.
+17
+19
+
+Disadvantages of tightly coupling •A change in one module usually forces a ripple effect of changes in other modules. •Assembly of modules might require more effort or time due to the increased inter-module dependency. •A particular module might be harder to reuse or test because dependent modules must be included.
+19
+
+[Table 2 on Page 5]
+18
+
+Coupling evaluation • Degree • Degree is the number of connections between the module and others. With coupling, we want to keep the degree small. For instance, if the module needed to connect to other modules through a few parameters or narrow interfaces, then the degree would be small, and coupling would be loose. • Ease • Ease is how obvious are the connections between the module and others. With coupling, we want the connections to be easy to make without needing to understand the implementations of the other modules. • Flexibility • Flexibility is how interchangeable the other modules are for this module. With coupling, we want the other modules easily replaceable for something better in the future.
+18
+
+
+Range of Coupling High Coupling Content Common Control Loose Stamp Data Uncoupled Low
+20
+
+[Table 3 on Page 5]
+ | 
+
+--- Page 6 ---
+Content
+Common
+2.1. Content coupling Control Content coupling:
+Stamp
+Data
+Uncoupled
+•Occurs when one component surreptitiously modifies data
+•Definition: One component references that is internalto another component
+• To reduce content coupling you should therefore encapsulateall
+contents of another
+instance variables
+•Example: • declare them private
+• and provide get and set methods
+•Component directly modifies another’s data • A worse form of content coupling occurs when you directly modify
+an instance variable of an instance variable
+•Component modifies another’s code, e.g.,
+•Disadvantage: if f changes g’s local variables, then
+jumps into the middle of a routine
+changing f often requires changing g or vice versa
+• Have to keep both in mind when changing either
+21 22
+23 24
+Example of content coupling Example of content coupling
+•In C++,friend classescan access each other’s private •"getters" and "setters" may not prevent content coupling if
+members the calculations on this variable is done by another class
+class A { and sets it back to the original class
+private:
+int a;
+public:
+A() { a = 0; } publicintsumValues(Calculator c){// tight coupling
+friend class B; // Friend Class intresult = c.getFirstNumber() + c.getSecondNumber();
+};
+c.setResult(result);
+class B { returnc.getResult();
+private: }
+int b;
+public: publicintsumValues(Calculator c){ // loose coupling
+void showA(A& x) c.sumAndUpdateResult();
+{
+// Since B is friend of A, it can access returnc.getResult();
+// private members of A }
+std::cout << "A::a=" << x.a;
+}
+};
+23 24
+6
+
+[Table 1 on Page 6]
+
+
+Content Common 2.1. Content coupling Control Stamp Data Uncoupled •Definition: One component references contents of another •Example: •Component directly modifies another’s data •Component modifies another’s code, e.g., jumps into the middle of a routine
+21
+23
+
+Example of content coupling •In C++,friend classescan access each other’s private members class A { private: int a; public: A() { a = 0; } friend class B; // Friend Class }; class B { private: int b; public: void showA(A& x) { // Since B is friend of A, it can access // private members of A std::cout << "A::a=" << x.a; } };
+23
+
+[Table 2 on Page 6]
+
+
+Content coupling: •Occurs when one component surreptitiously modifies data that is internalto another component • To reduce content coupling you should therefore encapsulateall instance variables • declare them private • and provide get and set methods • A worse form of content coupling occurs when you directly modify an instance variable of an instance variable •Disadvantage: if f changes g’s local variables, then changing f often requires changing g or vice versa • Have to keep both in mind when changing either
+22
+24
+
+Example of content coupling •"getters" and "setters" may not prevent content coupling if the calculations on this variable is done by another class and sets it back to the original class publicintsumValues(Calculator c){// tight coupling intresult = c.getFirstNumber() + c.getSecondNumber(); c.setResult(result); returnc.getResult(); } publicintsumValues(Calculator c){ // loose coupling c.sumAndUpdateResult(); returnc.getResult(); }
+24
+
+--- Page 7 ---
+Content
+2.2. Common Coupling Common
+Control Example
+Stamp
+Data
+Uncoupled
+•All the components using the global variable become
+•Definition: Several modules share an
+coupled to each other: one sets variable, another refers to
+externally imposed data format, value
+communication protocol, or device interface. •This is certainly possible in O-O languages
+•Usually a poor design choice because • One static object contains all “global data”
+• This object’s attributes are set and referred to
+•Lack of clear responsibility for the data •Disadvantage: consider debugging task: e.g.
+•Reduces readability • Global variable count has gotten some strange value
+•Difficult to determine all the components that affect a • Both f and g have been called
+data element (reduces maintainability) • Which changed it to the strange value?
+• Must flip back and forth between f and g to find out
+•Difficult to reuse components
+• Are there other functions which change count
+•Reduces ability to control data accesses • Have to keep whole program in mind when debugging
+25 26
+27
+Example 2.3. Control Coupling
+while( global_variable> 0 ) { •Definition: Component passes control
+switch( global_variable) { parameters to coupled components
+case1: function_a(); break; •Example: a method does different things
+case2: function_b(); break; depending on the value of a “flag” parameter.
+... •May be either good or bad, depending on situation
+casen:... • Bad when component must be aware of internal structure and logic
+of another module
+• Good if parameters allow factoring and reuse of functionality
+} •Example of good: Sort that takes a comparison function
+global_variable++; as an argument. The sort function is clearly defined:
+return a list in sorted order, where sorted is determined by
+}
+a parameter.
+27 28
+7
+
+[Table 1 on Page 7]
+
+
+Content 2.2. Common Coupling Common Control Stamp Data Uncoupled •Definition: Several modules share an externally imposed data format, communication protocol, or device interface. •Usually a poor design choice because •Lack of clear responsibility for the data •Reduces readability •Difficult to determine all the components that affect a data element (reduces maintainability) •Difficult to reuse components •Reduces ability to control data accesses
+25
+27
+
+Example while( global_variable> 0 ) { switch( global_variable) { case1: function_a(); break; case2: function_b(); break; ... casen:... } global_variable++; }
+27
+
+[Table 2 on Page 7]
+
+
+Example •All the components using the global variable become coupled to each other: one sets variable, another refers to value •This is certainly possible in O-O languages • One static object contains all “global data” • This object’s attributes are set and referred to •Disadvantage: consider debugging task: e.g. • Global variable count has gotten some strange value • Both f and g have been called • Which changed it to the strange value? • Must flip back and forth between f and g to find out • Are there other functions which change count • Have to keep whole program in mind when debugging
+26
+
+
+2.3. Control Coupling •Definition: Component passes control parameters to coupled components •Example: a method does different things depending on the value of a “flag” parameter. •May be either good or bad, depending on situation • Bad when component must be aware of internal structure and logic of another module • Good if parameters allow factoring and reuse of functionality •Example of good: Sort that takes a comparison function as an argument. The sort function is clearly defined: return a list in sorted order, where sorted is determined by a parameter.
+28
+
+--- Page 8 ---
+29 30
+Example 1 – Control Coupling Example 1 – Hint for updateCustomer()
+•In your video store, you might eventually create a method •Should be avoided, as it means the calling module must
+like this: know how the logic of the called module is organized. This
+• updateCustomer(int whatKind, Customer customer) where also may lead to gradually extent of param list when new
+• whatKindtakes on the values ADD, EDIT or DELETE, and logics defined
+• customeris used for EDIT, but is not used at all for ADD, and only the id •The method becomes very complicated to maintain.
+is used for DELETE.
+•How can we improve this situation?
+•Often, control coupling can be reduced by:
+• Introduce different methods for different cases
+• Think of applying inheritance and polymorphism if possible
+29 30
+31 32
+Example 2 – tight coupling Example 2 – loose coupling
+publicvoidrun() {
+Printable printable= newPrinterOne();
+takeAction(printable);
+publicvoidrun() { }
+takeAction(1); publicvoidtakeAction(Printable printable) {
+printable.print();
+} }
+publicvoidtakeAction(intkey) {
+publicinterfacePrintable {
+switch(key) { voidprint();
+case1: }
+System.out.println("ONE RECEIVED");
+publicclassPrinterOneimplementsPrintable {
+break; @Override
+case2: publicvoidprint() {
+System.out.println("TWO RECEIVED"); System.out.println("ONE RECEIVED");
+}
+break; }
+}
+} publicclassPrinterTwoimplementsPrintable {
+@Override
+publicvoidprint() {
+System.out.println("TWO RECEIVED");
+}
+}
+31 32
+8
+
+[Table 1 on Page 8]
+29
+
+Example 1 – Control Coupling •In your video store, you might eventually create a method like this: • updateCustomer(int whatKind, Customer customer) where • whatKindtakes on the values ADD, EDIT or DELETE, and • customeris used for EDIT, but is not used at all for ADD, and only the id is used for DELETE.
+29
+31
+
+Example 2 – tight coupling publicvoidrun() { takeAction(1); } publicvoidtakeAction(intkey) { switch(key) { case1: System.out.println("ONE RECEIVED"); break; case2: System.out.println("TWO RECEIVED"); break; } }
+31
+
+[Table 2 on Page 8]
+30
+
+Example 1 – Hint for updateCustomer() •Should be avoided, as it means the calling module must know how the logic of the called module is organized. This also may lead to gradually extent of param list when new logics defined •The method becomes very complicated to maintain. •How can we improve this situation? •Often, control coupling can be reduced by: • Introduce different methods for different cases • Think of applying inheritance and polymorphism if possible
+30
+32
+
+Example 2 – loose coupling publicvoidrun() { Printable printable= newPrinterOne(); takeAction(printable); } publicvoidtakeAction(Printable printable) { printable.print(); } publicinterfacePrintable { voidprint(); } publicclassPrinterOneimplementsPrintable { @Override publicvoidprint() { System.out.println("ONE RECEIVED"); } } publicclassPrinterTwoimplementsPrintable { @Override publicvoidprint() { System.out.println("TWO RECEIVED"); } }
+32
+
+--- Page 9 ---
+33 34
+Example 3 Example 3
+inttestStack(intkind, Stack S) { • Better to have two functions and name them intuitively:
+if(((kind== 1) && (S.num== 0)) || ((kind== 2) && (S.num== MAX)))
+intemptyStack(Stack S) {
+return1; if(S.num== 0)
+else return1;
+return0; else
+return0;
+}
+}
+intfullStack(Stack S) {
+•What does testStackdo? if(
+r
+S
+e
+.
+t
+n
+u
+u
+r
+m
+n1
+=
+;
+= MAXSTACK)
+• Seems to do two completely different things else
+return0;
+•kind is a “magic” parameter }
+• Selects from one of the two behaviours • Previous code worked fine (if called correctly) However, with
+new code:
+• Can’t tell what value it should be without looking at code for
+testStack • It is clear from the function names what the functions do
+• Don’t have to guess at values of parameters
+33 34
+36
+2.4. Stamp Coupling Example 1
+•Definition: data are passed by parameters using a data •Example: code for finding how much income tax to deduct
+structure containing fields which may or may not be used from employee’s salary:
+•Requires second component to know how to manipulate
+the data structure (e.g., needs to know about
+intincomeTaxPayable(Person p) {
+implementation) /* code which refers to only p.salary*/
+}
+•May be necessary due to efficiency factors: this is a
+choice made by insightful designer, not lazy programmer.
+•Function header leads us to believe that:
+•Two ways to reduce stamp coupling,
+• incomeTaxPayableuses all of p
+• using an interface as the argument type • We have to keep all of the Person fields in mind when debugging
+• passing simple variables incomeTaxPayable
+35 36
+9
+
+[Table 1 on Page 9]
+33
+
+Example 3 inttestStack(intkind, Stack S) { if(((kind== 1) && (S.num== 0)) || ((kind== 2) && (S.num== MAX))) return1; else return0; } •What does testStackdo? • Seems to do two completely different things •kind is a “magic” parameter • Selects from one of the two behaviours • Can’t tell what value it should be without looking at code for testStack
+33
+
+
+2.4. Stamp Coupling •Definition: data are passed by parameters using a data structure containing fields which may or may not be used •Requires second component to know how to manipulate the data structure (e.g., needs to know about implementation) •May be necessary due to efficiency factors: this is a choice made by insightful designer, not lazy programmer. •Two ways to reduce stamp coupling, • using an interface as the argument type • passing simple variables
+35
+
+[Table 2 on Page 9]
+34
+
+Example 3 • Better to have two functions and name them intuitively: intemptyStack(Stack S) { if(S.num== 0) return1; else return0; } intfullStack(Stack S) { if(S.num== MAXSTACK) return1; else return0; } • Previous code worked fine (if called correctly) However, with new code: • It is clear from the function names what the functions do • Don’t have to guess at values of parameters
+34
+36
+
+Example 1 •Example: code for finding how much income tax to deduct from employee’s salary: intincomeTaxPayable(Person p) { /* code which refers to only p.salary*/ } •Function header leads us to believe that: • incomeTaxPayableuses all of p • We have to keep all of the Person fields in mind when debugging incomeTaxPayable
+36
+
+--- Page 10 ---
+37
+Example 1 Example 2
+•Better: public class Emailer {
+public void sendEmail(Employee e, String text) {
+...
+intincomeTaxPayable(intsalary) { }
+/* code which refers salary */ ...
+} }
+•Call would be incomeTaxPayable(employee.salary) •Using simple data types to avoid it:
+rather than incomeTaxPayable(employee)
+public class Emailer {
+•Shows clearly that incomeTaxPayableis concerned only public void sendEmail(String name, String email, String text) {
+with the employee’s salary ...
+}
+•If the calling function can extract all that is needed for the
+...
+called function, it should
+}
+37 38
+Example 2 2.5. Data coupling
+•Using an interface to avoid it: •Def: Component passes data (not data structures) to
+another component.
+publicinterfaceAddressee { •Occurs whenever the types of method arguments are
+publicabstractString getName(); either primitive or else simple library classes
+publicabstractString getEmail();
+• The more arguments a method has, the higher the coupling
+}
+• All methods that use the method must pass all the arguments
+publicclassEmployee implementsAddressee {...} • You should reduce coupling by not giving methods unnecessary
+arguments
+publicclassEmailer {
+publicvoidsendEmail(Addressee e, String text) {
+...
+}
+...
+}
+39 40
+10
+
+[Table 1 on Page 10]
+37
+
+Example 1 •Better: intincomeTaxPayable(intsalary) { /* code which refers salary */ } •Call would be incomeTaxPayable(employee.salary) rather than incomeTaxPayable(employee) •Shows clearly that incomeTaxPayableis concerned only with the employee’s salary •If the calling function can extract all that is needed for the called function, it should
+37
+
+
+Example 2 •Using an interface to avoid it: publicinterfaceAddressee { publicabstractString getName(); publicabstractString getEmail(); } publicclassEmployee implementsAddressee {...} publicclassEmailer { publicvoidsendEmail(Addressee e, String text) { ... } ... }
+39
+
+[Table 2 on Page 10]
+
+
+Example 2 public class Emailer { public void sendEmail(Employee e, String text) { ... } ... } •Using simple data types to avoid it: public class Emailer { public void sendEmail(String name, String email, String text) { ... } ... }
+38
+
+
+2.5. Data coupling •Def: Component passes data (not data structures) to another component. •Occurs whenever the types of method arguments are either primitive or else simple library classes • The more arguments a method has, the higher the coupling • All methods that use the method must pass all the arguments • You should reduce coupling by not giving methods unnecessary arguments
+40
+
+--- Page 11 ---
+41 42
+Data coupling Uncoupled
+•Strengths of Data Coupling •Completely uncoupled components are not systems.
+• A module sees only the data elements it requires. •Systems are made of interacting components.
+• It is the best (i.e., loosest) form of coupling.
+•Weakness of Data Coupling
+• A module can be difficult to maintain if many data elements are Content
+passed. Common
+External
+• Too many parameters can also indicate that a module has been Control
+Stamp
+poorly partitioned. Data
+Uncoupled
+•There is a trade-off between data coupling and stamp
+coupling
+• Increasing one often decreases the other
+41 42
+Content 3. Cohesion
+1.How do you design? •Definition1: The degree to which all elements of a
+component are directed towards a single task
+2.Coupling and all elements directed towards that task are
+contained in a single component.
+3.Cohesion
+•Definition 2: Cohesion represents the clarity of
+the responsibilities of a module.
+•Internal glue with which component is constructed
+•All elements of component are directed toward
+and essential for performing the same task
+•High is good
+45 46
+11
+
+[Table 1 on Page 11]
+41
+
+Data coupling •Strengths of Data Coupling • A module sees only the data elements it requires. • It is the best (i.e., loosest) form of coupling. •Weakness of Data Coupling • A module can be difficult to maintain if many data elements are passed. • Too many parameters can also indicate that a module has been poorly partitioned. •There is a trade-off between data coupling and stamp coupling • Increasing one often decreases the other
+41
+
+
+Content 1.How do you design? 2.Coupling 3.Cohesion
+45
+
+[Table 2 on Page 11]
+42
+
+Uncoupled •Completely uncoupled components are not systems. •Systems are made of interacting components. Content Common External Control Stamp Data Uncoupled
+42
+
+
+3. Cohesion •Definition1: The degree to which all elements of a component are directed towards a single task and all elements directed towards that task are contained in a single component. •Definition 2: Cohesion represents the clarity of the responsibilities of a module. •Internal glue with which component is constructed •All elements of component are directed toward and essential for performing the same task •High is good
+46
+
+--- Page 12 ---
+47 48
+Cohesion Advantages of high cohesion
+•If our module performs one task and nothing else or has a •Reduced module complexity (they are simpler, having
+clear purpose, our module has high cohesion. fewer operations).
+•On the other hand, if our module tries to encapsulate •Increased system maintainability, because logical
+more than one purpose or has an unclear purpose, our changes in the domain affect fewer modules, and
+module has low cohesion. because changes in one module require fewer changes in
+•Single Responsibility Principleaims at creating highly other modules.
+cohesive classes. •Increased module reusability, because application
+•Cohesion is increased if: developers will find the component they need more easily
+among the cohesive set of operations provided by the
+• The functionalities embedded in a class, accessed through its
+methods, have much in common. module.
+• Methods carry out a small number of related activities, by avoiding
+coarsely grained or unrelated sets of data
+47 48
+49 50
+Example Example
+•High cohesion is when we have a class that does a well
+defined job. Low cohesion is when a class does a lot of
+jobs that don’t have much in common.
+•High cohesion gives us better maintaining facility and Low
+cohesion results in monolithic classes that are difficult to
+maintain, understand and reduces re-usability
+49 50
+12
+
+[Table 1 on Page 12]
+47
+
+Cohesion •If our module performs one task and nothing else or has a clear purpose, our module has high cohesion. •On the other hand, if our module tries to encapsulate more than one purpose or has an unclear purpose, our module has low cohesion. •Single Responsibility Principleaims at creating highly cohesive classes. •Cohesion is increased if: • The functionalities embedded in a class, accessed through its methods, have much in common. • Methods carry out a small number of related activities, by avoiding coarsely grained or unrelated sets of data
+47
+49
+
+Example
+49
+
+[Table 2 on Page 12]
+48
+
+Advantages of high cohesion •Reduced module complexity (they are simpler, having fewer operations). •Increased system maintainability, because logical changes in the domain affect fewer modules, and because changes in one module require fewer changes in other modules. •Increased module reusability, because application developers will find the component they need more easily among the cohesive set of operations provided by the module.
+48
+50
+
+Example •High cohesion is when we have a class that does a well defined job. Low cohesion is when a class does a lot of jobs that don’t have much in common. •High cohesion gives us better maintaining facility and Low cohesion results in monolithic classes that are difficult to maintain, understand and reduces re-usability
+50
+
+--- Page 13 ---
+52
+Range of Cohesion Range of cohesion
+•Low Cohesion (Highly Undesirable)
+High Cohesion • Coincidental Cohesion
+Functional • Logical Cohesion
+Informational
+• Temporal Cohesion
+Sequential Tight •Moderate Cohesion (Acceptable)
+• Procedural Cohesion
+Communicational
+• Communicational Cohesion
+Procedural • Sequential Cohesion
+Temporal
+•High Cohesion (Desirable)
+• Functional Cohesion
+Logical
+Coincidental Low
+51 52
+3.1. Coincidental Cohesion Example 1
+•Definition: Elements of the component are •A module supports the following tasks
+only related by their location in source code • Fix Car
+• Bake Cake
+•Elements needed to achieve some • Walk Dog
+functionality are scattered throughout the • Fill our Astronaut-Application Form
+• Have a Beer
+system.
+• Get out of Bed
+•Accidental Functional • Go the the Movies
+Informational
+Sequential
+•Worst form Communicational
+Procedural
+Temporal
+Logical
+Coincidental
+53 54
+13
+
+[Table 1 on Page 13]
+
+
+Range of Cohesion High Cohesion Functional Informational Sequential Tight Communicational Procedural Temporal Logical Coincidental Low
+51
+
+
+3.1. Coincidental Cohesion •Definition: Elements of the component are only related by their location in source code •Elements needed to achieve some functionality are scattered throughout the system. Functional •Accidental Informational Sequential •Worst form Communicational Procedural Temporal Logical Coincidental
+53
+
+[Table 2 on Page 13]
+52
+
+Range of cohesion •Low Cohesion (Highly Undesirable) • Coincidental Cohesion • Logical Cohesion • Temporal Cohesion •Moderate Cohesion (Acceptable) • Procedural Cohesion • Communicational Cohesion • Sequential Cohesion •High Cohesion (Desirable) • Functional Cohesion
+52
+
+
+Example 1 •A module supports the following tasks • Fix Car • Bake Cake • Walk Dog • Fill our Astronaut-Application Form • Have a Beer • Get out of Bed • Go the the Movies
+54
+
+--- Page 14 ---
+55 56
+Example 2 Example 3
+classJoe { classOutput {
+// converts a path in windows to one in linux // outputs a financial report
+publicString win2lin(String); publicvoidoutputReport(FinanceData);
+// number of days since the beginning of time // outputs the current weather
+publicintdays(String); publicvoidoutputWeather(WeatherData);
+// outputs a financial report // output a number in a nice formatted way
+publicvoidoutputReport(FinanceData); publicvoidoutputInt(int);
+} }
+55 56
+57
+Example 4 3.2. Logical Cohesion
+•(1) A programmer might take a 200 line program and •Definition: Elements of component are related
+break it into four procedures with 50 lines of code in each. logically and not functionally (elements contribute
+Thus, lines 1-50 would be in procedure-1 and lines 51-
+to activities of the same general category)
+100 would be in procedure-2, etc.
+•Several logically related elements are in the
+•(2) Recurring code which has no complete function
+same component and one of the elements is
+might be spotted by the programmer and, in an effort to
+save memory space, placed that code in one procedure selected by the client component.
+(a module). That procedure was then repeatedly called in
+Functional
+the program
+Informational
+Sequential
+•(3) A package with non-related classes
+Communicational
+Procedural
+Temporal
+Logical
+Coincidental
+57 58
+14
+
+[Table 1 on Page 14]
+55
+
+Example 2 classJoe { // converts a path in windows to one in linux publicString win2lin(String); // number of days since the beginning of time publicintdays(String); // outputs a financial report publicvoidoutputReport(FinanceData); }
+55
+57
+
+Example 4 •(1) A programmer might take a 200 line program and break it into four procedures with 50 lines of code in each. Thus, lines 1-50 would be in procedure-1 and lines 51- 100 would be in procedure-2, etc. •(2) Recurring code which has no complete function might be spotted by the programmer and, in an effort to save memory space, placed that code in one procedure (a module). That procedure was then repeatedly called in the program •(3) A package with non-related classes
+57
+
+[Table 2 on Page 14]
+56
+
+Example 3 classOutput { // outputs a financial report publicvoidoutputReport(FinanceData); // outputs the current weather publicvoidoutputWeather(WeatherData); // output a number in a nice formatted way publicvoidoutputInt(int); }
+56
+
+
+3.2. Logical Cohesion •Definition: Elements of component are related logically and not functionally (elements contribute to activities of the same general category) •Several logically related elements are in the same component and one of the elements is selected by the client component. Functional Informational Sequential Communicational Procedural Temporal Logical Coincidental
+58
+
+--- Page 15 ---
+59 60
+Example 1 Example 2
+•Someone contemplating a journey might compile the •A "print all" procedure might consist of:
+following list: • Printing a local sales report.
+• Go by Car • Printing a regional sales report.
+• Go by Train • Printing a national sales report.
+• Go by Boat • Printing a international sales report A "print all" procedure might
+• Go by Plane consist of:
+•What relates these activities? They're all means of
+transport, of course. But a crucial point is that for any •If the user, just wanted a national sales report, and not
+journey, a person must choose a specific subset of these any of the others, a flag (a switch) would need to be
+modes of transport. It's unlikely anyone would use passed to the procedure (using arguments and
+themallon any particular journey. parameters) to tell the procedure which report to print.
+59 60
+61
+Example 2 Example 3
+• You can eliminate the need for logical cohesion, by making each •A component reads inputs from tape, disk, and network.
+report above a separate procedure. Thus, there would be four All the code for these functions are in the same
+separate procedures which could be called individually when needed component.
+by using buttons, check boxes, radio button, other procedures, etc...
+•Operations are related, but the functions are significantly
+different.
+My single functionis to
+decide when to call the publicclassExample {
+procedures below me, publicvoidreadDataFromTape(Tape t) {
+then call them. Print Reports }
+publicvoidreadDataFromDisk(Disk d) {
+}
+publicvoidreadDataFromNetwork(Network n) {
+Print Local Print Regional Print National Print International }
+Sales Report Sales Report Sales Report Sales Report }
+•=> How to improve?
+Functional Cohesion
+61 62
+15
+
+[Table 1 on Page 15]
+59
+
+Example 1 •Someone contemplating a journey might compile the following list: • Go by Car • Go by Train • Go by Boat • Go by Plane •What relates these activities? They're all means of transport, of course. But a crucial point is that for any journey, a person must choose a specific subset of these modes of transport. It's unlikely anyone would use themallon any particular journey.
+59
+61
+
+Example 2 • You can eliminate the need for logical cohesion, by making each report above a separate procedure. Thus, there would be four separate procedures which could be called individually when needed by using buttons, check boxes, radio button, other procedures, etc... My single functionis to decide when to call the procedures below me, then call them. Print Reports Print Local Print Regional Print National Print International Sales Report Sales Report Sales Report Sales Report Functional Cohesion
+61
+
+[Table 2 on Page 15]
+60
+
+Example 2 •A "print all" procedure might consist of: • Printing a local sales report. • Printing a regional sales report. • Printing a national sales report. • Printing a international sales report A "print all" procedure might consist of: •If the user, just wanted a national sales report, and not any of the others, a flag (a switch) would need to be passed to the procedure (using arguments and parameters) to tell the procedure which report to print.
+60
+
+
+Example 3 •A component reads inputs from tape, disk, and network. All the code for these functions are in the same component. •Operations are related, but the functions are significantly different. publicclassExample { publicvoidreadDataFromTape(Tape t) { } publicvoidreadDataFromDisk(Disk d) { } publicvoidreadDataFromNetwork(Network n) { } } •=> How to improve?
+62
+
+--- Page 16 ---
+64
+Example 3 Example 3
+publicabstractclassDataReader<T> {
+•A component reads inputs from tape, disk, and publicvoidread(T t)
+network. All the code for these functions are in }
+the same component. Operations are related,
+publicclassTapeDataReaderextendsDataReader<Tape>{
+but the functions are significantly different. @Override
+publicvoidread(Tape t) {
+}
+=> Improvement and charging }
+publicclassDiskDataReaderextendsDataReader<Disk>{
+•A device component has a read operation that is @Override
+publicvoidread(Disk d) {
+overridden by sub-class components. The tape
+}
+sub-class reads from tape. The disk sub-class }
+reads from disk. The network sub-class reads publicclassNetWorkDataReaderextendsDataReader<Network>{
+@Override
+from the network. publicvoidread(Network n) {
+}
+}
+63 64
+66
+3.3. Temporal Cohesion Example 1
+•Definition: Elements of a component are •A module supports the following tasks
+related by timing.
+• Put out Milk Bottles
+•Temporal cohesion is when parts of a • Put out Cat
+module are grouped by when they are • Turn off TV
+processed - the parts at a particular time in • Brush Teeth
+program execution •These activities are (only) related by the fact that you do
+•Difficult to change because you may have to them all late at night, just before you go to bed
+look at numerous components when a
+change in a data structure is made.
+•Increases chances of regression fault
+In
+F
+fo
+u
+r
+n
+m
+ct
+a
+io
+ti
+n
+o
+a
+n
+l
+al
+Sequential
+•Component unlikely to be reusable.
+Communicational
+Procedural
+Temporal
+Logical
+Coincidental
+65 66
+16
+
+[Table 1 on Page 16]
+ | 
+ | 
+Example 3 •A component reads inputs from tape, disk, and network. All the code for these functions are in the same component. Operations are related, but the functions are significantly different. => Improvement and charging •A device component has a read operation that is overridden by sub-class components. The tape sub-class reads from tape. The disk sub-class reads from disk. The network sub-class reads from the network. | 
+63 | 
+ | 
+ | 
+3.3. Temporal Cohesion •Definition: Elements of a component are related by timing. •Temporal cohesion is when parts of a module are grouped by when they are processed - the parts at a particular time in program execution •Difficult to change because you may have to look at numerous components when a change in a data structure is made. •Increases chances of regression fault F u n ct io n a l In fo r m a ti o n al Sequential •Component unlikely to be reusable. Communicational Procedural Temporal Logical Coincidental | 
+ | 
+65 | 
+
+[Table 2 on Page 16]
+64
+
+Example 3 publicabstractclassDataReader<T> { publicvoidread(T t) } publicclassTapeDataReaderextendsDataReader<Tape>{ @Override publicvoidread(Tape t) { } } publicclassDiskDataReaderextendsDataReader<Disk>{ @Override publicvoidread(Disk d) { } } publicclassNetWorkDataReaderextendsDataReader<Network>{ @Override publicvoidread(Network n) { } }
+64
+66
+
+Example 1 •A module supports the following tasks • Put out Milk Bottles • Put out Cat • Turn off TV • Brush Teeth •These activities are (only) related by the fact that you do them all late at night, just before you go to bed
+66
+
+--- Page 17 ---
+Example 2 Example 2
+• A system initialization procedure: this procedure contains all of the
+code for initializing all of the parts of the system. Lots of different •A system initialization procedure: this procedure
+activities occur, all at inittime. contains all of the code for initializing all of the parts of
+the system. Lots of different activities occur, all at init
+classInit {
+time.
+// initializes financial report
+publicvoidinitReport(FinanceData);
+=> How to improvement?
+// initializes current weather
+publicvoidinitWeather(WeatherData); •A system initialization procedure sends an initialization
+message to each component.
+// initializes master count
+publicvoidinitCount(); •Each component initializes itself at component
+} instantiation time.
+• => How to improve?
+Remember: The goal is to produce procedures which can do their
+single functionindependently of other procedures.
+67 68
+70
+3.4. Procedural Cohesion Example 1
+•Definition: Elements of a component are • A Prepare for Holiday Meal module:
+related only to ensure a particular order of • Clean Utensils from Previous Meal
+• Prepare Turkey for Roasting
+execution.
+• Make Phone Call
+• Take Shower
+•Actions are still weakly connected and
+• Chop Vegetables
+unlikely to be reusable • Set Table
+• The module support different and possibly unrelated tasks, in
+Functional
+which controlpasses from one activity to the next.
+Informational
+Com S m eq u u n e ic n a ti t a io l nal • This is a bit better than “temporal cohesion’’, since we know
+Procedural that there's a fixed “linear ordering'' of the activities. However,
+Temporal
+Logical there's still not much reason for putting all these activities
+Coincidental together into one module
+69 70
+17
+
+[Table 1 on Page 17]
+
+
+Example 2 • A system initialization procedure: this procedure contains all of the code for initializing all of the parts of the system. Lots of different activities occur, all at inittime. classInit { // initializes financial report publicvoidinitReport(FinanceData); // initializes current weather publicvoidinitWeather(WeatherData); // initializes master count publicvoidinitCount(); } • => How to improve?
+67
+
+
+3.4. Procedural Cohesion •Definition: Elements of a component are related only to ensure a particular order of execution. •Actions are still weakly connected and unlikely to be reusable Functional Informational Sequential Communicational Procedural Temporal Logical Coincidental
+69
+
+[Table 2 on Page 17]
+
+
+Example 2 •A system initialization procedure: this procedure contains all of the code for initializing all of the parts of the system. Lots of different activities occur, all at init time. => How to improvement? •A system initialization procedure sends an initialization message to each component. •Each component initializes itself at component instantiation time. Remember: The goal is to produce procedures which can do their single functionindependently of other procedures.
+68
+70
+
+Example 1 • A Prepare for Holiday Meal module: • Clean Utensils from Previous Meal • Prepare Turkey for Roasting • Make Phone Call • Take Shower • Chop Vegetables • Set Table • The module support different and possibly unrelated tasks, in which controlpasses from one activity to the next. • This is a bit better than “temporal cohesion’’, since we know that there's a fixed “linear ordering'' of the activities. However, there's still not much reason for putting all these activities together into one module
+70
+
+--- Page 18 ---
+71 72
+Example 2 Procedural cohesion
+publicclassExample { •Advantages
+publicvoidreadData{}
+• Elements are related to the program procedure and have a closer
+publicvoidsendEmail() {} relationship to each other.
+}
+•Disadvantages
+• Elements have a closer relationship to the program procedure than
+the problem procedure.
+publicclassDataReader{
+• Because these elements represent part of the functionality of the
+publicvoidreadData(){}
+module it can lead to increased maintenance cost trough the ripple
+}
+effect.
+publicclassEmail{
+publicvoidsendEmail() {}
+}
+71 72
+74
+3.5. Communicational Cohesion Example
+•Definition: Communicational cohesion is when parts of a publicclassExample {
+module are grouped because they operate on the same privateTransaction trans;
+data. (use the same input or output data -or access and
+modify the same part of a data structure) publicreadTransaction() {}
+•All of the data is passed among the elements of the publicvoidsortTransaction() {}
+module. publicvoidcalculateTransactionMean() {}
+publicvoidprintTransaction() {}
+publicvoidsaveTransaction() {}
+Functional
+Informational }
+Sequential
+Communicational
+Procedural
+Temporal
+Logical
+Coincidental
+73 74
+18
+
+[Table 1 on Page 18]
+71
+
+Example 2 publicclassExample { publicvoidreadData{} publicvoidsendEmail() {} } publicclassDataReader{ publicvoidreadData(){} } publicclassEmail{ publicvoidsendEmail() {} }
+71
+
+
+3.5. Communicational Cohesion •Definition: Communicational cohesion is when parts of a module are grouped because they operate on the same data. (use the same input or output data -or access and modify the same part of a data structure) •All of the data is passed among the elements of the module. Functional Informational Sequential Communicational Procedural Temporal Logical Coincidental
+73
+
+[Table 2 on Page 18]
+72
+
+Procedural cohesion •Advantages • Elements are related to the program procedure and have a closer relationship to each other. •Disadvantages • Elements have a closer relationship to the program procedure than the problem procedure. • Because these elements represent part of the functionality of the module it can lead to increased maintenance cost trough the ripple effect.
+72
+74
+
+Example publicclassExample { privateTransaction trans; publicreadTransaction() {} publicvoidsortTransaction() {} publicvoidcalculateTransactionMean() {} publicvoidprintTransaction() {} publicvoidsaveTransaction() {} }
+74
+
+--- Page 19 ---
+76
+3.6. Sequential Cohesion Example
+•A module is said to possess sequential •A module supports the following activities
+cohesion if the element of a module form the • Clean Car Body
+• Fill in Holes in Car
+components of the sequence, where the
+• Sand Car Body
+output from one component of the sequence • Apply Primer
+is input to the next •The input car is being “passed" as a parameter from task
+to task
+•Occurs naturally in functional programming
+languages
+Functional
+Informational
+•Good situation Sequential
+Communicational
+Procedural
+Temporal
+Logical
+Coincidental
+75 76
+77
+Sequential cohesion 3.7. Informational Cohesion
+•Example
+•Definition: Module performs a number of
+• Calculate the trajectory and print results.
+actions, each with its own entry point, with
+•Advantage
+independent code for each action, all performed
+• Elements in a module with this type of cohesion are organized
+functionally providing a better isolation of functionality than in on the same data.
+communicational cohesion.
+•Disadvantage
+• Reuse is limited, because the module is only usable in an identical Functional
+Informational
+environment. For example, if there is a situation where there is a Sequential
+need to calculate the trajectory and write to a file or write to a Communicational
+Procedural
+display, it would be necessary to create a new module
+Temporal
+Logical
+Coincidental
+77 78
+19
+
+[Table 1 on Page 19]
+
+
+3.6. Sequential Cohesion •A module is said to possess sequential cohesion if the element of a module form the components of the sequence, where the output from one component of the sequence is input to the next •Occurs naturally in functional programming languages Functional Informational •Good situation Sequential Communicational Procedural Temporal Logical Coincidental
+75
+77
+
+Sequential cohesion •Example • Calculate the trajectory and print results. •Advantage • Elements in a module with this type of cohesion are organized functionally providing a better isolation of functionality than in communicational cohesion. •Disadvantage • Reuse is limited, because the module is only usable in an identical environment. For example, if there is a situation where there is a need to calculate the trajectory and write to a file or write to a display, it would be necessary to create a new module
+77
+
+[Table 2 on Page 19]
+76
+
+Example •A module supports the following activities • Clean Car Body • Fill in Holes in Car • Sand Car Body • Apply Primer •The input car is being “passed" as a parameter from task to task
+76
+
+
+3.7. Informational Cohesion •Definition: Module performs a number of actions, each with its own entry point, with independent code for each action, all performed on the same data. Functional Informational Sequential Communicational Procedural Temporal Logical Coincidental
+78
+
+--- Page 20 ---
+79 80
+Example 1 Example 2
+•A module performs all of the master file access publicclassExample {
+operations.It reads, adds, updates and deletes master file publicTransaction readTransaction() {}
+records.Each of these functions has its own entry point. publicvoidsortTransaction(Transaction trans) {}
+publicvoidcalculateTransactionMean(Transaction trans) {}
+publicvoidprintTransaction(Transaction trans) {}
+voidemployeeAdd(intstatus, EmpRecrec);
+publicvoidsaveTransaction(Transaction trans) {}
+}
+voidemployeeUpdate(intstatus, EmpRecrec);
+voidemployeeDelete(intstatus, EmpRecrec);
+79 80
+81
+Informational Cohesion 3.8. Functional Cohesion
+•Advantages •Definition: Every essential element to a
+• Informational cohesion provides the developer with the ability to single computation is contained in the
+"package" all of the functionality that relates to a given data
+structure.This can reduce maintenance cost if it is carried through component.
+the application by providing a single location for all of the
+functionality related to data structure. •Functional Cohesion is said to exist if the
+•Disadvantages different elements of a module, cooperate
+• If all of the functionality is not required in another application, it may
+to achieve a single function
+increase the memory requirement of the application and there by
+limit the utility in another application. •Ideal situation. Functional
+•Note In
+S
+fo
+e
+r
+q
+m
+ue
+a
+n
+ti
+t
+o
+ia
+n
+l
+al
+• Informational cohesion is the type of cohesion exhibited by the Com P m ro u c n e i d c u a r t a io l nal
+methods in an object or class. It ranks below functional cohesion in Temporal
+a structured development environment. Logical
+Coincidental
+81 82
+20
+
+[Table 1 on Page 20]
+79
+
+Example 1 •A module performs all of the master file access operations.It reads, adds, updates and deletes master file records.Each of these functions has its own entry point. voidemployeeAdd(intstatus, EmpRecrec); voidemployeeUpdate(intstatus, EmpRecrec); voidemployeeDelete(intstatus, EmpRecrec);
+79
+81
+
+Informational Cohesion •Advantages • Informational cohesion provides the developer with the ability to "package" all of the functionality that relates to a given data structure.This can reduce maintenance cost if it is carried through the application by providing a single location for all of the functionality related to data structure. •Disadvantages • If all of the functionality is not required in another application, it may increase the memory requirement of the application and there by limit the utility in another application. •Note • Informational cohesion is the type of cohesion exhibited by the methods in an object or class. It ranks below functional cohesion in a structured development environment.
+81
+
+[Table 2 on Page 20]
+80
+
+Example 2 publicclassExample { publicTransaction readTransaction() {} publicvoidsortTransaction(Transaction trans) {} publicvoidcalculateTransactionMean(Transaction trans) {} publicvoidprintTransaction(Transaction trans) {} publicvoidsaveTransaction(Transaction trans) {} }
+80
+
+
+3.8. Functional Cohesion •Definition: Every essential element to a single computation is contained in the component. •Functional Cohesion is said to exist if the different elements of a module, cooperate to achieve a single function •Ideal situation. Functional Informational Sequential Communicational Procedural Temporal Logical Coincidental
+82
+
+--- Page 21 ---
+83 84
+3.8. Functional Cohesion Determining Cohesiveness
+•Advantage •Write down a sentence to describe the function of the
+• Maximum possible reuse of the function in other applications. module
+• Maximum isolation of functionality. This isolation reduces the the •If the sentence is compound,
+maintenance costs.
+• It has a sequential or communicational cohesion.
+•If it has words like “first”, “next”, “after”, “then”, etc.
+•Disadvantage
+• It has sequential or temporal cohesion.
+• Using the functional cohesion results in a large number of modules •If it has words like initialize,
+that may necessitate the use of case tools like make and version
+control. • It probably has temporal cohesion.
+83 84
+88 89
+Difference between cohesion and
+Bad Example
+coupling
+Cohesion Coupling
+publicvoidget (intcontrolFlag){
+• Cohesion is the indication of the • Coupling is the indication of the switch(controlFlag) {
+relationship within module relationships between modules case0:
+• Cohesion shows the module’s relative • Coupling shows the relative
+functional strength independence among the modules returnthis.humidity;
+• Cohesion is a degree (quality) to which a • Coupling is a degree to which a Sensor break;
+component / module focuses on the component / module is connected to the case1:
+single thing other modules
+• While designing we should strive for high • While designing we should strive for low returnthis.temperature;
+cohesion. Ex: cohesive coupling. Ex: dependency between break;
+component/module focus on a single task modules should be less
+with little interaction with other modules of + get(controlFlag: int) default:
+the system thrownewUnknownFlagException
+• C o a h f l a o l d v h m i a n e e t g s a m i o d h b n e i e d f i r a i s n s u g t v l h t , i e s v fo i i b k s r i l i n e b e d i x l w i a t o y i m t f h n p a a le t p , u a c ra c la l k s e a s x g t h e e a n v s i i n o g n • M a co n a u d k p i n n li o n g n g p p ri u v b a l t i e c f c ie la ld ss s e , s p r p iv r a o t v e id m es e t l h o o o d s s e } }
+• Cohesion is Intra-Module Concept • Coupling is Inter-Module Concept
+88 89
+21
+
+[Table 1 on Page 21]
+83
+
+3.8. Functional Cohesion •Advantage • Maximum possible reuse of the function in other applications. • Maximum isolation of functionality. This isolation reduces the the maintenance costs. •Disadvantage • Using the functional cohesion results in a large number of modules that may necessitate the use of case tools like make and version control.
+83
+88
+
+Difference between cohesion and coupling Cohesion Coupling • Cohesion is the indication of the • Coupling is the indication of the relationship within module relationships between modules • Cohesion shows the module’s relative • Coupling shows the relative functional strength independence among the modules • Cohesion is a degree (quality) to which a • Coupling is a degree to which a component / module focuses on the component / module is connected to the single thing other modules • While designing we should strive for high • While designing we should strive for low cohesion. Ex: cohesive coupling. Ex: dependency between component/module focus on a single task modules should be less with little interaction with other modules of the system • C o a f l o l d h m a e e t s a m i o h b n i e d i r i s n s g t v h , i e s fo ib k r i l n e e d x w a o i m t f h n p a a le t p , u a c ra c la l k s e a s x g t h e e a n v s i i n o g n • M an a d k i n n o g n p p ri u v b a l t i e c f c ie la ld ss s e , s p r p iv r a o t v e id m es e t l h o o o d s s e having default visibility coupling • Cohesion is Intra-Module Concept • Coupling is Inter-Module Concept
+88
+
+[Table 2 on Page 21]
+84
+
+Determining Cohesiveness •Write down a sentence to describe the function of the module •If the sentence is compound, • It has a sequential or communicational cohesion. •If it has words like “first”, “next”, “after”, “then”, etc. • It has sequential or temporal cohesion. •If it has words like initialize, • It probably has temporal cohesion.
+84
+89
+
+Bad Example publicvoidget (intcontrolFlag){ switch(controlFlag) { case0: returnthis.humidity; Sensor break; case1: returnthis.temperature; break; + get(controlFlag: int) default: thrownewUnknownFlagException } }
+89
+
+[Table 3 on Page 21]
+Sensor
+
++ get(controlFlag: int)
+
+--- Page 22 ---
+92
+Relationship between Coupling and
+Cohesion and Coupling
+Cohesion
+•In general, there's a balance to be made between low
+coupling and high cohesion in your designs.
+•For a complex system, the complexity can be distributed
+to between the modules or within the modules.
+•As modules are simplified to achieve high cohesion, they
+may need to depend more on other modules thus
+increasing coupling.
+•As connections between modules are simplified to
+achieve low coupling, the modules may need to take on
+more responsibilities thus lowering cohesion
+91 92
+93
+Example
+93
+22
+
+[Table 1 on Page 22]
+
+
+Relationship between Coupling and Cohesion
+91
+93
+
+Example
+93
+
+[Table 2 on Page 22]
+92
+
+Cohesion and Coupling •In general, there's a balance to be made between low coupling and high cohesion in your designs. •For a complex system, the complexity can be distributed to between the modules or within the modules. •As modules are simplified to achieve high cohesion, they may need to depend more on other modules thus increasing coupling. •As connections between modules are simplified to achieve low coupling, the modules may need to take on more responsibilities thus lowering cohesion
+92

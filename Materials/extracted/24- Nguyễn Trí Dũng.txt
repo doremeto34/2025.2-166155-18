@@ -1,0 +1,66 @@
+HW2+3
+Phân tích yêu cầu
+Biểu đồ use case
+Biểu đồ use case tổng quan
+Biểu đồ use case tổng quan mô tả các chức năng mà mỗi tác nhân có thể thực hiện khi sử dụng hệ thống đặt hàng nhập khẩu.
+
+
+
+Biểu đồ use case phân rã “Quản lý yêu cầu nhập hàng BPBH”
+
+
+
+Đặc tả Use case
+
+se case “Xử lý đơn hàng đặt bị hủy” - UC003
+Use case “Xem yêu cầu nhập hàng BPBH” - UC02
+
+Mã UC | UC002 | Tên use case | Xem chi tiết yêu cầu nhập hàng
+Tác nhân | Nhân viên Bộ phận bán hàng | Nhân viên Bộ phận bán hàng | Nhân viên Bộ phận bán hàng
+Tiền điều kiện | Nhân viên Bộ phận bán hàng đã đăng nhập vào hệ thống thành công.
+Đã có ít nhất một yêu cầu nhập hàng được tạo trên hệ thống. | Nhân viên Bộ phận bán hàng đã đăng nhập vào hệ thống thành công.
+Đã có ít nhất một yêu cầu nhập hàng được tạo trên hệ thống. | Nhân viên Bộ phận bán hàng đã đăng nhập vào hệ thống thành công.
+Đã có ít nhất một yêu cầu nhập hàng được tạo trên hệ thống.
+Luồng sự kiện chính (thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Thông tin chi tiết của yêu cầu nhập hàng được hiển thị đầy đủ trên màn hình. Dữ liệu hệ thống không bị thay đổi | Thông tin chi tiết của yêu cầu nhập hàng được hiển thị đầy đủ trên màn hình. Dữ liệu hệ thống không bị thay đổi | Thông tin chi tiết của yêu cầu nhập hàng được hiển thị đầy đủ trên màn hình. Dữ liệu hệ thống không bị thay đổi
+
+
+* Dữ liệu đầu vào của thông tin Kiểm hàng và Nhập kho gồm các trường dữ liệu sau:
+STT | Trường    dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1 | Mã yêu cầu | Mã định danh duy nhất của yêu cầu nhập hàng cần xem chi tiết | Có | Không rỗng; mã phải tồn tại trong CSDL | YC-001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Phân tích yêu cầu
+Biểu đồ trình tự (Sequence Diagram - Mức phân tích)
+
+
+
+
+Biểu đồ giao tiếp (Communication Diagram) 
+
+
+
+Biểu đồ lớp (Class Diagram - Mức phân tích) 
+Activity diagram
+HW4
+Sơ đồ chuyển màn hình xem chi tiết yêu cầu nhập hàng
+Màn hình xem chi tiết yêu cầu nhập hàng
+HW5
+Biểu đồ trình tự (Sequence Diagram - Mức thiết kế) 
+
+Biểu đồ lớp (Class Diagram - Mức thiết kế) 
+
+Biểu đồ phụ thuộc gói (Package Dependency Diagram) 

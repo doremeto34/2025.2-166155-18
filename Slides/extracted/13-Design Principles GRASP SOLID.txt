@@ -1,0 +1,1934 @@
+=== Extracted from: 13-Design Principles GRASP SOLID.pdf ===
+=== Total pages: 28 ===
+
+--- Page 1 ---
+Content
+Part 1: GRASP
+n
+13. Design principles: GRASP
+Part 2: SOLID
+n
+& SOLID
+1 2
+1 2
+GRASP GRASP
+GRASP: General Responsibility Assignment 9 patterns and principles used in GRASP:
+n
+Software Patterns (or Principles) 1. Information expert
+Creator
+2.
+n GRASP consist of guidelines for assigning 3. Controller
+responsibility to classes and objects 4. Lowcoupling
+Highcohesion
+in object-oriented design. 5.
+Indirection
+6.
+n GRASP is not related to the SOLID design 7. Polymorphism
+Pure fabrication
+principle. 8.
+Protected variations-Don’t Talk to Strangers (Law of Demeter)
+9.
+Craig Larman: Apply UML and Patterns –An
+introduction to Object-Oriented Analysis and
+3 Design 4
+3 4
+1
+
+[Table 1 on Page 1]
+13. Design principles: GRASP & SOLID 1
+1
+
+GRASP GRASP: General Responsibility Assignment n Software Patterns (or Principles) GRASP consist of guidelines for assigning n responsibility to classes and objects in object-oriented design. GRASP is not related to the SOLID design n principle. 3
+3
+
+[Table 2 on Page 1]
+Content Part 1: GRASP n Part 2: SOLID n 2
+2
+
+GRASP 9 patterns and principles used in GRASP: Information expert 1. Creator 2. Controller 3. Lowcoupling 4. Highcohesion 5. Indirection 6. Polymorphism 7. Pure fabrication 8. Protected variations-Don’t Talk to Strangers (Law of Demeter) 9. Craig Larman: Apply UML and Patterns –An introduction to Object-Oriented Analysis and Design 4
+4
+
+[Table 3 on Page 1]
+
+
+
+[Table 4 on Page 1]
+ | 
+ | 
+
+[Table 5 on Page 1]
+
+
+
+--- Page 2 ---
+Information Expert Example for Expert
+Given an object o, which responsibilities can Assume we need to get all the videos of a
+n n
+be assigned to o? VideoStore.
+Expert principle says – assign those Since VideoStore knows about all the videos,
+n n
+responsibilities to o for which o has the we can assign this responsibility of giving all
+information to fulfill that responsibility. the videos can be assigned to VideoStore
+They have all the information needed to class.
+n
+perform operations, or in some cases they VideoStore is the information expert.
+n
+collaborate with others to fulfill their
+responsibilities.
+5 6
+5 6
+Example for Expert Example for Expert
+7 8
+7 8
+2
+
+[Table 1 on Page 2]
+Information Expert Given an object o, which responsibilities can n be assigned to o? Expert principle says – assign those n responsibilities to o for which o has the information to fulfill that responsibility. They have all the information needed to n perform operations, or in some cases they collaborate with others to fulfill their responsibilities. 5
+5
+
+Example for Expert 7
+7
+
+[Table 2 on Page 2]
+Example for Expert Assume we need to get all the videos of a n VideoStore. Since VideoStore knows about all the videos, n we can assign this responsibility of giving all the videos can be assigned to VideoStore class. VideoStore is the information expert. n 6
+6
+
+Example for Expert 8
+8
+
+[Table 3 on Page 2]
+
+
+
+[Table 4 on Page 2]
+
+
+
+[Table 5 on Page 2]
+
+
+
+[Table 6 on Page 2]
+
+
+
+--- Page 3 ---
+Creator Example for Creator
+n Who creates an Object? Or who should create a n Consider VideoStore and Video in that store.
+new instance of some class?
+VideoStore has an aggregation association
+n
+Container” object creates “contained” objects.
+n with Video. I.e, VideoStore is the container
+Decide who can be creator based on the objects
+n and the Video is the contained object.
+association and their interaction: Assign class B the
+So, we can instantiate video object in
+responsibility to create object A if one of these is n
+true (more is better) VideoStore class
+B contains or compositely aggregates A
+n
+B records A
+n
+B closely uses A
+n
+B has the initializing data for A
+n
+9 10
+9 10
+Example diagram Example for creator
+11 12
+11 12
+3
+
+[Table 1 on Page 3]
+Creator Who creates an Object? Or who should create a n new instance of some class? Container” object creates “contained” objects. n Decide who can be creator based on the objects n association and their interaction: Assign class B the responsibility to create object A if one of these is true (more is better) B contains or compositely aggregates A n B records A n B closely uses A n B has the initializing data for A n 9
+9
+
+Example diagram 11
+11
+
+[Table 2 on Page 3]
+Example for Creator Consider VideoStore and Video in that store. n VideoStore has an aggregation association n with Video. I.e, VideoStore is the container and the Video is the contained object. So, we can instantiate video object in n VideoStore class 10
+10
+
+Example for creator 12
+12
+
+[Table 3 on Page 3]
+
+
+
+[Table 4 on Page 3]
+
+
+
+[Table 5 on Page 3]
+
+
+
+[Table 6 on Page 3]
+
+
+
+--- Page 4 ---
+Controller Controller
+n Deals with how to delegate the request from the UI layer n We can make an object as Controller, if
+objects to domain layer objects.
+Object represents the overall system (facade
+n
+when a request comes from UI layer object, Controller
+n controller)
+pattern helps us in determining what is that first object that
+receive the message from the UI layer objects. Object represent a use case, handling a
+n
+This object is called controller object which receives request sequence of operations (use case or session
+n
+from UI layer object and then controls/coordinates with other controller).
+object of the domain layer to fulfill the request.
+Benefits
+n
+It delegates the work to other class and coordinates the
+n
+overall activity n can reuse this controller class.
+Can use to maintain the state of the use case.
+n
+Can control the sequence of the activities
+n
+13 14
+13 14
+Example for Controller Bloated Controllers
+Controller class is called bloated, if
+n
+The class is overloaded with too many
+n
+responsibilities.
+Solution –Add more controllers
+n
+Controller class also performing many tasks
+n
+instead of delegating to other class.
+Solution –controller class has to delegate things to
+n
+others.
+15 16
+15 16
+4
+
+[Table 1 on Page 4]
+Controller Deals with how to delegate the request from the UI layer n objects to domain layer objects. when a request comes from UI layer object, Controller n pattern helps us in determining what is that first object that receive the message from the UI layer objects. This object is called controller object which receives request n from UI layer object and then controls/coordinates with other object of the domain layer to fulfill the request. It delegates the work to other class and coordinates the n overall activity 13
+13
+
+Example for Controller 15
+15
+
+[Table 2 on Page 4]
+Controller We can make an object as Controller, if n Object represents the overall system (facade n controller) Object represent a use case, handling a n sequence of operations (use case or session controller). Benefits n can reuse this controller class. n Can use to maintain the state of the use case. n Can control the sequence of the activities n 14
+14
+
+Bloated Controllers Controller class is called bloated, if n The class is overloaded with too many n responsibilities. Solution –Add more controllers n Controller class also performing many tasks n instead of delegating to other class. Solution –controller class has to delegate things to n others. 16
+16
+
+[Table 3 on Page 4]
+
+
+
+[Table 4 on Page 4]
+
+
+
+[Table 5 on Page 4]
+
+
+
+[Table 6 on Page 4]
+
+
+
+--- Page 5 ---
+Low Coupling Low coupling
+n How strongly the objects are connected to each other? Two elements are coupled, if
+Coupling –object depending on other object.
+n One element has aggregation/composition
+n
+When depended upon element changes, it affects the
+n association with another element.
+dependant also.
+One element implements/extends other element.
+Low Coupling –How can we reduce the impact of change in n
+n
+depended upon elements on dependant elements.
+Prefer low coupling –assign responsibilities so that coupling
+n
+remain low.
+Minimizes the dependency hence making system
+n
+maintainable, efficient and code reusable
+17 18
+17 18
+Example for poor coupling Example for low coupling
+Here class Rent knows about both VideoStore and VideoStore and Video class are coupled, and Rent is
+n n
+Video objects. Rent is depending on both the coupled with VideoStore. Thus providing low coupling
+classes.
+19 20
+19 20
+5
+
+[Table 1 on Page 5]
+Low Coupling How strongly the objects are connected to each other? n Coupling –object depending on other object. n When depended upon element changes, it affects the n dependant also. Low Coupling –How can we reduce the impact of change in n depended upon elements on dependant elements. Prefer low coupling –assign responsibilities so that coupling n remain low. Minimizes the dependency hence making system n maintainable, efficient and code reusable 17
+17
+
+Example for poor coupling Here class Rent knows about both VideoStore and n Video objects. Rent is depending on both the classes. 19
+19
+
+[Table 2 on Page 5]
+Low coupling Two elements are coupled, if One element has aggregation/composition n association with another element. One element implements/extends other element. n 18
+18
+
+Example for low coupling VideoStore and Video class are coupled, and Rent is n coupled with VideoStore. Thus providing low coupling 20
+20
+
+[Table 3 on Page 5]
+
+
+
+[Table 4 on Page 5]
+
+
+
+[Table 5 on Page 5]
+
+
+
+[Table 6 on Page 5]
+
+
+
+--- Page 6 ---
+High Cohesion Example for low cohesion
+How are the operations of any element are
+n
+functionally related?
+Related responsibilities in to one manageable unit.
+n
+Prefer high cohesion
+n
+Clearly defines the purpose of the element
+n
+Benefits
+n
+Easily understandable and maintainable.
+n
+Code reuse
+n
+Low coupling
+n
+21 22
+21 22
+Example for High Cohesion Indirection
+How can we avoid a direct coupling between
+n
+two or more elements.
+Indirection introduces an intermediate unit to
+n
+communicate between the other units, so that
+the other units are not directly coupled.
+Benefits: low coupling
+n
+Example: Adapter, Facade, Obserever
+n
+23 24
+23 24
+6
+
+[Table 1 on Page 6]
+High Cohesion How are the operations of any element are n functionally related? Related responsibilities in to one manageable unit. n Prefer high cohesion n Clearly defines the purpose of the element n Benefits n Easily understandable and maintainable. n Code reuse n Low coupling n 21
+21
+
+Example for High Cohesion 23
+23
+
+[Table 2 on Page 6]
+Example for low cohesion 22
+22
+
+Indirection How can we avoid a direct coupling between n two or more elements. Indirection introduces an intermediate unit to n communicate between the other units, so that the other units are not directly coupled. Benefits: low coupling n Example: Adapter, Facade, Obserever n 24
+24
+
+[Table 3 on Page 6]
+
+
+
+[Table 4 on Page 6]
+
+
+
+[Table 5 on Page 6]
+
+
+
+[Table 6 on Page 6]
+
+
+
+--- Page 7 ---
+Example for Indirection Polymorphism
+Here polymorphism illustrates indirection How to handle related but varying elements
+n n
+Class Employee provides a level of based on element type?
+n
+indirection to other units of the system Polymorphism guides us in deciding which
+n
+object is responsible for handling those
+varying elements.
+Benefits: handling new variations will become
+n
+easy.
+25 26
+25 26
+Example for Polymorphism Pure Fabrication
+n the getArea() varies by the type of shape, so we assign that n Problem: Who is responsible when you are
+responsibility to the subclasses.
+desperate, and do not want to violate high
+cohesion and low coupling
+Solution: Assign a highly cohesive set of
+n
+responsibilities to an artificial or convenience
+"behavior” class that does not represent a
+problem domain concept — something made
+n By sending message to the Shape object, a call will be up, in order to support high cohesion, low
+made to the corresponding sub class object –Circle or
+coupling, and reuse.
+Triangle
+27 28
+27 28
+7
+
+[Table 1 on Page 7]
+Example for Indirection Here polymorphism illustrates indirection n Class Employee provides a level of n indirection to other units of the system 25
+25
+
+Example for Polymorphism the getArea() varies by the type of shape, so we assign that n responsibility to the subclasses. By sending message to the Shape object, a call will be n made to the corresponding sub class object –Circle or Triangle 27
+27
+
+[Table 2 on Page 7]
+Polymorphism How to handle related but varying elements n based on element type? Polymorphism guides us in deciding which n object is responsible for handling those varying elements. Benefits: handling new variations will become n easy. 26
+26
+
+Pure Fabrication Problem: Who is responsible when you are n desperate, and do not want to violate high cohesion and low coupling Solution: Assign a highly cohesive set of n responsibilities to an artificial or convenience "behavior” class that does not represent a problem domain concept — something made up, in order to support high cohesion, low coupling, and reuse. 28
+28
+
+[Table 3 on Page 7]
+
+
+
+[Table 4 on Page 7]
+
+
+
+[Table 5 on Page 7]
+
+
+
+[Table 6 on Page 7]
+
+
+
+--- Page 8 ---
+Example 1 Example 1
+We need to save Saleinstances in a relational Solution: create a new class (PersistentStorage) that is
+n n
+database. By Information Expert, we assign this solely responsible for saving objects
+responsibility to the Saleclass itself, because the n Advantages:
+sale has the data that needs to be saved. But n The Sale remains well-designed, with high cohesion and low coupling.
+the Sale class becomes incohesive. n The PersistentStorageclass is relatively cohesive, having the sole
+n purpose of storing or inserting objects in a persistent storage medium.
+The Sale class has to be coupled to the relational database interface
+n (such as JDBC in Java technologies), so its coupling goes up. n The PersistentStorageclass is a very generic and reusable object.
+Saving objects in a relational database is a very general task. Placing
+n
+these responsibilities in the Sale class suggests there is going to be
+poor reuse or lots of duplication in other classes that do the same
+thing.
+29 30
+29 30
+Example 2 Protected Variation
+interfaceIForeignExchange {
+List<ConversionRate> getConversionRates();
+} Problem: How to design objects, subsystems
+classConversionRate{ n
+privateString from;
+privateString to; and systems so that the variations or
+privatedoublerate;
+publicConversionRate(String from, String to, doublerate) { instability in these elements does not have an
+this.from= from;
+this.to= to; undesirable impact on other elements?
+this.rate= rate;
+}
+} Solution: Identify points of predicted variation
+n
+publicclassForeignExchange implementsIForeignExchange {
+publicList<ConversionRate> getConversionRates() { or instability, assign responsibilities to create
+List<ConversionRate> rates= ForeignExchange.getConversionRatesFromExternalApi();
+returnrates; a stable interface around them.
+}
+privatestaticList<ConversionRate> getConversionRatesFromExternalApi() {
+// Communication with external API. Here is only mock.
+List<ConversionRate> conversionRates= newArrayList<ConversionRate>();
+conversionRates.add(newConversionRate("USD", "EUR", 0.88));
+conversionRates.add(newConversionRate("EUR", "USD", 1.13));
+returnconversionRates;
+}
+} 31 32
+31 32
+8
+
+[Table 1 on Page 8]
+Example 1 We need to save Saleinstances in a relational n database. By Information Expert, we assign this responsibility to the Saleclass itself, because the sale has the data that needs to be saved. But the Sale class becomes incohesive. n The Sale class has to be coupled to the relational database interface n (such as JDBC in Java technologies), so its coupling goes up. Saving objects in a relational database is a very general task. Placing n these responsibilities in the Sale class suggests there is going to be poor reuse or lots of duplication in other classes that do the same thing. 29
+29
+
+Example 2 interfaceIForeignExchange { List<ConversionRate> getConversionRates(); } classConversionRate{ privateString from; privateString to; privatedoublerate; publicConversionRate(String from, String to, doublerate) { this.from= from; this.to= to; this.rate= rate; } } publicclassForeignExchange implementsIForeignExchange { publicList<ConversionRate> getConversionRates() { List<ConversionRate> rates= ForeignExchange.getConversionRatesFromExternalApi(); returnrates; } privatestaticList<ConversionRate> getConversionRatesFromExternalApi() { // Communication with external API. Here is only mock. List<ConversionRate> conversionRates= newArrayList<ConversionRate>(); conversionRates.add(newConversionRate("USD", "EUR", 0.88)); conversionRates.add(newConversionRate("EUR", "USD", 1.13)); returnconversionRates; } } 31
+31
+
+[Table 2 on Page 8]
+Example 1 Solution: create a new class (PersistentStorage) that is n solely responsible for saving objects Advantages: n n The Sale remains well-designed, with high cohesion and low coupling. n The PersistentStorageclass is relatively cohesive, having the sole purpose of storing or inserting objects in a persistent storage medium. n The PersistentStorageclass is a very generic and reusable object. 30
+30
+
+Protected Variation Problem: How to design objects, subsystems n and systems so that the variations or instability in these elements does not have an undesirable impact on other elements? Solution: Identify points of predicted variation n or instability, assign responsibilities to create a stable interface around them. 32
+32
+
+[Table 3 on Page 8]
+
+
+
+[Table 4 on Page 8]
+
+
+
+[Table 5 on Page 8]
+
+
+
+[Table 6 on Page 8]
+
+
+
+--- Page 9 ---
+Example for Protected Variation (1/3) Example for Protected Variation (2/3)
+33 34
+33 34
+Example for Protected Variation (1/3)
+Law of Demeter
+35 36
+35 36
+9
+
+[Table 1 on Page 9]
+Example for Protected Variation (1/3) 33
+33
+
+Example for Protected Variation (1/3) 35
+35
+
+[Table 2 on Page 9]
+Example for Protected Variation (2/3) 34
+34
+
+Law of Demeter 36
+36
+
+[Table 3 on Page 9]
+
+
+
+[Table 4 on Page 9]
+
+
+
+[Table 5 on Page 9]
+ | 
+ | 
+
+--- Page 10 ---
+Law of Demeter Law of Demeter
+Karl Lieberherriand colleagues
+A method "M" of an object "O" should invoke
+n Law of Demeter: An object should know as little as n
+possible about the internal structure of other objects only the the methods of the following kinds of
+with which it interacts –a question of coupling objects:
+Or… “only talk to your immediate friends”
+n
+itself
+Closely related to representation exposure and n
+n
+(im)mutability n its parameters
+n Bad example –too-tight chain of coupling between n any objects it creates/instantiates
+classes
+its direct component objects
+n
+general.getColonel().getMajor(m).getCaptain(cap)
+.getSergeant(ser).getPrivate(name).digFoxHole();
+Guidelines: not strict rules!
+n Better example But thinking about them
+general.superviseFoxHole(m, cap, ser, name); will generally help you
+produce better designs
+37 38
+37 38
+Without Law of Demeter? Law of Demeter – benefits
+objectA.getObjectB().getObjectC().doSomething(); Your classes will be "loosely coupled"; your
+n
+In the future, the class ObjectA may no longer need dependencies are reduced.
+n
+to carry a reference to ObjectB.
+Reusing your classes will be easier.
+n
+In the future, the class ObjectB may no longer need
+n
+Your classes are less subject to changes in
+to carry a reference to ObjectC. n
+other classes.
+The doSomething() method in the ObjectC class
+n
+may go away, or change. n Your code will be easier to test.
+n If the intent of your class is to be reusable, you can n Classes designed this way have been proven
+never reuse your class without also requiring to have fewer errors.
+ObjectA, ObjectB, and ObjectC to be shipped with
+your class.
+39 40
+39 40
+10
+
+[Table 1 on Page 10]
+Law of Demeter Karl Lieberherriand colleagues Law of Demeter: An object should know as little as n possible about the internal structure of other objects with which it interacts –a question of coupling Or… “only talk to your immediate friends” n Closely related to representation exposure and n (im)mutability Bad example –too-tight chain of coupling between n classes general.getColonel().getMajor(m).getCaptain(cap) .getSergeant(ser).getPrivate(name).digFoxHole(); Better example n general.superviseFoxHole(m, cap, ser, name); 37
+37
+
+Without Law of Demeter? objectA.getObjectB().getObjectC().doSomething(); In the future, the class ObjectA may no longer need n to carry a reference to ObjectB. In the future, the class ObjectB may no longer need n to carry a reference to ObjectC. The doSomething() method in the ObjectC class n may go away, or change. If the intent of your class is to be reusable, you can n never reuse your class without also requiring ObjectA, ObjectB, and ObjectC to be shipped with your class. 39
+39
+
+[Table 2 on Page 10]
+Law of Demeter A method "M" of an object "O" should invoke n only the the methods of the following kinds of objects: itself n its parameters n any objects it creates/instantiates n its direct component objects n Guidelines: not strict rules! But thinking about them will generally help you produce better designs 38
+38
+
+Law of Demeter – benefits Your classes will be "loosely coupled"; your n dependencies are reduced. Reusing your classes will be easier. n Your classes are less subject to changes in n other classes. Your code will be easier to test. n Classes designed this way have been proven n to have fewer errors. 40
+40
+
+[Table 3 on Page 10]
+
+
+
+[Table 4 on Page 10]
+
+
+
+[Table 5 on Page 10]
+
+
+
+[Table 6 on Page 10]
+
+
+
+--- Page 11 ---
+Example of LoD Example of LoD
+public class Customer { public class Wallet {
+private String firstName; private float value;
+private String lastName; public float getTotalMoney() {
+private Wallet myWallet; return value;
+}
+public String getFirstName(){ public void setTotalMoney(float newValue) {
+return firstName; value = newValue;
+} }
+public String getLastName(){ public void addMoney(float deposit) {
+return lastName; value += deposit;
+} }
+public Wallet getWallet(){ public void subtractMoney(float debit) {
+return myWallet; value -= debit;
+} }
+} }
+41 42
+41 42
+Example of LoD Example of LoD – Improvement
+// code from some method inside the Paperboy class... public class Customer {
+private String firstName;
+payment = 2.00; // “I want my two dollars!” private String lastName;
+private Wallet myWallet;
+Wallet theWallet = myCustomer.getWallet();
+public String getFirstName(){
+if (theWallet.getTotalMoney() > payment) { return firstName;
+}
+theWallet.subtractMoney(payment); public String getLastName(){
+return lastName;
+} else {
+}
+// come back later and get my money public float getPayment(float bill) {
+if (myWallet != null) {
+} if (myWallet.getTotalMoney() > bill) {
+theWallet.subtractMoney(payment);
+return payment;
+Is this Bad? Why?
+}
+}
+}
+}
+43 44
+43 44
+11
+
+[Table 1 on Page 11]
+Example of LoD public class Customer { private String firstName; private String lastName; private Wallet myWallet; public String getFirstName(){ return firstName; } public String getLastName(){ return lastName; } public Wallet getWallet(){ return myWallet; } } 41
+41
+
+Example of LoD // code from some method inside the Paperboy class... payment = 2.00; // “I want my two dollars!” Wallet theWallet = myCustomer.getWallet(); if (theWallet.getTotalMoney() > payment) { theWallet.subtractMoney(payment); } else { // come back later and get my money } Is this Bad? Why? 43
+43
+
+[Table 2 on Page 11]
+Example of LoD public class Wallet { private float value; public float getTotalMoney() { return value; } public void setTotalMoney(float newValue) { value = newValue; } public void addMoney(float deposit) { value += deposit; } public void subtractMoney(float debit) { value -= debit; } } 42
+42
+
+Example of LoD – Improvement public class Customer { private String firstName; private String lastName; private Wallet myWallet; public String getFirstName(){ return firstName; } public String getLastName(){ return lastName; } public float getPayment(float bill) { if (myWallet != null) { if (myWallet.getTotalMoney() > bill) { theWallet.subtractMoney(payment); return payment; } } } } 44
+44
+
+[Table 3 on Page 11]
+
+
+
+[Table 4 on Page 11]
+
+
+
+[Table 5 on Page 11]
+
+
+
+[Table 6 on Page 11]
+
+
+
+--- Page 12 ---
+Example of LoD – Improvement Another example of LoD
+// code from some method inside the Paperboy class... public class Band {
+payment = 2.00; // “I want my two dollars!”
+private Singer singer;
+paidAmount = myCustomer.getPayment(payment);
+private Drummer drummer;
+if (paidAmount == payment) {
+// say thank you and give customer a receipt private Guitarist guitarist;
+} else {
+}
+// come back later and get my money
+}
+Why Is This Better?
+45 46
+45 46
+Another example of LoD Another example of LoD – Improvement
+class TourPromoter { public class Band {
+public String makePosterText(Band band) {
+private Singer singer;
+String guitaristsName = band.getGuitarist().getName();
+String drummersName = band.getDrummer().getName(); private Drummer drummer;
+String singersName = band.getSinger().getName();
+StringBuilder posterText = new StringBuilder(); private Guitarist guitarist;
+posterText.append(band.getName()
+posterText.append(" featuring: "); public String[] getMembers() {
+posterText.append(guitaristsName); return {
+posterText.append(", ");
+posterText.append(singersName); singer.getName(),
+posterText.append(", ")
+posterText.append(drummersName); drummer.getName(),
+posterText.append(", ") guitarist.getName()};
+posterText.append("Tickets £50.");
+}
+return posterText.toString(); }
+}
+}
+47 48
+47 48
+12
+
+[Table 1 on Page 12]
+Example of LoD – Improvement // code from some method inside the Paperboy class... payment = 2.00; // “I want my two dollars!” paidAmount = myCustomer.getPayment(payment); if (paidAmount == payment) { // say thank you and give customer a receipt } else { // come back later and get my money } Why Is This Better? 45
+45
+
+Another example of LoD class TourPromoter { public String makePosterText(Band band) { String guitaristsName = band.getGuitarist().getName(); String drummersName = band.getDrummer().getName(); String singersName = band.getSinger().getName(); StringBuilder posterText = new StringBuilder(); posterText.append(band.getName() posterText.append(" featuring: "); posterText.append(guitaristsName); posterText.append(", "); posterText.append(singersName); posterText.append(", ") posterText.append(drummersName); posterText.append(", ") posterText.append("Tickets £50."); return posterText.toString(); } } 47
+47
+
+[Table 2 on Page 12]
+Another example of LoD public class Band { private Singer singer; private Drummer drummer; private Guitarist guitarist; } 46
+46
+
+Another example of LoD – Improvement public class Band { private Singer singer; private Drummer drummer; private Guitarist guitarist; public String[] getMembers() { return { singer.getName(), drummer.getName(), guitarist.getName()}; } } 48
+48
+
+[Table 3 on Page 12]
+
+
+
+[Table 4 on Page 12]
+
+
+
+[Table 5 on Page 12]
+
+
+
+[Table 6 on Page 12]
+
+
+
+--- Page 13 ---
+Another example of LoD – Improvement
+public class TourPromoter {
+public String makePosterText(Band band) { SOLID
+StringBuilder posterText = new StringBuilder();
+posterText.append(band.getName());
+posterText.append(" featuring: ");
+for(String member: band.getMembers()) {
+posterText.append(member);
+posterText.append(", ");
+}
+posterText.append("Tickets: £50");
+return posterText.toString();
+}
+}
+49
+49 50
+SOLID 1. Nguyên lý một nhiệm vụ
+Single-responsibility Principle
+“Principles Of OOD”, Robert C. Martin (“Uncle Every class or module in a program should
+n
+BOB”) have responsibility for just a single piece of
+that program’s functionality, or
+S – Single-responsiblity principle
+n
+A class should have only one reason to
+O – Open-closed principle n
+n
+change.
+L – Liskov substitution principle
+n
+Discussion:
+I – Interface segregation principle n
+n
+Why should classes have a single responsibility?
+D – Dependency Inversion Principle n
+n
+Does this mean class should have a single
+n
+method?
+51 52
+51 52
+13
+
+[Table 1 on Page 13]
+Another example of LoD – Improvement public class TourPromoter { public String makePosterText(Band band) { StringBuilder posterText = new StringBuilder(); posterText.append(band.getName()); posterText.append(" featuring: "); for(String member: band.getMembers()) { posterText.append(member); posterText.append(", "); } posterText.append("Tickets: £50"); return posterText.toString(); } } 49
+49
+
+SOLID “Principles Of OOD”, Robert C. Martin (“Uncle BOB”) S – Single-responsiblity principle n O – Open-closed principle n L – Liskov substitution principle n I – Interface segregation principle n D – Dependency Inversion Principle n 51
+51
+
+[Table 2 on Page 13]
+SOLID
+50
+
+1. Nguyên lý một nhiệm vụ Single-responsibility Principle Every class or module in a program should n have responsibility for just a single piece of that program’s functionality, or A class should have only one reason to n change. Discussion: n Why should classes have a single responsibility? n Does this mean class should have a single n method? 52
+52
+
+[Table 3 on Page 13]
+
+
+
+[Table 4 on Page 13]
+ | 
+ | 
+
+[Table 5 on Page 13]
+
+
+
+--- Page 14 ---
+Example 1 – UserSettingService Example 1 - Refactored code
+package test; publicclassUserSettingService{
+public class UserSettingService { publicvoidchangeEmail(User user) {
+public void changeEmail(User user) { if(SecurityService.checkAccess(user)) {
+//Grant option to change
+if(checkAccess(user)) {
+}
+//Grant option to change
+}
+} }
+}
+public boolean checkAccess(User user) {
+publicclassSecurityService{
+//Verify if the user is valid.
+publicbooleancheckAccess(User user) {
+}
+//check the access.
+}
+}
+}
+53 54
+53 54
+Example 2 – Employee Example 2 - Refactored code
+publicclassEmployee{ publicclassHRPromotions{
+privateString employeeId; publicbooleanisPromotionDueThisYear(Employee emp){
+/*promotion logic implementation using the employee information passed*/
+privateString name; }
+privatestring address; }
+privateDate dateOfJoining;
+publicclassFinITCalculations{
+publicbooleanisPromotionDueThisYear(){
+publicDouble calcIncomeTaxForCurrentYear(Employee emp){
+//promotion logic implementation //income tax logic implementation using the employee information passed
+} }
+}
+publicDouble calcIncomeTaxForCurrentYear(){
+//income tax logic implementation publicclassEmployee{
+} privateString employeeId;
+privateString name;
+//Getters & Setters for all the private attributes
+privatestring address;
+} privateDate dateOfJoining;
+//Getters & Setters for all the private attributes
+}
+55
+55 56
+14
+
+[Table 1 on Page 14]
+Example 1 – UserSettingService package test; public class UserSettingService { public void changeEmail(User user) { if(checkAccess(user)) { //Grant option to change } } public boolean checkAccess(User user) { //Verify if the user is valid. } } 53
+53
+
+Example 2 – Employee publicclassEmployee{ privateString employeeId; privateString name; privatestring address; privateDate dateOfJoining; publicbooleanisPromotionDueThisYear(){ //promotion logic implementation } publicDouble calcIncomeTaxForCurrentYear(){ //income tax logic implementation } //Getters & Setters for all the private attributes } 55
+55
+
+[Table 2 on Page 14]
+Example 1 - Refactored code publicclassUserSettingService{ publicvoidchangeEmail(User user) { if(SecurityService.checkAccess(user)) { //Grant option to change } } } publicclassSecurityService{ publicbooleancheckAccess(User user) { //check the access. } } 54
+54
+
+Example 2 - Refactored code publicclassHRPromotions{ publicbooleanisPromotionDueThisYear(Employee emp){ /*promotion logic implementation using the employee information passed*/ } } publicclassFinITCalculations{ publicDouble calcIncomeTaxForCurrentYear(Employee emp){ //income tax logic implementation using the employee information passed } } publicclassEmployee{ privateString employeeId; privateString name; privatestring address; privateDate dateOfJoining; //Getters & Setters for all the private attributes }
+56
+
+[Table 3 on Page 14]
+
+
+
+[Table 4 on Page 14]
+
+
+
+[Table 5 on Page 14]
+
+
+
+[Table 6 on Page 14]
+
+
+
+--- Page 15 ---
+2. Nguyên lý đóng mở Example 1 - HealthInsuranceSurveyor
+Open-closed Principle
+Software entities (classes, modules, functions, etc.) publicclassHealthInsuranceSurveyor{
+n
+should be open for extension, but closed for publicbooleanisValidClaim(){
+modification
+System.out.println("Validating ...");
+We should strive to write code that doesn’t have to
+n /*Logic to validate health insurance claims*/
+be changed every time the requirements change
+returntrue;
+“Open for extension”: A module (class) should
+n
+}
+provide extension point to change its behaviors
+}
+Closed for modification”: we should not have to
+n
+change old code in order to implement new
+behavior (old code is untouched and therefore
+avoiding cascading breakage)
+57 58
+57 58
+ClaimApprovalManager ClaimApprovalManager
+publicclassClaimApprovalManager { publicclassClaimApprovalManager{
+publicvoidprocessHealthClaim (HealthInsuranceSurveyor surveyor) { publicvoidprocessHealthClaim(HealthInsuranceSurveyorsurveyor)
+if(surveyor.isValidClaim()){ {
+if(surveyor.isValidClaim()){
+System.out.println("Valid claim. Processing claim for approval....");
+System.out.println("Valid claim. Processing ...");
+} }
+} }
+} publicvoidprocessVehicleClaim(VehicleInsuranceSurveyorsurveyor)
+{
+if(surveyor.isValidClaim()){
+System.out.println("Valid claim. Processing ...");
+}
+}
+}
+59 60
+59 60
+15
+
+[Table 1 on Page 15]
+2. Nguyên lý đóng mở Open-closed Principle Software entities (classes, modules, functions, etc.) n should be open for extension, but closed for modification We should strive to write code that doesn’t have to n be changed every time the requirements change “Open for extension”: A module (class) should n provide extension point to change its behaviors Closed for modification”: we should not have to n change old code in order to implement new behavior (old code is untouched and therefore avoiding cascading breakage) 57
+57
+
+ClaimApprovalManager publicclassClaimApprovalManager { publicvoidprocessHealthClaim (HealthInsuranceSurveyor surveyor) { if(surveyor.isValidClaim()){ System.out.println("Valid claim. Processing claim for approval...."); } } } 59
+59
+
+[Table 2 on Page 15]
+Example 1 - HealthInsuranceSurveyor publicclassHealthInsuranceSurveyor{ publicbooleanisValidClaim(){ System.out.println("Validating ..."); /*Logic to validate health insurance claims*/ returntrue; } } 58
+58
+
+ClaimApprovalManager publicclassClaimApprovalManager{ publicvoidprocessHealthClaim(HealthInsuranceSurveyorsurveyor) { if(surveyor.isValidClaim()){ System.out.println("Valid claim. Processing ..."); } } publicvoidprocessVehicleClaim(VehicleInsuranceSurveyorsurveyor) { if(surveyor.isValidClaim()){ System.out.println("Valid claim. Processing ..."); } } } 60
+60
+
+[Table 3 on Page 15]
+
+
+
+[Table 4 on Page 15]
+
+
+
+[Table 5 on Page 15]
+
+
+
+[Table 6 on Page 15]
+
+
+
+--- Page 16 ---
+Refactored code ClaimApprovalManager
+publicabstractclassInsuranceSurveyor { publicclassClaimApprovalManager {
+publicabstractbooleanisValidClaim();
+} publicvoidprocessClaim(InsuranceSurveyor surveyor){
+publicclassHealthInsuranceSurveyor extendsInsuranceSurveyor{ if(surveyor.isValidClaim()){
+publicbooleanisValidClaim(){ System.out.println("Valid claim. Processing ...");
+System.out.println("HealthInsuranceSurveyor: Validating claim...");
+/*Logic to validate health insurance claims*/ }
+returntrue;
+}
+}
+}
+}
+publicclassVehicleInsuranceSurveyor extendsInsuranceSurveyor{
+publicbooleanisValidClaim(){
+System.out.println("VehicleInsuranceSurveyor: Validating claim...");
+/*Logic to validate vehicle insurance claims*/
+returntrue;
+}
+} 61 62
+61 62
+ClaimApprovalManagerTest Example 2
+publicclassClaimApprovalManagerTest{
+publicclassRectangle{
+@Test
+publicvoidtestProcessClaim() throwsException { privatedoublelength;
+HealthInsuranceSurveyorhealthInsuranceSurveyor= privatedoublewidth;
+newHealthInsuranceSurveyor(); }
+ClaimApprovalManagerclaim= newClaimApprovalManager();
+claim1.processClaim(healthInsuranceSurveyor);
+publicclassAreaCalculator{
+publicdoublecalculateRectangleArea(Rectangle rectangle) {
+VehicleInsuranceSurveyorvehicleInsuranceSurveyor=
+returnrectangle.getLength() *rectangle.getWidth();
+newVehicleInsuranceSurveyor();
+ClaimApprovalManagerclaim2= newClaimApprovalManager(); }
+claim2.processClaim(vehicleInsuranceSurveyor); }
+}
+}
+63 64
+63 64
+16
+
+[Table 1 on Page 16]
+Refactored code publicabstractclassInsuranceSurveyor { publicabstractbooleanisValidClaim(); } publicclassHealthInsuranceSurveyor extendsInsuranceSurveyor{ publicbooleanisValidClaim(){ System.out.println("HealthInsuranceSurveyor: Validating claim..."); /*Logic to validate health insurance claims*/ returntrue; } } publicclassVehicleInsuranceSurveyor extendsInsuranceSurveyor{ publicbooleanisValidClaim(){ System.out.println("VehicleInsuranceSurveyor: Validating claim..."); /*Logic to validate vehicle insurance claims*/ returntrue; } } 61
+61
+
+ClaimApprovalManagerTest publicclassClaimApprovalManagerTest{ @Test publicvoidtestProcessClaim() throwsException { HealthInsuranceSurveyorhealthInsuranceSurveyor= newHealthInsuranceSurveyor(); ClaimApprovalManagerclaim= newClaimApprovalManager(); claim1.processClaim(healthInsuranceSurveyor); VehicleInsuranceSurveyorvehicleInsuranceSurveyor= newVehicleInsuranceSurveyor(); ClaimApprovalManagerclaim2= newClaimApprovalManager(); claim2.processClaim(vehicleInsuranceSurveyor); } } 63
+63
+
+[Table 2 on Page 16]
+ClaimApprovalManager publicclassClaimApprovalManager { publicvoidprocessClaim(InsuranceSurveyor surveyor){ if(surveyor.isValidClaim()){ System.out.println("Valid claim. Processing ..."); } } } 62
+62
+
+Example 2 publicclassRectangle{ privatedoublelength; privatedoublewidth; } publicclassAreaCalculator{ publicdoublecalculateRectangleArea(Rectangle rectangle) { returnrectangle.getLength() *rectangle.getWidth(); } } 64
+64
+
+[Table 3 on Page 16]
+
+
+
+[Table 4 on Page 16]
+
+
+
+[Table 5 on Page 16]
+
+
+
+[Table 6 on Page 16]
+
+
+
+--- Page 17 ---
+To add a new shape (Circle) Refactored code
+publicclassCircle{ publicinterfaceShape{
+privatedoubleradius; publicdoublecalculateArea();
+}
+}
+publicclassRectangle implementsShape{
+doublelength;
+publicclassAreaCalculator{ doublewidth;
+publicdoublecalculateRectangleArea(Rectangle rectangle){ publicdoublecalculateArea(){
+returnrectangle.getLength() *rectangle.getWidth(); returnlength* width;
+} }
+}
+publicdoublecalculateCircleArea(Circle circle){
+return3.14159*circle.getRadius()*circle.getRadius(); publicclassCircle implementsShape{
+} publicdoubleradius;
+} publicdoublecalculateArea(){
+return3.14159 *radius*radius;
+}
+}
+65 66
+65 66
+AreaCalculator 3. Nguyên lý thay thế Liskov
+Liskov substitution principle
+publicclassAreaCalculator{ “Let q(x) be a property provable about
+n
+publicdoublecalculateShapeArea(Shape shape){ objects of x of type T. Then q(y) should be
+returnshape.calculateArea(); provable for objects y of type S where S is a
+} subtype of T”
+} Functions that use pointers of references to
+n
+base classes must be able to use objects of
+derived classes without knowing it
+New derived classes are extending the base
+n
+classes without changing their behavior
+67 68
+67 68
+17
+
+[Table 1 on Page 17]
+To add a new shape (Circle) publicclassCircle{ privatedoubleradius; } publicclassAreaCalculator{ publicdoublecalculateRectangleArea(Rectangle rectangle){ returnrectangle.getLength() *rectangle.getWidth(); } publicdoublecalculateCircleArea(Circle circle){ return3.14159*circle.getRadius()*circle.getRadius(); } } 65
+65
+
+AreaCalculator publicclassAreaCalculator{ publicdoublecalculateShapeArea(Shape shape){ returnshape.calculateArea(); } } 67
+67
+
+[Table 2 on Page 17]
+Refactored code publicinterfaceShape{ publicdoublecalculateArea(); } publicclassRectangle implementsShape{ doublelength; doublewidth; publicdoublecalculateArea(){ returnlength* width; } } publicclassCircle implementsShape{ publicdoubleradius; publicdoublecalculateArea(){ return3.14159 *radius*radius; } } 66
+66
+
+3. Nguyên lý thay thế Liskov Liskov substitution principle “Let q(x) be a property provable about n objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T” Functions that use pointers of references to n base classes must be able to use objects of derived classes without knowing it New derived classes are extending the base n classes without changing their behavior 68
+68
+
+[Table 3 on Page 17]
+
+
+
+[Table 4 on Page 17]
+
+
+
+[Table 5 on Page 17]
+
+
+
+[Table 6 on Page 17]
+
+
+
+--- Page 18 ---
+Liskov substitution principle Example – Rectangle
+void clientMethod(SomeClass sc) { classRectangle {
+… protectedintm_width;
+protectedintm_height;
+sc.someMethod();
+… publicvoidsetWidth(intwidth){
+} m_width= width;
+}
+publicvoidsetHeight(intheight){
+m_height= height;
+}
+publicintgetWidth(){
+returnm_width;
+}
+publicintgetHeight(){
+returnm_height;
+}
+publicintgetArea(){
+returnm_width* m_height;
+}
+69 } 70
+69 70
+Square Test
+classSquare extendsRectangle { publicclassRectangleFactory {
+@override publicstaticRectangle generate(){
+returnnewSquare(); // if we return new Rectangle(), everything is fine
+publicvoidsetWidth(intwidth){ }
+m_width= width; }
+m_height= width; classLspTest {
+} publicstaticvoidmain (String args[]) {
+Rectangle r= RectangleFactory.generate();
+@override
+publicvoidsetHeight(intheight){ r.setWidth(5);
+r.setHeight(10);
+m_width= height;
+// user knows that r it's a rectangle.
+m_height= height; // It assumes that he's able to set the width and height as for the base class
+}
+System.out.println(r.getArea());
+} // now he's surprised to see that the area is 100 instead of 50.
+}
+}
+71 72
+71 72
+18
+
+[Table 1 on Page 18]
+Liskov substitution principle void clientMethod(SomeClass sc) { … sc.someMethod(); … } 69
+69
+
+Square classSquare extendsRectangle { @override publicvoidsetWidth(intwidth){ m_width= width; m_height= width; } @override publicvoidsetHeight(intheight){ m_width= height; m_height= height; } } 71
+71
+
+[Table 2 on Page 18]
+Example – Rectangle classRectangle { protectedintm_width; protectedintm_height; publicvoidsetWidth(intwidth){ m_width= width; } publicvoidsetHeight(intheight){ m_height= height; } publicintgetWidth(){ returnm_width; } publicintgetHeight(){ returnm_height; } publicintgetArea(){ returnm_width* m_height; } } 70
+70
+
+Test publicclassRectangleFactory { publicstaticRectangle generate(){ returnnewSquare(); // if we return new Rectangle(), everything is fine } } classLspTest { publicstaticvoidmain (String args[]) { Rectangle r= RectangleFactory.generate(); r.setWidth(5); r.setHeight(10); // user knows that r it's a rectangle. // It assumes that he's able to set the width and height as for the base class System.out.println(r.getArea()); // now he's surprised to see that the area is 100 instead of 50. } } 72
+72
+
+[Table 3 on Page 18]
+
+
+
+[Table 4 on Page 18]
+
+
+
+[Table 5 on Page 18]
+
+
+
+[Table 6 on Page 18]
+
+
+
+--- Page 19 ---
+Refactored code – Shape Rectangle
+publicabstractclassShape { publicclassRectangle extendsShape {
+protectedintmHeight; @Override
+protectedintmWidth; publicintgetWidth() {
+returnmWidth;
+publicabstractintgetWidth(); }
+publicabstractvoidsetWidth(intinWidth); @Override
+publicintgetHeight() {
+returnmHeight;
+publicabstractintgetHeight(); }
+publicabstractvoidsetHeight(intinHeight); @Override
+publicvoidsetWidth(intinWidth) {
+publicintgetArea() { mWidth = inWidth;
+returnmHeight* mWidth; }
+}
+} @Override
+publicvoidsetHeight(intinHeight) {
+mHeight = inHeight;
+}
+73 74
+}
+73 74
+Square Test
+publicclassSquare extendsShape { publicclassShapeFactory{
+@Override
+publicintgetWidth() { publicstaticShape generate(){
+returnmWidth; returnnewSquare();
+} }
+@Override }
+publicvoidsetWidth(intinWidth) {
+SetWidthAndHeight(inWidth); classLspTest{
+} publicstaticvoidmain (String args[]) {
+@Override
+Shape s= ShapeFactory.generate();
+publicintgetHeight() {
+returnmHeight;
+} s.setWidth(5);
+@Override s.setHeight(10);
+publicvoidsetHeight(intinHeight) {
+SetWidthAndHeight(inHeight); System.out.println(r.getArea());
+} }
+privatevoidsetWidthAndHeight(intinValue) {
+}
+mHeight = inValue;
+mWidth = inValue;
+}
+75 76
+}
+75 76
+19
+
+[Table 1 on Page 19]
+Refactored code – Shape publicabstractclassShape { protectedintmHeight; protectedintmWidth; publicabstractintgetWidth(); publicabstractvoidsetWidth(intinWidth); publicabstractintgetHeight(); publicabstractvoidsetHeight(intinHeight); publicintgetArea() { returnmHeight* mWidth; } } 73
+73
+
+Square publicclassSquare extendsShape { @Override publicintgetWidth() { returnmWidth; } @Override publicvoidsetWidth(intinWidth) { SetWidthAndHeight(inWidth); } @Override publicintgetHeight() { returnmHeight; } @Override publicvoidsetHeight(intinHeight) { SetWidthAndHeight(inHeight); } privatevoidsetWidthAndHeight(intinValue) { mHeight = inValue; mWidth = inValue; } 75 }
+75
+
+[Table 2 on Page 19]
+Rectangle publicclassRectangle extendsShape { @Override publicintgetWidth() { returnmWidth; } @Override publicintgetHeight() { returnmHeight; } @Override publicvoidsetWidth(intinWidth) { mWidth = inWidth; } @Override publicvoidsetHeight(intinHeight) { mHeight = inHeight; } 74 }
+74
+
+Test publicclassShapeFactory{ publicstaticShape generate(){ returnnewSquare(); } } classLspTest{ publicstaticvoidmain (String args[]) { Shape s= ShapeFactory.generate(); s.setWidth(5); s.setHeight(10); System.out.println(r.getArea()); } } 76
+76
+
+[Table 3 on Page 19]
+
+
+
+[Table 4 on Page 19]
+
+
+
+[Table 5 on Page 19]
+
+
+
+[Table 6 on Page 19]
+
+
+
+--- Page 20 ---
+Optimized solution Example 2 – Project
+publicclassProject {
+publicArrayList<ProjectFile> projectFiles;
+publicvoidloadAllFiles() {
+for(ProjectFilefile: projectFiles){
+file.loadFileData();
+}
+}
+publicvoidsaveAllFiles() {
+for(ProjectFilefile: projectFiles){
+file.saveFileData();
+}
+}
+}
+77 78
+77 78
+ProjectFile ReadOnlyFile
+publicclassProjectFile{ publicclassReadOnlyFile extendsProjectFile {
+publicstring filePath;
+@Override
+publicvoidsaveFileData() throwsnewInvalidOPException {
+publicbyte[] fileData;
+thrownewInvalidOPException();
+publicvoidloadFileData() { }
+// Retrieve FileDatafrom disk }
+}
+publicvoidsaveFileData(){
+// Write FileDatato disk
+}
+}
+79 80
+79 80
+20
+
+[Table 1 on Page 20]
+Optimized solution 77
+77
+
+ProjectFile publicclassProjectFile{ publicstring filePath; publicbyte[] fileData; publicvoidloadFileData() { // Retrieve FileDatafrom disk } publicvoidsaveFileData(){ // Write FileDatato disk } } 79
+79
+
+[Table 2 on Page 20]
+Example 2 – Project publicclassProject { publicArrayList<ProjectFile> projectFiles; publicvoidloadAllFiles() { for(ProjectFilefile: projectFiles){ file.loadFileData(); } } publicvoidsaveAllFiles() { for(ProjectFilefile: projectFiles){ file.saveFileData(); } } } 78
+78
+
+ReadOnlyFile publicclassReadOnlyFile extendsProjectFile { @Override publicvoidsaveFileData() throwsnewInvalidOPException { thrownewInvalidOPException(); } } 80
+80
+
+[Table 3 on Page 20]
+
+
+
+[Table 4 on Page 20]
+
+
+
+[Table 5 on Page 20]
+
+
+
+[Table 6 on Page 20]
+
+
+
+--- Page 21 ---
+Project Project
+publicclassProject { publicclassProject {
+publicArrayList<ProjectFile> projectFiles; publicArrayList<ProjectFile> allFiles;
+publicArrayList<WritableFile> writableFiles;
+publicvoidloadAllFiles() { publicvoidloadAllFiles() {
+for(ProjectFile file: projectFiles){ for(ProjectFilefile: allFiles){
+file.loadFileData(); file.loadFileData();
+} }
+}
+}
+publicvoidsaveAllFiles() {
+publicvoidsaveAllFiles() { for(ProjectFilefile: writableFiles){
+for(ProjectFile file: projectFiles){ file.saveFileData();
+if(!file instanceOf ReadOnlyFile) }
+}
+file.saveFileData();
+}
+}
+}
+}
+81 82
+81 82
+ProjectFile WritableFile
+public class ProjectFile { public class WritableFile extends ProjectFile {
+public string filePath; public void saveFileData() {
+// Write FileData to disk
+public byte[] fileData; }
+}
+public void loadFileData() {
+// Retrieve FileData from disk
+}
+}
+83 84
+83 84
+21
+
+[Table 1 on Page 21]
+Project publicclassProject { publicArrayList<ProjectFile> projectFiles; publicvoidloadAllFiles() { for(ProjectFile file: projectFiles){ file.loadFileData(); } } publicvoidsaveAllFiles() { for(ProjectFile file: projectFiles){ if(!file instanceOf ReadOnlyFile) file.saveFileData(); } } } 81
+81
+
+ProjectFile public class ProjectFile { public string filePath; public byte[] fileData; public void loadFileData() { // Retrieve FileData from disk } } 83
+83
+
+[Table 2 on Page 21]
+Project publicclassProject { publicArrayList<ProjectFile> allFiles; publicArrayList<WritableFile> writableFiles; publicvoidloadAllFiles() { for(ProjectFilefile: allFiles){ file.loadFileData(); } } publicvoidsaveAllFiles() { for(ProjectFilefile: writableFiles){ file.saveFileData(); } } } 82
+82
+
+WritableFile public class WritableFile extends ProjectFile { public void saveFileData() { // Write FileData to disk } } 84
+84
+
+[Table 3 on Page 21]
+
+
+
+[Table 4 on Page 21]
+
+
+
+[Table 5 on Page 21]
+
+
+
+[Table 6 on Page 21]
+
+
+
+--- Page 22 ---
+Discussion Example
+publicclassReport{ 3 subclasses of Report
+Does method overriding break the Liskov
+n
+privateFoo foo; 1. HTMLReport
+substitution principle?
+publicString toString(){ 2. XMLReport
+return"";
+3. TextReport
+}
+}
+Contract:
+n
+n toString() returns a string, which is the representation of Foo in
+some format (HTML, XML, Text) (and return the empty string if
+the format is undefined).
+n toString() shall not mutate the Report object
+n toString() shall never throw an Exception
+85 86
+85 86
+4. Nguyên lý phân tách giao diện Example 1 – Toy
+Interface Segregation Principle
+An interface should NOThave methods that its public interface Toy {
+n
+implementing classes do not need (Client should NOTbe
+void setPrice(double price);
+forced to depend on methods it does not use)
+n “Fat interface”should be split into smaller and more specific void setColor(String color);
+ones so that clients will only have to know about the
+void move();
+methods that are of interest to them
+Similar to theSingle Responsibility Principle, the goal of the void fly();
+n
+Interface Segregation Principle is to reduce the side effects
+}
+and frequency of required changes by splitting the software
+into multiple, independent parts
+87 88
+87 88
+22
+
+[Table 1 on Page 22]
+Discussion Does method overriding break the Liskov n substitution principle? 85
+85
+
+4. Nguyên lý phân tách giao diện Interface Segregation Principle An interface should NOThave methods that its n implementing classes do not need (Client should NOTbe forced to depend on methods it does not use) “Fat interface”should be split into smaller and more specific n ones so that clients will only have to know about the methods that are of interest to them Similar to theSingle Responsibility Principle, the goal of the n Interface Segregation Principle is to reduce the side effects and frequency of required changes by splitting the software into multiple, independent parts 87
+87
+
+[Table 2 on Page 22]
+Example publicclassReport{ 3 subclasses of Report privateFoo foo; 1. HTMLReport publicString toString(){ 2. XMLReport return""; 3. TextReport } } Contract: n n toString() returns a string, which is the representation of Foo in some format (HTML, XML, Text) (and return the empty string if the format is undefined). n toString() shall not mutate the Report object n toString() shall never throw an Exception 86
+86
+
+Example 1 – Toy public interface Toy { void setPrice(double price); void setColor(String color); void move(); void fly(); } 88
+88
+
+[Table 3 on Page 22]
+
+
+
+[Table 4 on Page 22]
+
+
+
+[Table 5 on Page 22]
+
+
+
+[Table 6 on Page 22]
+
+
+
+--- Page 23 ---
+ToyHouse
+publicclassToyCar implementsToy, Movable {
+doubleprice;
+String color;
+publicclassToyHouse implementsToy {
+@Override doubleprice;
+publicvoidsetPrice(doubleprice) { String color;
+this.price = price;
+} @Override
+@Override publicvoidsetPrice(doubleprice) {
+publicvoidsetColor(String color) { this.price= price;
+this.color=color; }
+} @Override
+@Override publicvoidsetColor(String color) {
+publicvoidmove(){ this.color=color;
+System.out.println("ToyCar: Start moving car."); }
+} @Override
+@Override publicvoidmove(){}
+@Override
+publicString toString(){
+publicvoidfly(){}
+return"ToyCar: Moveable Toy car-Price: "+price+" Color: "+color;
+}
+}
+} 89 90
+89 90
+Refactored code ToyHouse
+publicinterfaceToy { publicclassToyHouse implementsToy {
+voidsetPrice(doubleprice); doubleprice;
+String color;
+voidsetColor(String color);
+}
+@Override
+publicvoidsetPrice(doubleprice) {
+this.price = price;
+publicinterfaceMovable { }
+voidmove(); @Override
+} publicvoidsetColor(String color) {
+this.color=color;
+}
+@Override
+publicinterfaceFlyable {
+publicString toString(){
+voidfly(); return"ToyHouse: Toy house-Price: "+price+" Color: "+color;
+} }
+}
+91 92
+91 92
+23
+
+[Table 1 on Page 23]
+publicclassToyCar implementsToy, Movable { doubleprice; String color; @Override publicvoidsetPrice(doubleprice) { this.price = price; } @Override publicvoidsetColor(String color) { this.color=color; } @Override publicvoidmove(){ System.out.println("ToyCar: Start moving car."); } @Override publicString toString(){ return"ToyCar: Moveable Toy car-Price: "+price+" Color: "+color; } } 89
+89
+
+Refactored code publicinterfaceToy { voidsetPrice(doubleprice); voidsetColor(String color); } publicinterfaceMovable { voidmove(); } publicinterfaceFlyable { voidfly(); } 91
+91
+
+[Table 2 on Page 23]
+ToyHouse publicclassToyHouse implementsToy { doubleprice; String color; @Override publicvoidsetPrice(doubleprice) { this.price= price; } @Override publicvoidsetColor(String color) { this.color=color; } @Override publicvoidmove(){} @Override publicvoidfly(){} } 90
+90
+
+ToyHouse publicclassToyHouse implementsToy { doubleprice; String color; @Override publicvoidsetPrice(doubleprice) { this.price = price; } @Override publicvoidsetColor(String color) { this.color=color; } @Override publicString toString(){ return"ToyHouse: Toy house-Price: "+price+" Color: "+color; } } 92
+92
+
+[Table 3 on Page 23]
+p
+
+
+[Table 4 on Page 23]
+
+
+
+[Table 5 on Page 23]
+
+
+
+[Table 6 on Page 23]
+
+
+
+--- Page 24 ---
+publicclassToyBuilder {
+publicclassToyPlane implementsToy, Movable, Flyable {
+doubleprice; publicstaticToyHouse buildToyHouse(){
+String color; ToyHouse toyHouse=newToyHouse();
+toyHouse.setPrice(15.00);
+@Override toyHouse.setColor("green");
+publicvoidsetPrice(doubleprice) { returntoyHouse;
+this.price = price; }
+} publicstaticToyCar buildToyCar(){
+@Override ToyCar toyCar=newToyCar();
+publicvoidsetColor(String color) {
+toyCar.setPrice(25.00);
+this.color=color;
+} toyCar.setColor("red");
+@Override toyCar.move();
+publicvoidmove(){ returntoyCar;
+System.out.println("ToyPlane: Start moving plane."); }
+} publicstaticToyPlane buildToyPlane(){
+@Override ToyPlane toyPlane=newToyPlane();
+publicvoidfly(){ toyPlane.setPrice(125.00);
+System.out.println("ToyPlane: Start flying plane."); toyPlane.setColor("white");
+} toyPlane.move();
+@Override
+toyPlane.fly();
+publicString toString(){
+return"ToyPlane: Moveable and flyable toy plane-Price: "+price+" Color: "+color; returntoyPlane;
+} }
+} 93 } 94
+93 94
+Interface Segregation Principle and Single Example 2 – RestaurantInterface
+Responsibility Principle
+Share the same goal: ensuring small, public interface RestaurantInterface {
+n
+focused, and highly cohesive software public void acceptOnlineOrder();
+components.
+public void takeTelephoneOrder();
+Single Responsibility Principle is concerned
+n public void payOnline();
+with classes
+public void walkInCustomerOrder();
+Interface Segregation Principle is concerned
+n
+public void payInPerson();
+with interfaces
+}
+95 96
+95 96
+24
+
+[Table 1 on Page 24]
+publicclassToyPlane implementsToy, Movable, Flyable { doubleprice; String color; @Override publicvoidsetPrice(doubleprice) { this.price = price; } @Override publicvoidsetColor(String color) { this.color=color; } @Override publicvoidmove(){ System.out.println("ToyPlane: Start moving plane."); } @Override publicvoidfly(){ System.out.println("ToyPlane: Start flying plane."); } @Override publicString toString(){ return"ToyPlane: Moveable and flyable toy plane-Price: "+price+" Color: "+color; } } 93
+93
+
+Interface Segregation Principle and Single Responsibility Principle Share the same goal: ensuring small, n focused, and highly cohesive software components. Single Responsibility Principle is concerned n with classes Interface Segregation Principle is concerned n with interfaces 95
+95
+
+[Table 2 on Page 24]
+publicclassToyBuilder { publicstaticToyHouse buildToyHouse(){ ToyHouse toyHouse=newToyHouse(); toyHouse.setPrice(15.00); toyHouse.setColor("green"); returntoyHouse; } publicstaticToyCar buildToyCar(){ ToyCar toyCar=newToyCar(); toyCar.setPrice(25.00); toyCar.setColor("red"); toyCar.move(); returntoyCar; } publicstaticToyPlane buildToyPlane(){ ToyPlane toyPlane=newToyPlane(); toyPlane.setPrice(125.00); toyPlane.setColor("white"); toyPlane.move(); toyPlane.fly(); returntoyPlane; } } 94
+94
+
+Example 2 – RestaurantInterface public interface RestaurantInterface { public void acceptOnlineOrder(); public void takeTelephoneOrder(); public void payOnline(); public void walkInCustomerOrder(); public void payInPerson(); } 96
+96
+
+[Table 3 on Page 24]
+p
+
+
+[Table 4 on Page 24]
+
+
+
+[Table 5 on Page 24]
+
+
+
+[Table 6 on Page 24]
+
+
+
+--- Page 25 ---
+publicclassOnlineClientImpl implementsRestaurantInterface { 5. Nguyên lý đảo ngược sự phụ thuộc
+@Override
+Dependency Inversion Principle
+publicvoidacceptOnlineOrder() {
+// logic for placing online order
+} We should avoid tightly coupled code
+n
+@Override
+Conventional application architecture follows a top-
+publicvoidtakeTelephoneOrder() { // Not Applicable for Online Order n
+thrownewUnsupportedOperationException(); down design approach where a high-level problem
+}
+is broken into smaller parts àhigh-level modules
+@Override
+publicvoidpayOnline() { that gets written directly depends on low-level
+// logic for paying online
+modules
+}
+@Override n A. High-level modules should not depend on low-level
+publicvoidwalkInCustomerOrder() { // Not Applicable for Online Order modules. Both should depend on abstractions.
+thrownewUnsupportedOperationException();
+} n B. Abstractions should not depend on details. Details
+should depend on abstractions”
+@Override
+publicvoidpayInPerson() { // Not Applicable for Online Order
+thrownewUnsupportedOperationException();
+}
+} 97
+97 99
+5. Dependency Inversion Principle Example – LightBulb
+publicclassLightBulb {
+publicvoidturnOn() {
+System.out.println("LightBulb: Bulb turned on...");
+}
+publicvoidturnOff() {
+System.out.println("LightBulb: Bulb turned off...");
+}
+}
+100 101
+100 101
+25
+
+[Table 1 on Page 25]
+publicclassOnlineClientImpl implementsRestaurantInterface { @Override publicvoidacceptOnlineOrder() { // logic for placing online order } @Override publicvoidtakeTelephoneOrder() { // Not Applicable for Online Order thrownewUnsupportedOperationException(); } @Override publicvoidpayOnline() { // logic for paying online } @Override publicvoidwalkInCustomerOrder() { // Not Applicable for Online Order thrownewUnsupportedOperationException(); } @Override publicvoidpayInPerson() { // Not Applicable for Online Order thrownewUnsupportedOperationException(); } } 97
+97
+
+5. Dependency Inversion Principle 100
+100
+
+[Table 2 on Page 25]
+5. Nguyên lý đảo ngược sự phụ thuộc Dependency Inversion Principle We should avoid tightly coupled code n Conventional application architecture follows a top- n down design approach where a high-level problem is broken into smaller parts àhigh-level modules that gets written directly depends on low-level modules A. High-level modules should not depend on low-level n modules. Both should depend on abstractions. B. Abstractions should not depend on details. Details n should depend on abstractions”
+99
+
+Example – LightBulb publicclassLightBulb { publicvoidturnOn() { System.out.println("LightBulb: Bulb turned on..."); } publicvoidturnOff() { System.out.println("LightBulb: Bulb turned off..."); } } 101
+101
+
+[Table 3 on Page 25]
+
+
+
+[Table 4 on Page 25]
+
+
+
+[Table 5 on Page 25]
+
+
+
+[Table 6 on Page 25]
+
+
+
+--- Page 26 ---
+ElectricPowerSwitch Interface ISwitchable
+publicclassElectricPowerSwitch { public interface ISwitchable {
+publicLightBulb lightBulb;
+publicbooleanon;
+publicElectricPowerSwitch(LightBulb lightBulb) { public void turnOn();
+this.lightBulb = lightBulb;
+this.on = false; public void turnOff();
+}
+publicbooleanisOn() {
+returnthis.on; }
+}
+publicvoidpress(){
+booleancheckOn = isOn();
+if(checkOn) {
+lightBulb.turnOff();
+this.on = false;
+} else{
+lightBulb.turnOn();
+this.on = true;
+}
+}
+}
+102 103
+102 103
+ElectricPowerSwitch LightBulb
+publicclassElectricPowerSwitch { publicclassLightBulb implementsISwitchable {
+publicISwitchable client;
+publicbooleanon; @Override
+publicElectricPowerSwitch(ISwitchable client) { publicvoidturnOn() {
+this.client = client;
+this.on = false; System.out.println("LightBulb: Bulb turned on...");
+} }
+publicbooleanisOn() {
+returnthis.on;
+} @Override
+publicvoidpress(){
+booleancheckOn = isOn(); publicvoidturnOff() {
+if(checkOn) { System.out.println("LightBulb: Bulb turned off...");
+client.turnOff();
+this.on = false; }
+} else{ }
+client.turnOn();
+this.on = true;
+}
+}
+}
+104 105
+104 105
+26
+
+[Table 1 on Page 26]
+ElectricPowerSwitch publicclassElectricPowerSwitch { publicLightBulb lightBulb; publicbooleanon; publicElectricPowerSwitch(LightBulb lightBulb) { this.lightBulb = lightBulb; this.on = false; } publicbooleanisOn() { returnthis.on; } publicvoidpress(){ booleancheckOn = isOn(); if(checkOn) { lightBulb.turnOff(); this.on = false; } else{ lightBulb.turnOn(); this.on = true; } } } 102
+102
+
+ElectricPowerSwitch publicclassElectricPowerSwitch { publicISwitchable client; publicbooleanon; publicElectricPowerSwitch(ISwitchable client) { this.client = client; this.on = false; } publicbooleanisOn() { returnthis.on; } publicvoidpress(){ booleancheckOn = isOn(); if(checkOn) { client.turnOff(); this.on = false; } else{ client.turnOn(); this.on = true; } } } 104
+104
+
+[Table 2 on Page 26]
+Interface ISwitchable public interface ISwitchable { public void turnOn(); public void turnOff(); } 103
+103
+
+LightBulb publicclassLightBulb implementsISwitchable { @Override publicvoidturnOn() { System.out.println("LightBulb: Bulb turned on..."); } @Override publicvoidturnOff() { System.out.println("LightBulb: Bulb turned off..."); } } 105
+105
+
+[Table 3 on Page 26]
+
+
+
+[Table 4 on Page 26]
+
+
+
+[Table 5 on Page 26]
+
+
+
+[Table 6 on Page 26]
+
+
+
+--- Page 27 ---
+Fan ElectricPowerSwitchTest
+publicclassFan implementsISwitchable { publicclassElectricPowerSwitchTest{
+@Override @Test
+publicvoidtestPress() throwsException {
+publicvoidturnOn() {
+ISwitchableswitchableBulb=newLightBulb();
+System.out.println("Fan: Fan turned on..."); ElectricPowerSwitchbulbPowerSwitch=
+newElectricPowerSwitch(switchableBulb);
+} bulbPowerSwitch.press();
+bulbPowerSwitch.press();
+@Override ISwitchableswitchableFan=newFan();
+ElectricPowerSwitchfanPowerSwitch=
+publicvoidturnOff() {
+newElectricPowerSwitch(switchableFan);
+System.out.println("Fan: Fan turned off..."); fanPowerSwitch.press();
+fanPowerSwitch.press();
+} }
+} }
+106 107
+106 107
+ElectricPowerSwitch ISwitch
+publicclassElectricPowerSwitch { public interface ISwitch {
+publicISwitchable client;
+publicbooleanon;
+publicElectricPowerSwitch(ISwitchable client) { boolean isOn();
+this.client = client;
+this.on = false; void press();
+}
+publicbooleanisOn() {
+returnthis.on; Any problem? }
+}
+publicvoidpress(){
+booleancheckOn = isOn();
+if(checkOn) {
+client.turnOff();
+this.on = false;
+} else{
+client.turnOn();
+this.on = true;
+}
+}
+}
+108 109
+108 109
+27
+
+[Table 1 on Page 27]
+Fan publicclassFan implementsISwitchable { @Override publicvoidturnOn() { System.out.println("Fan: Fan turned on..."); } @Override publicvoidturnOff() { System.out.println("Fan: Fan turned off..."); } } 106
+106
+
+ElectricPowerSwitch publicclassElectricPowerSwitch { publicISwitchable client; publicbooleanon; publicElectricPowerSwitch(ISwitchable client) { this.client = client; this.on = false; } publicbooleanisOn() { returnthis.on; Any problem? } publicvoidpress(){ booleancheckOn = isOn(); if(checkOn) { client.turnOff(); this.on = false; } else{ client.turnOn(); this.on = true; } } } 108
+108
+
+[Table 2 on Page 27]
+ElectricPowerSwitchTest publicclassElectricPowerSwitchTest{ @Test publicvoidtestPress() throwsException { ISwitchableswitchableBulb=newLightBulb(); ElectricPowerSwitchbulbPowerSwitch= newElectricPowerSwitch(switchableBulb); bulbPowerSwitch.press(); bulbPowerSwitch.press(); ISwitchableswitchableFan=newFan(); ElectricPowerSwitchfanPowerSwitch= newElectricPowerSwitch(switchableFan); fanPowerSwitch.press(); fanPowerSwitch.press(); } } 107
+107
+
+ISwitch public interface ISwitch { boolean isOn(); void press(); } 109
+109
+
+[Table 3 on Page 27]
+
+
+
+[Table 4 on Page 27]
+
+
+
+[Table 5 on Page 27]
+
+
+
+[Table 6 on Page 27]
+
+
+
+--- Page 28 ---
+ElectricPowerSwitch
+publicclassElectricPowerSwitch implementsISwitch {
+publicISwitchable client;
+publicbooleanon;
+publicElectricPowerSwitch(ISwitchable client) {
+this.client = client;
+this.on = false;
+}
+publicbooleanisOn() {
+returnthis.on;
+}
+publicvoidpress(){
+booleancheckOn = isOn();
+if(checkOn) {
+client.turnOff();
+this.on = false;
+} else{
+client.turnOn();
+this.on = true;
+}
+}
+}
+110
+110
+28
+
+[Table 1 on Page 28]
+ElectricPowerSwitch publicclassElectricPowerSwitch implementsISwitch { publicISwitchable client; publicbooleanon; publicElectricPowerSwitch(ISwitchable client) { this.client = client; this.on = false; } publicbooleanisOn() { returnthis.on; } publicvoidpress(){ booleancheckOn = isOn(); if(checkOn) { client.turnOff(); this.on = false; } else{ client.turnOn(); this.on = true; } } } 110
+110
+
+[Table 2 on Page 28]
+
+

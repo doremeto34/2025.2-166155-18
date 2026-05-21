@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpdhqt.OrderListController"
+      spacing="20" styleClass="content-panel">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="📦 DANH SÁCH ĐƠN HÀNG NHẬP KHẨU" styleClass="title-main" />
+            <Label text="Theo dõi và quản lý toàn bộ đơn đặt hàng quốc tế gửi tới đối tác nước ngoài." styleClass="title-sub" />
+        </VBox>
+        <Button fx:id="btnReallocate" text="⚡ Tái phân bổ đơn" onAction="#handleReallocate" styleClass="button-primary" style="-fx-background-color: #fb923c;" disable="true" />
+        <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+    </HBox>
+    
+    <!-- Orders Table Card -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label text="Lọc trạng thái:" styleClass="label-secondary" />
+            <ComboBox fx:id="cbOrderStatusFilter" prefWidth="180" styleClass="text-input" />
+        </HBox>
+        
+        <TableView fx:id="tblOrders" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colOrderId" text="Mã Đơn" prefWidth="80" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colReqId" text="Mã Phiếu Yêu Cầu" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colSiteName" text="Site Nhập Khẩu" prefWidth="250" />
+                <TableColumn fx:id="colDeliveryMethod" text="Vận Chuyển" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colCreatedDate" text="Ngày Tạo" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colEstArrival" text="Ngày Về Dự Kiến" prefWidth="140" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="130" style="-fx-alignment: CENTER;" />
+            </columns>
+            <placeholder>
+                <Label text="Không có đơn đặt hàng nhập khẩu nào được tạo." />
+            </placeholder>
+        </TableView>
+    </VBox>
+    
+</VBox>

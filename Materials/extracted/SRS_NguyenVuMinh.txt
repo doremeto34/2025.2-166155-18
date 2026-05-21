@@ -1,0 +1,142 @@
+HW2
+ Phân tích yêu cầu
+Nhóm18
+Nguyễn Vũ Minh - UC20 - Xử lý đơn hàng hủy
+
+Biểu đồ Use case
+
+Biểu đồ Use case phân rã
+Đặc tả Use case
+
+Use case “Xử lý đơn hàng hủy”
+Mã Use case | UC20 | Tên Usecase | Xử lý đơn hàng hủy
+Tác nhân | Bộ phận đặt hàng quốc tế | Bộ phận đặt hàng quốc tế | Bộ phận đặt hàng quốc tế
+Tiền điều kiện | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy” | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy” | - Nhân viên đã đăng nhập với quyền Bộ phận đặt hàng quốc tế
+- Đã tồn tại đơn hàng có trạng thái “Đã hủy”
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện |  |  | 
+
+
+Activity Diagram
+
+
+
+Từ điển thuật ngữ
+Introduction to Glossary…
+Course
+…
+Credit
+…
+Đặc tả phụ trợ
+Chức năng
+Cxxx
+Hiệu năng
+Xxxx
+Độ tin cậy
+… 
+
+
+HW3
+Sequence Diagram
+Communication Diagram
+
+
+
+
+
+Class Diagram
+
+HW4
+Sơ đồ chuyển màn hình
+
+
+Màn hình Danh sách đơn hàng
+
+
+
+Đặc tả 
+
+STT | Tên mục | Phân loại | Giải thích chi tiết
+1 | Sidebar Navigation | Menu điều hướng | Chứa các liên kết đến các phân hệ chính: Dashboard, Sales Orders, Import Orders (đang chọn), Items và Sites.
+2 | Search orders... | Input Field | Cho phép người dùng nhập từ khóa (như Order ID hoặc Site name) để lọc nhanh danh sách đơn hàng.
+3 | Create Import Order | Button (Action) | Nút bấm để mở màn hình hoặc popup tạo mới một đơn hàng nhập khẩu.
+4 | Order ID | Data Column (ID) | Hiển thị mã định danh duy nhất của đơn hàng (ví dụ: 1, 2, 3, 4).
+5 | Site | Data Column (Text) | Hiển thị tên kho hoặc trung tâm cung ứng của nhà cung cấp (ví dụ: Beijing Warehouse, Shanghai Distribution Center).
+6 | Items | Data Column (Number) | Số lượng loại mặt hàng có trong đơn hàng đó (ví dụ: 2 items, 1 items).
+7 | Total Price | Data Column (Currency) | Tổng giá trị của đơn hàng tính theo đơn vị USD (ví dụ: $6,250).
+8 | Transport | Data Column (Icon + Text) | Phương thức vận chuyển: Air (Máy bay), Sea (Tàu biển), Rail (Tàu hỏa) kèm icon nhận diện.
+9 | Status | Label (Badge) | Trạng thái đơn hàng, được phân biệt bằng màu sắc: pending (chờ - vàng), shipped (đã giao cho đơn vị vận chuyển - xanh dương), delivered (đã nhận - xanh lá), cancelled (đã hủy - đỏ).
+10 | Est. Arrival | Data Column (Date) | Ngày dự kiến hàng về đến kho của hệ thống.
+11 | View Details | Button (Action) | Nút có biểu tượng con mắt cho phép người dùng xem chi tiết thông tin của từng đơn hàng cụ thể.
+12 | Sign Out | Button | Đăng xuất khỏi tài khoản hiện tại
+
+
+
+
+Màn hình Chi tiết đơn hàng
+
+Đặc tả
+
+STT | Tên mục | Phân loại | Giải thích chi tiết
+1 | Back to Import Orders | Link/Button | Cho phép quay lại màn hình danh sách đơn hàng trước đó.
+2 | Order ID | Label (Header) | Hiển thị mã số của đơn hàng đang xem chi tiết (Mã số: 4).
+3 | Status Badge | Label (Status) | Trạng thái hiện tại của đơn hàng (Đã hủy), được đánh dấu màu đỏ để dễ nhận biết.
+4 | Reallocate Order | Button (Action) | Nút thực hiện chức năng tái phân bổ đơn hàng, tương ứng với method nhanXuly() trong Class Diagram.
+5 | Site Information | Information Card | Hiển thị tên kho cung ứng hàng (Beijing Warehouse).
+6 | Transport Method | Information Card | Hiển thị phương thức vận chuyển được chọn cho đơn hàng này (Air).
+7 | Estimated Arrival | Information Card | Hiển thị thời gian dự kiến hàng cập bến (May 11, 2026).
+8 | Order Items Table | Data Table | Bảng liệt kê danh sách các mặt hàng trong đơn, bao gồm: tên hàng, mã hàng (Item ID), số lượng, đơn giá và thành tiền từng loại.
+9 | Total Amount | Label (Currency) | Tổng giá trị của toàn bộ đơn hàng, hiển thị nổi bật ở góc phải.
+10 | Order Timeline | List/Log | Theo dõi lịch sử thay đổi của đơn hàng (ví dụ: Ngày giờ khởi tạo đơn hàng).
+
+
+Màn hình tạo đơn hàng
+
+
+
+Đặc tả
+
+STT | Tên mục | Phân loại | Giải thích chi tiết
+1 | Required Date | Date Picker | Cho phép người dùng chọn ngày nhận hàng mong muốn. Tương ứng với attribute - ngayNhanMongMuon.
+2 | Selected Items | List/Table | Danh sách các mặt hàng đã chọn từ catalog để chờ phân bổ. Có nút "X" để xóa nhanh mặt hàng khỏi danh sách tạm.
+3 | Add Items | Button | Nút để mở danh sách sản phẩm và thêm vào danh sách hàng cần nhập. Tương ứng method khoiTao().
+4 | Auto-Allocate | Button (Primary) | Nút kích hoạt thuật toán tự động phân chia số lượng hàng cần nhập về các Site tối ưu nhất. Tương ứng method nhanAutoAllocate().
+5 | Add Order | Button | Cho phép người dùng thêm thủ công một đơn hàng con (Order #) cho một Site cụ thể.
+6 | Save All | Button (Action) | Nút lưu tất cả các đơn hàng đã phân bổ vào hệ thống. Tương ứng method nhanSaveAll().
+7 | Site (Dropdown) | Selection | Chọn kho cung ứng cho đơn hàng con cụ thể (ví dụ: Beijing Warehouse).
+8 | Transport Method | Selection | Chọn phương thức vận chuyển (Air, Sea, Rail). Hệ thống sẽ hiển thị số ngày vận chuyển dự kiến tương ứng.
+9 | Item Quantity | Input Number | Cho phép chỉnh sửa số lượng hàng cho từng đơn con sau khi đã phân bổ.
+10 | Delete (Order/Item) | Button (Icon) | Cho phép xóa một đơn hàng con hoặc một mặt hàng cụ thể ra khỏi danh sách chuẩn bị lưu.
+
+
+Màn hình thêm mặt hàng
+
+Đặc tả
+STT | Tên mục | Phân loại | Giải thích chi tiết
+1 | Search items... | Input Field | Cho phép người dùng tìm kiếm nhanh các mặt hàng theo tên hoặc mã sản phẩm.
+2 | All Categories | Dropdown | Bộ lọc sản phẩm theo danh mục (ví dụ: Electronics, Furniture) để thu hẹp phạm vi tìm kiếm.
+3 | Item Card | Container | Mỗi thẻ đại diện cho một sản phẩm trong kho, hiển thị đầy đủ: Tên, Mã (SKU), Phân loại, Mô tả ngắn và Ảnh minh họa.
+4 | Item Name & Description | Label | Hiển thị tên sản phẩm (ví dụ: Laptop Computer) và mô tả đặc tính (ví dụ: High-performance laptop).
+5 | SKU Badge | Label | Mã định danh kỹ thuật của sản phẩm trong hệ thống (ví dụ: TECH-001, FURN-001).
+6 | Category Tag | Label | Nhãn phân loại sản phẩm, được mã hóa màu để phân biệt (Đen/Xanh cho Electronics, Đen cho Furniture).
+7 | Qty | Input Number | Ô nhập số lượng cần nhập cho mặt hàng tương ứng trước khi thêm vào danh sách chờ.
+8 | Add Button | Button | Nút xác nhận thêm mặt hàng với số lượng đã nhập vào danh sách phân bổ. Khi nhấn sẽ kích hoạt method khoiTao() trong thiết kế của bạn.
+9 | Close | Button | Nút đóng popup để quay lại màn hình chính mà không thực hiện thêm hành động.
+
+
+
+Subsystem
+
+
+HW5
+666666666Sequence Diagram
+
+
+
+
+Class Diagram
+Biểu đồ phụ thuộc gói

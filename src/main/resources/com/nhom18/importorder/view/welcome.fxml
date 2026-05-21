@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.WelcomeController">
+   <children>
+      <VBox alignment="CENTER" spacing="30.0" styleClass="card" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Label text="HỆ THỐNG ĐẶT HÀNG NHẬP KHẨU" textFill="#06b6d4" style="-fx-font-weight: bold; -fx-letter-spacing: 3px; -fx-font-size: 14px; -fx-font-family: 'System';" />
+                  <Label text="XIN CHÀO LÀM VIỆC!" style="-fx-text-fill: -text-primary; -fx-font-weight: 800; -fx-font-size: 32px;" />
+               </children>
+            </VBox>
+            
+            <VBox alignment="CENTER" spacing="8.0" style="-fx-background-color: rgba(15,23,42,0.03); -fx-background-radius: 12px; -fx-padding: 24px; -fx-max-width: 400px;">
+               <children>
+                  <Label fx:id="lblWelcomeName" text="Nguyễn Trí Dũng" textFill="#6366f1" style="-fx-font-weight: bold; -fx-font-size: 20px;" />
+                  <Label fx:id="lblWelcomeRole" text="Bộ Phận Bán Hàng (BPBH)" style="-fx-text-fill: -text-secondary; -fx-font-size: 14px;" />
+               </children>
+            </VBox>
+            
+            <Label text="Vui lòng lựa chọn các chức năng nghiệp vụ tương ứng ở thanh menu điều hướng bên trái để bắt đầu." textAlignment="CENTER" wrapText="true" style="-fx-text-fill: -text-muted; -fx-max-width: 500px; -fx-font-size: 14px;" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
