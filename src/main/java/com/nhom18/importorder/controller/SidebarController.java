@@ -31,7 +31,11 @@ public class SidebarController {
 
     /* BPĐHQT */
     @FXML
+    private Button btnBpbhRequestList;
+    @FXML
     private Button btnRequestProcessing;
+    @FXML
+    private Button btnCreateFreeRequest;
     @FXML
     private Button btnOrderList;
     @FXML
@@ -82,7 +86,9 @@ public class SidebarController {
         setButtonVisible(btnCreateRequest, false);
         setButtonVisible(btnMerchandiseList, false);
         
+        setButtonVisible(btnBpbhRequestList, false);
         setButtonVisible(btnRequestProcessing, false);
+        setButtonVisible(btnCreateFreeRequest, false);
         setButtonVisible(btnOrderList, false);
         setButtonVisible(btnSiteList, false);
         
@@ -101,7 +107,9 @@ public class SidebarController {
                 setButtonVisible(btnMerchandiseList, true);
             }
             case BPDHQT -> {
+                setButtonVisible(btnBpbhRequestList, true);
                 setButtonVisible(btnRequestProcessing, true);
+                setButtonVisible(btnCreateFreeRequest, true);
                 setButtonVisible(btnOrderList, true);
                 setButtonVisible(btnSiteList, true);
             }
@@ -163,9 +171,21 @@ public class SidebarController {
     }
 
     @FXML
+    private void handleNavigateBpbhRequestList() {
+        setActiveButton(btnBpbhRequestList);
+        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/bpbh_requests.fxml");
+    }
+
+    @FXML
     private void handleNavigateRequestProcessing() {
         setActiveButton(btnRequestProcessing);
         NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/request_processing.fxml");
+    }
+
+    @FXML
+    private void handleNavigateCreateFreeRequest() {
+        setActiveButton(btnCreateFreeRequest);
+        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/create_free_request.fxml");
     }
 
     @FXML

@@ -199,6 +199,80 @@ public class OrderServiceTest {
         }, "Nên ném ngoại lệ khi đơn hàng đã được tái phân bổ trước đó");
     }
 
+    @Test
+    public void testGenerateProposedOrdersInMemory_Success() {
+        // Setup inventories
+        mockInventoryDAO.inventories.add(new SiteInventory("S_SEO", "M_CPU_I7", 50, "Cái"));
+        mockInventoryDAO.inventories.add(new SiteInventory("S_TOK", "M_CPU_I7", 10, "Cái"));
+
+        // Setup items
+        List<ImportRequestItem> items = new ArrayList<>();
+        ImportRequestItem item = new ImportRequestItem();
+        item.setMerchandiseCode("M_CPU_I7");
+        item.setMerchandiseName("Core i7");
+        item.setQuantityOrdered(30);
+        item.setUnit("Cái");
+        item.setDesiredDeliveryDate(LocalDate.now().plusDays(15)); // SHIP is feasible (Seoul = 12 days)
+        items.add(item);
+
+        // Run proposed allocation in-memory
+        List<Order> proposed = orderService.generateProposedOrders(items);
+
+        // Verify
+        assertNotNull(proposed);
+        assertEquals(1, proposed.size(), "Nên sinh ra 1 đơn hàng");
+        Order ord = proposed.get(0);
+        assertEquals("S_SEO", ord.getSiteCode(), "Phân bổ tối ưu phải chọn Seoul do tồn kho lớn hơn");
+        assertEquals(DeliveryMethod.SHIP, ord.getDeliveryMethod(), "SHIP phải được ưu tiên trước AIR");
+        assertEquals(1, ord.getItems().size());
+        assertEquals(30, ord.getItems().get(0).getQuantityOrdered());
+    }
+
+    @Test
+    public void testSaveCustomFreeRequestAndOrders_Success() {
+        // Setup initial inventory
+        mockInventoryDAO.inventories.add(new SiteInventory("S_TOK", "M_SSD_1T", 50, "Cái"));
+
+        // Setup custom orders to save
+        List<Order> customOrders = new ArrayList<>();
+        Order ord = new Order();
+        ord.setSiteCode("S_TOK");
+        ord.setSiteName("Tokyo Site");
+        ord.setDeliveryMethod(DeliveryMethod.AIR);
+        ord.setEstimatedArrival(LocalDate.now().plusDays(3));
+        ord.setStatus(OrderStatus.PENDING);
+
+        OrderItem oi = new OrderItem();
+        oi.setMerchandiseCode("M_SSD_1T");
+        oi.setMerchandiseName("Samsung SSD 1TB");
+        oi.setQuantityOrdered(20);
+        oi.setUnit("Cái");
+        ord.addItem(oi);
+
+        customOrders.add(ord);
+
+        // Save
+        LocalDate desiredDate = LocalDate.now().plusDays(10);
+        orderService.saveCustomFreeRequestAndOrders(desiredDate, customOrders);
+
+        // Verify that ImportRequest is created with APPROVED status
+        assertEquals(1, mockRequestDAO.requests.size(), "Phải tạo 1 phiếu yêu cầu nhập hàng");
+        ImportRequest req = mockRequestDAO.requests.get(0);
+        assertEquals(RequestStatus.APPROVED, req.getStatus(), "Phiếu yêu cầu nhập tự do phải được duyệt luôn (APPROVED)");
+        assertEquals(1, req.getItems().size());
+        assertEquals(20, req.getItems().get(0).getQuantityOrdered());
+
+        // Verify that Order is saved
+        assertEquals(1, mockOrderDAO.orders.size(), "Phải lưu 1 đơn hàng mới");
+        Order savedOrder = mockOrderDAO.orders.get(0);
+        assertEquals("S_TOK", savedOrder.getSiteCode());
+        assertEquals(1, savedOrder.getItems().size());
+
+        // Verify that inventory at Site is deducted
+        SiteInventory inv = mockInventoryDAO.get("S_TOK", "M_SSD_1T");
+        assertEquals(30, inv.getInStockQuantity(), "Tồn kho phải giảm đi 20 cái (50 - 20 = 30)");
+    }
+
     // --- MOCK DAO IMPLEMENTATIONS FOR TESTING ---
     private static class MockOrderDAO implements IOrderDAO {
         List<Order> orders = new ArrayList<>();

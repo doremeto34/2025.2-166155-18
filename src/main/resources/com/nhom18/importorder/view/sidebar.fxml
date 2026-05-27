@@ -41,7 +41,9 @@
             <Button fx:id="btnMerchandiseList" onAction="#handleNavigateMerchandiseList" mnemonicParsing="false" styleClass="nav-item" text="📦 Danh Mục Mặt Hàng" />
 
             <!-- 2. BPĐHQT Navigation -->
-            <Button fx:id="btnRequestProcessing" onAction="#handleNavigateRequestProcessing" mnemonicParsing="false" styleClass="nav-item" text="⚡ Xử Lý Yêu Cầu Nhập" />
+            <Button fx:id="btnBpbhRequestList" onAction="#handleNavigateBpbhRequestList" mnemonicParsing="false" styleClass="nav-item" text="📋 Đơn Hàng Từ BPBH" />
+            <Button fx:id="btnRequestProcessing" onAction="#handleNavigateRequestProcessing" mnemonicParsing="false" styleClass="nav-item" text="⚡ Phân Bổ Yêu Cầu BPBH" />
+            <Button fx:id="btnCreateFreeRequest" onAction="#handleNavigateCreateFreeRequest" mnemonicParsing="false" styleClass="nav-item" text="➕ Tạo Yêu Cầu Nhập" />
             <Button fx:id="btnOrderList" onAction="#handleNavigateOrderList" mnemonicParsing="false" styleClass="nav-item" text="📑 Danh Sách Đơn Hàng" />
             <Button fx:id="btnSiteList" onAction="#handleNavigateSiteList" mnemonicParsing="false" styleClass="nav-item" text="🌐 Quản Lý Đối Tác Site" />
 

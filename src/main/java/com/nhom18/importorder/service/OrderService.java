@@ -14,10 +14,12 @@ import com.nhom18.importorder.model.entity.Order;
 import com.nhom18.importorder.model.entity.OrderItem;
 import com.nhom18.importorder.model.entity.Site;
 import com.nhom18.importorder.model.entity.SiteInventory;
+import com.nhom18.importorder.model.entity.User;
 import com.nhom18.importorder.model.enums.DeliveryMethod;
 import com.nhom18.importorder.model.enums.OrderStatus;
 import com.nhom18.importorder.model.enums.RequestStatus;
 import com.nhom18.importorder.service.AllocationEngine.AllocationDetail;
+import com.nhom18.importorder.util.SessionManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -302,5 +304,109 @@ public class OrderService {
 
     public Order getOrderById(int orderId) {
         return orderDAO.getById(orderId);
+    }
+
+    /**
+     * Chạy thuật toán phân bổ in-memory từ danh sách mặt hàng tự do chọn trên UI.
+     */
+    public List<Order> generateProposedOrders(List<ImportRequestItem> items) {
+        List<Site> allSites = siteDAO.getAllActive();
+        Map<String, Order> orderGroups = new HashMap<>();
+        LocalDate currentDate = LocalDate.now();
+
+        for (ImportRequestItem item : items) {
+            List<SiteInventory> inventories = siteInventoryDAO.getByMerchandiseCode(item.getMerchandiseCode());
+            
+            // Chạy phân bổ tối ưu cho mặt hàng này
+            List<AllocationDetail> details = allocationEngine.allocate(item, currentDate, inventories, allSites);
+
+            // Gom nhóm kết quả phân bổ vào các đơn hàng đề xuất tương ứng
+            for (AllocationDetail detail : details) {
+                String key = detail.getSite().getSiteCode() + "_" + detail.getMethod().name();
+                Order order = orderGroups.get(key);
+                if (order == null) {
+                    order = new Order();
+                    order.setRequestId(-1); // ID tạm thời
+                    order.setSiteCode(detail.getSite().getSiteCode());
+                    order.setSiteName(detail.getSite().getName());
+                    order.setDeliveryMethod(detail.getMethod());
+                    order.setStatus(OrderStatus.PENDING);
+                    order.setCreatedDate(currentDate);
+                    order.setEstimatedArrival(detail.getEstimatedArrivalDate());
+                    
+                    orderGroups.put(key, order);
+                }
+
+                // Cập nhật ngày đến dự kiến của đơn hàng
+                if (detail.getEstimatedArrivalDate().isAfter(order.getEstimatedArrival())) {
+                    order.setEstimatedArrival(detail.getEstimatedArrivalDate());
+                }
+
+                // Tạo dòng mặt hàng
+                OrderItem orderItem = new OrderItem();
+                orderItem.setMerchandiseCode(item.getMerchandiseCode());
+                orderItem.setMerchandiseName(item.getMerchandiseName());
+                orderItem.setQuantityOrdered(detail.getAllocatedQuantity());
+                orderItem.setQuantityConfirmed(0);
+                orderItem.setQuantityReceived(0);
+                orderItem.setUnit(item.getUnit());
+
+                order.addItem(orderItem);
+            }
+        }
+
+        return new ArrayList<>(orderGroups.values());
+    }
+
+    /**
+     * Lưu phiếu yêu cầu nhập hàng tự do (APPROVED) và các đơn hàng Site tương ứng sau khi chỉnh sửa thủ công.
+     */
+    public void saveCustomFreeRequestAndOrders(LocalDate desiredDate, List<Order> customOrders) {
+        if (customOrders == null || customOrders.isEmpty()) {
+            throw new IllegalArgumentException("Danh sách đơn hàng rỗng!");
+        }
+
+        // 1. Tạo phiếu yêu cầu nhập hàng (APPROVED)
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        int createdBy = currentUser != null ? currentUser.getId() : 9; // fallback admin nếu test
+
+        ImportRequest request = new ImportRequest();
+        request.setCreatedBy(createdBy);
+        request.setCreatedDate(LocalDate.now());
+        request.setStatus(RequestStatus.APPROVED);
+
+        int newRequestId = requestDAO.insert(request);
+        if (newRequestId == -1) {
+            throw new RuntimeException("Không thể tạo phiếu yêu cầu nhập hàng!");
+        }
+        request.setId(newRequestId);
+
+        // 2. Lưu từng đơn hàng và trừ tồn kho Site tương ứng
+        for (Order order : customOrders) {
+            order.setRequestId(newRequestId);
+            order.setCreatedDate(LocalDate.now());
+            order.setStatus(OrderStatus.PENDING);
+
+            // Lưu đơn hàng qua DAO (tự động lưu cả OrderItems nhờ cơ chế Transaction của DAO)
+            orderDAO.insert(order);
+
+            // Lưu các ImportRequestItem tương ứng để lưu lịch sử yêu cầu nhập ban đầu
+            for (OrderItem item : order.getItems()) {
+                ImportRequestItem reqItem = new ImportRequestItem();
+                reqItem.setRequestId(newRequestId);
+                reqItem.setMerchandiseCode(item.getMerchandiseCode());
+                reqItem.setQuantityOrdered(item.getQuantityOrdered());
+                reqItem.setUnit(item.getUnit());
+                reqItem.setDesiredDeliveryDate(desiredDate);
+                requestDAO.insertItem(reqItem);
+
+                // Khấu trừ tồn kho khả dụng tại Site đối tác tương ứng
+                SiteInventory inventory = siteInventoryDAO.get(order.getSiteCode(), item.getMerchandiseCode());
+                if (inventory != null) {
+                    int newQty = Math.max(0, inventory.getInStockQuantity() - item.getQuantityOrdered());
+                    siteInventoryDAO.updateStock(order.getSiteCode(), item.getMerchandiseCode(), newQty);
+                }
+            }
+        }
     }
 }
