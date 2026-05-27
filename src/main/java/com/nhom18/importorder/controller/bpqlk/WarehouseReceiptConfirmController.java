@@ -164,17 +164,18 @@ public class WarehouseReceiptConfirmController {
         colQtyReceived.setCellValueFactory(cell -> cell.getValue().qtyReceivedProperty().asObject());
         colQtyReceived.setCellFactory(column -> new TableCell<>() {
             private final TextField txtQty = new TextField();
+            private boolean isUpdating = false;
             {
                 txtQty.setPrefWidth(80);
                 txtQty.setStyle("-fx-alignment: CENTER;");
                 txtQty.textProperty().addListener((obs, oldVal, newVal) -> {
+                    if (isUpdating) return;
                     ReconciliationRow row = getTableRow().getItem();
                     if (row != null && newVal != null && !newVal.trim().isEmpty()) {
                         try {
                             int val = Integer.parseInt(newVal.trim());
                             if (val >= 0) {
                                 row.setQtyReceived(val);
-                                tblReconciliation.refresh(); // Làm mới hiển thị chênh lệch
                             }
                         } catch (NumberFormatException e) {
                             // Bỏ qua giá trị nhập không hợp lệ
@@ -190,7 +191,9 @@ public class WarehouseReceiptConfirmController {
                 } else {
                     ReconciliationRow row = getTableRow().getItem();
                     if (row != null) {
+                        isUpdating = true;
                         txtQty.setText(String.valueOf(row.getQtyReceived()));
+                        isUpdating = false;
                     }
                     setGraphic(txtQty);
                 }
@@ -222,9 +225,11 @@ public class WarehouseReceiptConfirmController {
         colDiscrepancyNotes.setCellValueFactory(cell -> cell.getValue().notesProperty());
         colDiscrepancyNotes.setCellFactory(column -> new TableCell<>() {
             private final TextField txtNote = new TextField();
+            private boolean isUpdating = false;
             {
                 txtNote.setPromptText("Nhập lý do nếu lệch...");
                 txtNote.textProperty().addListener((obs, oldVal, newVal) -> {
+                    if (isUpdating) return;
                     ReconciliationRow row = getTableRow().getItem();
                     if (row != null) {
                         row.setNotes(newVal);
@@ -239,7 +244,9 @@ public class WarehouseReceiptConfirmController {
                 } else {
                     ReconciliationRow row = getTableRow().getItem();
                     if (row != null) {
+                        isUpdating = true;
                         txtNote.setText(row.getNotes() != null ? row.getNotes() : "");
+                        isUpdating = false;
                     }
                     setGraphic(txtNote);
                 }

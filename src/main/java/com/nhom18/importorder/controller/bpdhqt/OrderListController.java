@@ -1,6 +1,7 @@
 package com.nhom18.importorder.controller.bpdhqt;
 
 import com.nhom18.importorder.model.entity.Order;
+import com.nhom18.importorder.model.entity.OrderItem;
 import com.nhom18.importorder.model.enums.OrderStatus;
 import com.nhom18.importorder.service.OrderService;
 import java.util.List;
@@ -33,6 +34,22 @@ public class OrderListController {
     @FXML
     private TableColumn<Order, String> colStatus;
 
+    // --- Cột chi tiết đơn hàng ---
+    @FXML
+    private TableView<OrderItem> tblOrderItems;
+    @FXML
+    private TableColumn<OrderItem, String> colItemCode;
+    @FXML
+    private TableColumn<OrderItem, String> colItemName;
+    @FXML
+    private TableColumn<OrderItem, Integer> colItemQtyOrdered;
+    @FXML
+    private TableColumn<OrderItem, Integer> colItemQtyConfirmed;
+    @FXML
+    private TableColumn<OrderItem, Integer> colItemQtyReceived;
+    @FXML
+    private TableColumn<OrderItem, String> colItemUnit;
+
     @FXML
     private ComboBox<String> cbOrderStatusFilter;
     @FXML
@@ -47,7 +64,7 @@ public class OrderListController {
 
     @FXML
     public void initialize() {
-        // 1. Cấu hình các cột của TableView
+        // 1. Cấu hình các cột của TableView đơn hàng
         colOrderId.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
         colReqId.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getRequestId()).asObject());
         colSiteName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSiteName()));
@@ -77,7 +94,15 @@ public class OrderListController {
             }
         });
 
-        // 2. Thiết lập Combobox Bộ lọc trạng thái
+        // 2. Cấu hình các cột của TableView chi tiết đơn hàng
+        colItemCode.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getMerchandiseCode()));
+        colItemName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getMerchandiseName()));
+        colItemQtyOrdered.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantityOrdered()).asObject());
+        colItemQtyConfirmed.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantityConfirmed()).asObject());
+        colItemQtyReceived.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantityReceived()).asObject());
+        colItemUnit.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getUnit()));
+
+        // 3. Thiết lập Combobox Bộ lọc trạng thái
         cbOrderStatusFilter.setItems(FXCollections.observableArrayList(
             "Tất cả", "PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"
         ));
@@ -86,13 +111,19 @@ public class OrderListController {
         // Lắng nghe sự kiện đổi bộ lọc
         cbOrderStatusFilter.valueProperty().addListener((obs, oldVal, newVal) -> filterOrders(newVal));
 
-        // Lắng nghe chọn dòng trong TableView để kích hoạt nút Tái phân bổ
+        // Lắng nghe chọn dòng trong TableView để hiển thị chi tiết và kích hoạt nút Tái phân bổ
         tblOrders.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null 
-                    && newSelection.getStatus() == OrderStatus.CANCELLED 
-                    && (newSelection.getCancelReason() == null || !newSelection.getCancelReason().contains("[REALLOCATED]"))) {
-                btnReallocate.setDisable(false);
+            if (newSelection != null) {
+                tblOrderItems.setItems(FXCollections.observableArrayList(newSelection.getItems()));
+                
+                if (newSelection.getStatus() == OrderStatus.CANCELLED 
+                        && (newSelection.getCancelReason() == null || !newSelection.getCancelReason().contains("[REALLOCATED]"))) {
+                    btnReallocate.setDisable(false);
+                } else {
+                    btnReallocate.setDisable(true);
+                }
             } else {
+                tblOrderItems.setItems(FXCollections.observableArrayList());
                 btnReallocate.setDisable(true);
             }
         });
