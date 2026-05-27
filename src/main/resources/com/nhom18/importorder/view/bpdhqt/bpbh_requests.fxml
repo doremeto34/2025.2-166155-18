@@ -54,16 +54,46 @@
             </VBox>
 
             <!-- Right Panel: Detail Item List -->
-            <VBox spacing="12.0" styleClass="card-panel">
+            <VBox spacing="12.0" styleClass="card-panel" style="-fx-background-color: white; -fx-background-radius: 8px; -fx-padding: 15px;">
                <children>
-                  <Label styleClass="section-title" text="Chi Tiết Mặt Hàng Của Phiếu" />
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <Label styleClass="section-title" text="Chi Tiết Mặt Hàng Của Phiếu" HBox.hgrow="ALWAYS" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: -accent-cyan;" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="hboxActions" spacing="8.0" visible="false" managed="false">
+                           <children>
+                              <Button fx:id="btnApprove" mnemonicParsing="false" onAction="#handleApprove" style="-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="✅ Duyệt" />
+                              <Button fx:id="btnReject" mnemonicParsing="false" onAction="#handleReject" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="❌ Từ Chối" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  
+                  <!-- Metadata display panel -->
+                  <GridPane fx:id="gridRequestDetail" hgap="15" vgap="5" visible="false" managed="false" style="-fx-background-color: #f8fafc; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-color: #e2e8f0; -fx-border-width: 1px; -fx-border-radius: 6px;">
+                     <columnConstraints>
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="75" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Mã phiếu:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: -text-secondary;" />
+                        <Label fx:id="lblReqId" text="..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Người tạo &amp; Ngày:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: -text-secondary;" />
+                        <Label fx:id="lblReqCreatorDate" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+
                   <TableView fx:id="tblRequestItems" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="colItemMerch" maxWidth="120.0" minWidth="90.0" prefWidth="100.0" text="Mã Hàng" />
+                        <TableColumn fx:id="colItemMerch" maxWidth="120.0" minWidth="90.0" prefWidth="100.0" text="Mã Hàng" style="-fx-alignment: CENTER;" />
                         <TableColumn fx:id="colItemName" prefWidth="200.0" text="Tên Mặt Hàng" />
-                        <TableColumn fx:id="colItemQty" maxWidth="100.0" minWidth="70.0" prefWidth="80.0" text="Số Lượng" />
-                        <TableColumn fx:id="colItemUnit" maxWidth="80.0" minWidth="60.0" prefWidth="70.0" text="Đơn Vị" />
-                        <TableColumn fx:id="colItemDate" prefWidth="140.0" text="Ngày Nhận Mong Muốn" />
+                        <TableColumn fx:id="colItemQty" maxWidth="100.0" minWidth="70.0" prefWidth="80.0" text="Số Lượng" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colItemUnit" maxWidth="80.0" minWidth="60.0" prefWidth="70.0" text="Đơn Vị" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colItemDate" prefWidth="140.0" text="Ngày Nhận Mong Muốn" style="-fx-alignment: CENTER;" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

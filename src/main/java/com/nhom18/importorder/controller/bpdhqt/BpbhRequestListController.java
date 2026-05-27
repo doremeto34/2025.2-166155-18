@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,6 +46,20 @@ public class BpbhRequestListController {
     private TableColumn<ImportRequestItem, String> colItemUnit;
     @FXML
     private TableColumn<ImportRequestItem, String> colItemDate;
+
+    // --- Chi tiết yêu cầu & Hành động Duyệt/Từ chối ---
+    @FXML
+    private HBox hboxActions;
+    @FXML
+    private Button btnApprove;
+    @FXML
+    private Button btnReject;
+    @FXML
+    private GridPane gridRequestDetail;
+    @FXML
+    private Label lblReqId;
+    @FXML
+    private Label lblReqCreatorDate;
 
     private final IImportRequestDAO requestDAO = new SQLiteImportRequestDAO();
     private final ObservableList<ImportRequest> masterData = FXCollections.observableArrayList();
@@ -103,8 +119,30 @@ public class BpbhRequestListController {
         tblRequests.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 loadRequestItems(newVal.getId());
+                
+                // Hiển thị panel chi tiết & nút hành động
+                gridRequestDetail.setVisible(true);
+                gridRequestDetail.setManaged(true);
+                lblReqId.setText("#" + newVal.getId());
+                lblReqCreatorDate.setText(newVal.getCreatorName() + " | Ngày: " + newVal.getCreatedDate().toString());
+                
+                hboxActions.setVisible(true);
+                hboxActions.setManaged(true);
+                
+                // Chỉ cho phép Duyệt/Từ khống nếu trạng thái là PENDING
+                if (newVal.getStatus() == RequestStatus.PENDING) {
+                    btnApprove.setDisable(false);
+                    btnReject.setDisable(false);
+                } else {
+                    btnApprove.setDisable(true);
+                    btnReject.setDisable(true);
+                }
             } else {
                 tblRequestItems.getItems().clear();
+                gridRequestDetail.setVisible(false);
+                gridRequestDetail.setManaged(false);
+                hboxActions.setVisible(false);
+                hboxActions.setManaged(false);
             }
         });
 
@@ -167,5 +205,59 @@ public class BpbhRequestListController {
         loadRequests();
         cbStatusFilter.setValue("Tất cả trạng thái");
         tblRequestItems.getItems().clear();
+        gridRequestDetail.setVisible(false);
+        gridRequestDetail.setManaged(false);
+        hboxActions.setVisible(false);
+        hboxActions.setManaged(false);
+    }
+
+    @FXML
+    private void handleApprove() {
+        ImportRequest selected = tblRequests.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        boolean confirm = com.nhom18.importorder.util.AlertHelper.showConfirm("Xác nhận duyệt", 
+            "Bạn có chắc chắn muốn duyệt phiếu yêu cầu nhập hàng này?");
+        if (confirm) {
+            try {
+                requestDAO.updateStatus(selected.getId(), RequestStatus.APPROVED);
+                com.nhom18.importorder.util.AlertHelper.showInfo("Thành công", "Đã duyệt phiếu yêu cầu nhập hàng thành công!");
+                loadRequests();
+                // Chọn lại dòng cũ
+                for (ImportRequest r : masterData) {
+                    if (r.getId() == selected.getId()) {
+                        tblRequests.getSelectionModel().select(r);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                com.nhom18.importorder.util.AlertHelper.showError("Lỗi", "Không thể duyệt yêu cầu: " + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void handleReject() {
+        ImportRequest selected = tblRequests.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        boolean confirm = com.nhom18.importorder.util.AlertHelper.showConfirm("Xác nhận từ chối", 
+            "Bạn có chắc chắn muốn từ chối phiếu yêu cầu nhập hàng này?");
+        if (confirm) {
+            try {
+                requestDAO.updateStatus(selected.getId(), RequestStatus.REJECTED);
+                com.nhom18.importorder.util.AlertHelper.showInfo("Thành công", "Đã từ chối phiếu yêu cầu nhập hàng!");
+                loadRequests();
+                // Chọn lại dòng cũ
+                for (ImportRequest r : masterData) {
+                    if (r.getId() == selected.getId()) {
+                        tblRequests.getSelectionModel().select(r);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                com.nhom18.importorder.util.AlertHelper.showError("Lỗi", "Không thể từ chối yêu cầu: " + e.getMessage());
+            }
+        }
     }
 }
