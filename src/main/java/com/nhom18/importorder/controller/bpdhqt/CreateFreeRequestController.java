@@ -1,5 +1,7 @@
 package com.nhom18.importorder.controller.bpdhqt;
 
+import com.nhom18.importorder.dao.ISiteInventoryDAO;
+import com.nhom18.importorder.dao.impl.SQLiteSiteInventoryDAO;
 import com.nhom18.importorder.model.entity.*;
 import com.nhom18.importorder.model.enums.DeliveryMethod;
 import com.nhom18.importorder.model.enums.OrderStatus;
@@ -60,6 +62,8 @@ public class CreateFreeRequestController {
     @FXML
     private Button btnSaveAll;
     @FXML
+    private Button btnValidate;
+    @FXML
     private VBox boxError;
     @FXML
     private Label lblAllocationError;
@@ -69,6 +73,8 @@ public class CreateFreeRequestController {
     private final MerchandiseService merchandiseService = new MerchandiseService();
     private final OrderService orderService = new OrderService();
     private final SiteService siteService = new SiteService();
+    private final ISiteInventoryDAO siteInventoryDAO = new SQLiteSiteInventoryDAO();
+    private boolean isCheckPassed = false;
 
     private final ObservableList<ImportRequestItem> selectedItemsData = FXCollections.observableArrayList();
     private final ObservableList<Order> proposedOrdersData = FXCollections.observableArrayList();
@@ -129,6 +135,8 @@ public class CreateFreeRequestController {
         dpRequiredDate.setValue(LocalDate.now().plusDays(10));
 
         updateTotalQuantityLabel();
+        isCheckPassed = false;
+        btnSaveAll.setDisable(true);
     }
 
     private void updateTotalQuantityLabel() {
@@ -149,7 +157,8 @@ public class CreateFreeRequestController {
         dialogStage.initModality(Modality.APPLICATION_MODAL);
         dialogStage.setTitle(targetOrder == null ? "Catalog Mặt Hàng" : "Thêm Mặt Hàng vào Đơn Hàng");
         dialogStage.setMinWidth(800);
-        dialogStage.setMinHeight(600);
+        dialogStage.setMinHeight(700);
+        dialogStage.setHeight(700);
 
         VBox root = new VBox(15);
         root.setStyle("-fx-padding: 20px; -fx-background-color: #f8fafc;");
@@ -266,7 +275,8 @@ public class CreateFreeRequestController {
 
                                 // Cập nhật UI
                                 renderOrderCards();
-                                syncRightToLeft();
+                                isCheckPassed = false;
+                                btnSaveAll.setDisable(true);
                             }
 
                             // Đổi màu nút để báo hiệu thành công
@@ -353,6 +363,10 @@ public class CreateFreeRequestController {
             // Vẽ các Card đơn hàng sang cột phải
             renderOrderCards();
 
+            // Nếu chỉ phân bổ thì cho phép lưu đơn vì dữ liệu đã hợp lệ
+            isCheckPassed = true;
+            btnSaveAll.setDisable(false);
+
         } catch (IllegalArgumentException | UnsupportedOperationException e) {
             // Báo lỗi phân bổ tự động
             lblAllocationError.setText(e.getMessage());
@@ -362,6 +376,9 @@ public class CreateFreeRequestController {
             proposedOrdersData.clear();
             vboxOrdersContainer.getChildren().clear();
             lblOrdersCount.setText("Danh Sách Đơn Hàng Đề Xuất (0)");
+            
+            isCheckPassed = false;
+            btnSaveAll.setDisable(true);
         }
     }
 
@@ -383,10 +400,19 @@ public class CreateFreeRequestController {
 
         proposedOrdersData.add(emptyOrder);
         renderOrderCards();
+
+        // Thay đổi thủ công yêu cầu kiểm tra trước khi lưu
+        isCheckPassed = false;
+        btnSaveAll.setDisable(true);
     }
 
     @FXML
     private void handleSaveAll() {
+        if (!isCheckPassed) {
+            AlertHelper.showWarning("Chưa kiểm tra", "Vui lòng bấm 'Kiểm Tra' để xác nhận tồn kho trước khi lưu đơn!");
+            return;
+        }
+
         if (proposedOrdersData.isEmpty()) {
             AlertHelper.showWarning("Không có đơn hàng", "Vui lòng chạy phân bổ tự động hoặc bấm Add Order để thiết lập đơn hàng trước!");
             return;
@@ -415,12 +441,65 @@ public class CreateFreeRequestController {
                 updateTotalQuantityLabel();
                 lblOrdersCount.setText("Danh Sách Đơn Hàng Đề Xuất (0)");
                 dpRequiredDate.setValue(LocalDate.now().plusDays(10));
+                
+                isCheckPassed = false;
+                btnSaveAll.setDisable(true);
 
             } catch (Exception e) {
                 AlertHelper.showError("Lỗi lưu dữ liệu", "Không thể lưu đơn hàng: " + e.getMessage());
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    private void handleValidateOrders() {
+        if (proposedOrdersData.isEmpty()) {
+            AlertHelper.showWarning("Không có đơn hàng", "Vui lòng chạy phân bổ tự động hoặc thêm đơn hàng trước khi kiểm tra!");
+            return;
+        }
+
+        // Kiểm tra tồn kho của từng sản phẩm tại từng Site đối tác
+        for (Order order : proposedOrdersData) {
+            String siteCode = order.getSiteCode();
+            String siteName = order.getSiteName();
+
+            // Nếu đơn hàng rỗng hoặc không có mặt hàng nào
+            if (order.getItems().isEmpty()) {
+                AlertHelper.showWarning("Đơn hàng rỗng", "Đơn hàng gửi cho Site " + siteName + " chưa có mặt hàng nào!");
+                isCheckPassed = false;
+                btnSaveAll.setDisable(true);
+                return;
+            }
+
+            for (OrderItem item : order.getItems()) {
+                SiteInventory inventory = siteInventoryDAO.get(siteCode, item.getMerchandiseCode());
+                int inStock = (inventory != null) ? inventory.getInStockQuantity() : 0;
+
+                if (inStock < item.getQuantityOrdered()) {
+                    AlertHelper.showError("Không đủ tồn kho", 
+                        String.format("Site '%s' (%s) không đủ tồn kho cho mặt hàng '%s' (%s)!\n" +
+                        "Yêu cầu: %d, Hiện có: %d", 
+                        siteName, siteCode, item.getMerchandiseName(), item.getMerchandiseCode(), 
+                        item.getQuantityOrdered(), inStock));
+                    isCheckPassed = false;
+                    btnSaveAll.setDisable(true);
+                    return;
+                }
+            }
+        }
+
+        // Nếu tất cả đều hợp lệ
+        isCheckPassed = true;
+        btnSaveAll.setDisable(false);
+
+        // Cập nhật lại số lượng ở danh sách bên trái (đồng bộ sang trái)
+        syncRightToLeft();
+
+        AlertHelper.showInfo("Kiểm tra thành công", 
+            "Tất cả các đơn hàng đều hợp lệ và đủ tồn kho tại các Site đối tác!\n" +
+            "Danh sách mặt hàng yêu cầu bên trái đã được đồng bộ chính xác.\n" +
+            "Bạn có thể tiến hành lưu toàn bộ đơn hàng.");
     }
 
     /**
@@ -503,7 +582,8 @@ public class CreateFreeRequestController {
             btnDeleteOrder.setOnAction(event -> {
                 proposedOrdersData.remove(index);
                 renderOrderCards();
-                syncRightToLeft(); // Đồng bộ ngược
+                isCheckPassed = false;
+                btnSaveAll.setDisable(true);
             });
             header.getChildren().addAll(lblOrderNo, btnDeleteOrder);
             card.getChildren().add(header);
@@ -605,6 +685,10 @@ public class CreateFreeRequestController {
                     order.setSiteCode(newSite.getSiteCode());
                     order.setSiteName(newSite.getName());
                     updateOrderMetrics.run();
+                    if (oldSite != null) {
+                        isCheckPassed = false;
+                        btnSaveAll.setDisable(true);
+                    }
                 }
             });
 
@@ -617,6 +701,10 @@ public class CreateFreeRequestController {
                         order.setDeliveryMethod(DeliveryMethod.AIR);
                     }
                     updateOrderMetrics.run();
+                    if (oldMethod != null) {
+                        isCheckPassed = false;
+                        btnSaveAll.setDisable(true);
+                    }
                 }
             });
 
@@ -662,7 +750,8 @@ public class CreateFreeRequestController {
                                         if (newQty > 0) {
                                             item.setQuantityOrdered(newQty);
                                             updateOrderMetrics.run();
-                                            syncRightToLeft(); // Đồng bộ ngược
+                                            isCheckPassed = false;
+                                            btnSaveAll.setDisable(true);
                                         }
                                     } catch (NumberFormatException ignored) {}
                                 }
@@ -675,7 +764,8 @@ public class CreateFreeRequestController {
                                 order.getItems().remove(itemIndex);
                                 this.run();
                                 updateOrderMetrics.run();
-                                syncRightToLeft(); // Đồng bộ ngược
+                                isCheckPassed = false;
+                                btnSaveAll.setDisable(true);
                             });
 
                             itemRow.getChildren().addAll(itemInfo, txtQtyInput, btnDeleteItem);

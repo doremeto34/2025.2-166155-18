@@ -108,6 +108,7 @@
                      <children>
                         <Label fx:id="lblOrdersCount" styleClass="section-title" text="Danh Sách Đơn Hàng Đề Xuất (0)" HBox.hgrow="ALWAYS" />
                         <Button mnemonicParsing="false" onAction="#handleAddEmptyOrder" styleClass="button, button-secondary" text="➕ Add Order" />
+                        <Button fx:id="btnValidate" onAction="#handleValidateOrders" mnemonicParsing="false" styleClass="button, button-secondary" style="-fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-cursor: hand;" text="🔍 Kiểm Tra" />
                         <Button fx:id="btnSaveAll" onAction="#handleSaveAll" mnemonicParsing="false" styleClass="button, button-primary" text="💾 Save All" />
                      </children>
                   </HBox>
