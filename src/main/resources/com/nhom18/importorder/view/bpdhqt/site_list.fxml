@@ -11,7 +11,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="🏢 QUẢN LÝ ĐỐI TÁC SITE" styleClass="title-main" />
-            <Label text="Xem danh sách, hiệu chỉnh thông tin và quản lý trạng thái hoạt động của đối tác cung ứng." styleClass="title-sub" />
         </VBox>
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="➕ Thêm Site Mới" onAction="#handleCreateSite" styleClass="button" />

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Order {
     private int id;
-    private int requestId;
+    private Integer requestId;
     private String siteCode;
     private DeliveryMethod deliveryMethod;
     private OrderStatus status;
@@ -22,7 +22,7 @@ public class Order {
 
     public Order() {}
 
-    public Order(int id, int requestId, String siteCode, DeliveryMethod deliveryMethod, OrderStatus status, LocalDate createdDate, LocalDate estimatedArrival, String cancelReason) {
+    public Order(int id, Integer requestId, String siteCode, DeliveryMethod deliveryMethod, OrderStatus status, LocalDate createdDate, LocalDate estimatedArrival, String cancelReason) {
         this.id = id;
         this.requestId = requestId;
         this.siteCode = siteCode;
@@ -42,10 +42,10 @@ public class Order {
     }
 
     public int getRequestId() {
-        return requestId;
+        return requestId != null ? requestId : 0;
     }
 
-    public void setRequestId(int requestId) {
+    public void setRequestId(Integer requestId) {
         this.requestId = requestId;
     }
 

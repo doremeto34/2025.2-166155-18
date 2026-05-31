@@ -12,7 +12,6 @@
         <Button text="⬅️ Quay lại" onAction="#handleBack" styleClass="button-secondary" />
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label fx:id="lblTitle" text="📦 CHI TIẾT ĐƠN HÀNG NHẬN ĐƯỢC" styleClass="title-main" />
-            <Label text="Xem thông tin chi tiết và đưa ra phản hồi phê duyệt/từ chối cung ứng." styleClass="title-sub" />
         </VBox>
     </HBox>
     

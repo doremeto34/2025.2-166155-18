@@ -10,7 +10,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="📋 XEM YÊU CẦU NHẬP HÀNG" styleClass="title-main" />
-            <Label text="Danh sách toàn bộ các yêu cầu nhập khẩu được ghi nhận trong hệ thống." styleClass="title-sub" />
         </VBox>
         <Button text="➕ Tạo Yêu Cầu Mới" fx:id="btnCreateNew" onAction="#handleCreateNewRequest" styleClass="button" />
     </HBox>

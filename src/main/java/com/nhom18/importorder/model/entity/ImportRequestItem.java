@@ -7,6 +7,7 @@ public class ImportRequestItem {
     private int requestId;
     private String merchandiseCode;
     private int quantityOrdered;
+    private int quantityShortage;
     private String unit;
     private LocalDate desiredDeliveryDate;
     
@@ -20,6 +21,17 @@ public class ImportRequestItem {
         this.requestId = requestId;
         this.merchandiseCode = merchandiseCode;
         this.quantityOrdered = quantityOrdered;
+        this.quantityShortage = quantityOrdered; // default to ordered quantity if not specified
+        this.unit = unit;
+        this.desiredDeliveryDate = desiredDeliveryDate;
+    }
+
+    public ImportRequestItem(int id, int requestId, String merchandiseCode, int quantityOrdered, int quantityShortage, String unit, LocalDate desiredDeliveryDate) {
+        this.id = id;
+        this.requestId = requestId;
+        this.merchandiseCode = merchandiseCode;
+        this.quantityOrdered = quantityOrdered;
+        this.quantityShortage = quantityShortage;
         this.unit = unit;
         this.desiredDeliveryDate = desiredDeliveryDate;
     }
@@ -78,5 +90,13 @@ public class ImportRequestItem {
 
     public void setMerchandiseName(String merchandiseName) {
         this.merchandiseName = merchandiseName;
+    }
+
+    public int getQuantityShortage() {
+        return quantityShortage;
+    }
+
+    public void setQuantityShortage(int quantityShortage) {
+        this.quantityShortage = quantityShortage;
     }
 }

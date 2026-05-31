@@ -33,8 +33,6 @@ public class SidebarController {
     @FXML
     private Button btnBpbhRequestList;
     @FXML
-    private Button btnRequestProcessing;
-    @FXML
     private Button btnCreateFreeRequest;
     @FXML
     private Button btnOrderList;
@@ -50,6 +48,8 @@ public class SidebarController {
     /* BPQLK */
     @FXML
     private Button btnWarehouseOrderList;
+    @FXML
+    private Button btnCompanyInventory;
 
     /* ADMIN */
     @FXML
@@ -87,15 +87,16 @@ public class SidebarController {
         setButtonVisible(btnMerchandiseList, false);
         
         setButtonVisible(btnBpbhRequestList, false);
-        setButtonVisible(btnRequestProcessing, false);
         setButtonVisible(btnCreateFreeRequest, false);
         setButtonVisible(btnOrderList, false);
         setButtonVisible(btnSiteList, false);
+        // btnRequestProcessing removed
         
         setButtonVisible(btnSiteOrderList, false);
         setButtonVisible(btnSiteInventory, false);
         
         setButtonVisible(btnWarehouseOrderList, false);
+        setButtonVisible(btnCompanyInventory, false);
         
         setButtonVisible(btnUserList, false);
 
@@ -108,7 +109,7 @@ public class SidebarController {
             }
             case BPDHQT -> {
                 setButtonVisible(btnBpbhRequestList, true);
-                setButtonVisible(btnRequestProcessing, true);
+                // btnRequestProcessing removed
                 setButtonVisible(btnCreateFreeRequest, true);
                 setButtonVisible(btnOrderList, true);
                 setButtonVisible(btnSiteList, true);
@@ -119,6 +120,7 @@ public class SidebarController {
             }
             case BPQLK -> {
                 setButtonVisible(btnWarehouseOrderList, true);
+                setButtonVisible(btnCompanyInventory, true);
             }
             case ADMIN -> {
                 setButtonVisible(btnUserList, true);
@@ -176,11 +178,9 @@ public class SidebarController {
         NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/bpbh_requests.fxml");
     }
 
-    @FXML
-    private void handleNavigateRequestProcessing() {
-        setActiveButton(btnRequestProcessing);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/request_processing.fxml");
-    }
+    // handleNavigateRequestProcessing removed
+
+
 
     @FXML
     private void handleNavigateCreateFreeRequest() {
@@ -216,6 +216,12 @@ public class SidebarController {
     private void handleNavigateWarehouseOrderList() {
         setActiveButton(btnWarehouseOrderList);
         NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpqlk/warehouse_order_list.fxml");
+    }
+
+    @FXML
+    private void handleNavigateCompanyInventory() {
+        setActiveButton(btnCompanyInventory);
+        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpqlk/company_inventory.fxml");
     }
 
     @FXML

@@ -42,8 +42,7 @@
 
             <!-- 2. BPĐHQT Navigation -->
             <Button fx:id="btnBpbhRequestList" onAction="#handleNavigateBpbhRequestList" mnemonicParsing="false" styleClass="nav-item" text="📋 Đơn Hàng Từ BPBH" />
-            <Button fx:id="btnRequestProcessing" onAction="#handleNavigateRequestProcessing" mnemonicParsing="false" styleClass="nav-item" text="⚡ Phân Bổ Yêu Cầu BPBH" />
-            <Button fx:id="btnCreateFreeRequest" onAction="#handleNavigateCreateFreeRequest" mnemonicParsing="false" styleClass="nav-item" text="➕ Tạo Yêu Cầu Nhập" />
+            <Button fx:id="btnCreateFreeRequest" onAction="#handleNavigateCreateFreeRequest" mnemonicParsing="false" styleClass="nav-item" text="➕ Tạo Đơn Hàng Quốc Tế" />
             <Button fx:id="btnOrderList" onAction="#handleNavigateOrderList" mnemonicParsing="false" styleClass="nav-item" text="📑 Danh Sách Đơn Hàng" />
             <Button fx:id="btnSiteList" onAction="#handleNavigateSiteList" mnemonicParsing="false" styleClass="nav-item" text="🌐 Quản Lý Đối Tác Site" />
 
@@ -53,6 +52,7 @@
 
             <!-- 4. BPQLK Navigation -->
             <Button fx:id="btnWarehouseOrderList" onAction="#handleNavigateWarehouseOrderList" mnemonicParsing="false" styleClass="nav-item" text="🚪 Nhận Hàng &amp; Kiểm Kho" />
+            <Button fx:id="btnCompanyInventory" onAction="#handleNavigateCompanyInventory" mnemonicParsing="false" styleClass="nav-item" text="📉 Quản Lý Tồn Kho Nội Bộ" />
 
             <!-- 5. ADMIN Navigation -->
             <Button fx:id="btnUserList" onAction="#handleNavigateUserList" mnemonicParsing="false" styleClass="nav-item" text="👥 Quản Lý Tài Khoản" />

@@ -22,8 +22,6 @@ public class OrderListController {
     @FXML
     private TableColumn<Order, Integer> colOrderId;
     @FXML
-    private TableColumn<Order, Integer> colReqId;
-    @FXML
     private TableColumn<Order, String> colSiteName;
     @FXML
     private TableColumn<Order, String> colDeliveryMethod;
@@ -66,7 +64,6 @@ public class OrderListController {
     public void initialize() {
         // 1. Cấu hình các cột của TableView đơn hàng
         colOrderId.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
-        colReqId.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getRequestId()).asObject());
         colSiteName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSiteName()));
         colDeliveryMethod.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDeliveryMethod().name()));
         colCreatedDate.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCreatedDate().toString()));

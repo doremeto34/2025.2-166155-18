@@ -11,7 +11,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="🚚 DANH SÁCH ĐƠN NHẬP KHO" styleClass="title-main" />
-            <Label text="Kiểm tra, đối chiếu và xác nhận nhập kho thực tế cho các đơn đặt hàng quốc tế." styleClass="title-sub" />
         </VBox>
         <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
     </HBox>

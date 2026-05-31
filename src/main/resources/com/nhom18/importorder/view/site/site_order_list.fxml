@@ -11,7 +11,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="📬 ĐƠN HÀNG NHẬN ĐƯỢC" styleClass="title-main" />
-            <Label text="Xem và phản hồi các yêu cầu cung cấp hàng từ Tổng công ty." styleClass="title-sub" />
         </VBox>
         <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
     </HBox>

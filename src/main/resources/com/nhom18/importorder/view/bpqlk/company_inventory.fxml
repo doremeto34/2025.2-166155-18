@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="com.nhom18.importorder.controller.site.SiteInventoryController"
-      spacing="20" styleClass="content-panel">
+      fx:controller="com.nhom18.importorder.controller.bpqlk.CompanyInventoryController"
+      spacing="20" styleClass="content-panel" stylesheets="@../../../../../css/styles.css">
     
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
-            <Label text="📈 CẬP NHẬT TỒN KHO SITE" styleClass="title-main" />
+            <Label text="📉 QUẢN LÝ TỒN KHO NỘI BỘ" styleClass="title-main" />
         </VBox>
         <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
     </HBox>
@@ -23,7 +23,7 @@
             <Label text="Mã Mặt Hàng:" styleClass="label-secondary" />
             <Label fx:id="lblMerchandiseCode" text="[Vui lòng chọn dòng bên dưới]" style="-fx-font-weight: bold;" />
             
-            <Label text="Số lượng tồn kho mới:" styleClass="label-secondary" style="-fx-margin-left: 20px;" />
+            <Label text="Số lượng tồn thực tế mới:" styleClass="label-secondary" style="-fx-margin-left: 20px;" />
             <TextField fx:id="txtNewQuantity" prefWidth="120" styleClass="text-input" promptText="Nhập số" />
             
             <Button fx:id="btnUpdate" text="💾 Lưu cập nhật" onAction="#handleUpdateStock" styleClass="button" disable="true" />
@@ -34,11 +34,11 @@
             <columns>
                 <TableColumn fx:id="colMerchandiseCode" text="Mã Mặt Hàng" prefWidth="180" style="-fx-alignment: CENTER;" />
                 <TableColumn fx:id="colMerchandiseName" text="Tên Mặt Hàng" prefWidth="380" />
-                <TableColumn fx:id="colInStockQuantity" text="Số Lượng Khả Dụng (Tại Site)" prefWidth="200" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colInStockQuantity" text="Số Lượng Khả Dụng (Kho Công Ty)" prefWidth="250" style="-fx-alignment: CENTER;" />
                 <TableColumn fx:id="colUnit" text="Đơn Vị" prefWidth="120" style="-fx-alignment: CENTER;" />
             </columns>
             <placeholder>
-                <Label text="Không có mặt hàng nào trong kho của bạn." />
+                <Label text="Không có mặt hàng nào trong kho công ty." />
             </placeholder>
         </TableView>
     </VBox>

@@ -8,6 +8,7 @@ public class OrderItem {
     private int quantityConfirmed;
     private int quantityReceived;
     private String unit;
+    private Integer sourceRequestItemId; // nullable: points to import_request_items.id
 
     // Thuộc tính phụ hiển thị trên UI
     private String merchandiseName;
@@ -86,5 +87,13 @@ public class OrderItem {
 
     public void setMerchandiseName(String merchandiseName) {
         this.merchandiseName = merchandiseName;
+    }
+
+    public Integer getSourceRequestItemId() {
+        return sourceRequestItemId;
+    }
+
+    public void setSourceRequestItemId(Integer sourceRequestItemId) {
+        this.sourceRequestItemId = sourceRequestItemId;
     }
 }

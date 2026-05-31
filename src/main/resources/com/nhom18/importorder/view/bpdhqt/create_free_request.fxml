@@ -14,25 +14,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="900.0" prefWidth="1500.0" spacing="20.0" styleClass="main-container" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.bpdhqt.CreateFreeRequestController">
+<VBox prefHeight="900.0" prefWidth="1500.0" spacing="20.0" styleClass="content-panel" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.bpdhqt.CreateFreeRequestController">
    <children>
-      <!-- Top Bar Header -->
-      <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="page-header">
-         <children>
-            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label styleClass="page-title" text="Tạo Đơn Hàng Nhập Khẩu Tự Do" />
-                  <Label styleClass="page-subtitle" text="Lên kế hoạch đặt hàng tự do, tự chọn mặt hàng, số lượng và tối ưu hóa phân bổ hoặc chỉnh sửa thủ công đơn hàng gửi Site" />
-               </children>
-            </VBox>
-         </children>
+      <!-- Header -->
+      <HBox alignment="CENTER_LEFT" spacing="20">
+         <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="🛍️ QUẢN LÝ ĐƠN ĐẶT HÀNG QUỐC TẾ" styleClass="title-main" />
+         </VBox>
       </HBox>
 
       <!-- Main Layout: 2 Columns using GridPane -->
       <GridPane hgap="20.0" vgap="10.0" VBox.vgrow="ALWAYS">
         <columnConstraints>
-          <ColumnConstraints percentWidth="40.0" hgrow="SOMETIMES" minWidth="450.0" />
-          <ColumnConstraints percentWidth="60.0" hgrow="SOMETIMES" minWidth="650.0" />
+          <ColumnConstraints percentWidth="40.0" hgrow="SOMETIMES" minWidth="350.0" />
+          <ColumnConstraints percentWidth="60.0" hgrow="SOMETIMES" minWidth="500.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints vgrow="ALWAYS" />
@@ -61,7 +56,7 @@
                   </HBox>
 
                   <!-- Selected Items TableView -->
-                  <TableView fx:id="tblSelectedItems" VBox.vgrow="ALWAYS" prefHeight="350.0">
+                  <TableView fx:id="tblSelectedItems" VBox.vgrow="ALWAYS" prefHeight="250.0" minHeight="150.0">
                      <columns>
                         <TableColumn fx:id="colItemName" prefWidth="160.0" text="Tên Mặt Hàng" />
                         <TableColumn fx:id="colItemCode" maxWidth="100.0" minWidth="70.0" prefWidth="80.0" text="Mã Hàng" />
@@ -73,14 +68,15 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <placeholder>
-                        <Label text="Chưa chọn mặt hàng nào. Vui lòng thêm từ Catalog phía dưới!" style="-fx-text-fill: -text-secondary; -fx-font-style: italic;" />
+                        <Label text="Chưa chọn mặt hàng nào. Thêm từ Catalog hoặc Yêu Cầu BPBH!" style="-fx-text-fill: -text-secondary; -fx-font-style: italic;" />
                      </placeholder>
                   </TableView>
 
-                  <!-- Add Item Button to open Catalog Grid View -->
-                  <HBox alignment="CENTER">
+                  <!-- Add Item Buttons -->
+                  <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleOpenCatalogGrid" prefHeight="40.0" prefWidth="250.0" styleClass="button, button-secondary" style="-fx-border-color: #cbd5e1; -fx-border-radius: 6px; -fx-font-weight: bold;" text="➕ Add Items from Catalog" />
+                        <Button mnemonicParsing="false" onAction="#handleOpenCatalogGrid" prefHeight="40.0" prefWidth="170.0" styleClass="button, button-secondary" style="-fx-border-color: #cbd5e1; -fx-border-radius: 6px; -fx-font-weight: bold;" text="➕ Add from Catalog" />
+                        <Button mnemonicParsing="false" onAction="#handleOpenBpbhRequestsPopup" prefHeight="40.0" prefWidth="180.0" styleClass="button, button-secondary" style="-fx-border-color: #cbd5e1; -fx-border-radius: 6px; -fx-font-weight: bold; -fx-background-color: #e0e7ff; -fx-text-fill: -accent-indigo; -fx-cursor: hand;" text="➕ Add from BPBH" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />

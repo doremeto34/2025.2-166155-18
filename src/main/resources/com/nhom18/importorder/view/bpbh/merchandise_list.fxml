@@ -11,7 +11,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="📦 QUẢN LÝ DANH MỤC MẶT HÀNG" styleClass="title-main" />
-            <Label text="Xem danh mục, thêm mới, cập nhật thông tin và điều chỉnh trạng thái kinh doanh của mặt hàng." styleClass="title-sub" />
         </VBox>
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="➕ Thêm Mặt Hàng" onAction="#handleCreateMerchandise" styleClass="button" />

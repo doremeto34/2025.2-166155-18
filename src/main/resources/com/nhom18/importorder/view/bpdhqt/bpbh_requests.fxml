@@ -13,19 +13,14 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<VBox prefHeight="800.0" prefWidth="1200.0" spacing="20.0" styleClass="main-container" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.bpdhqt.BpbhRequestListController">
+<VBox prefHeight="800.0" prefWidth="1200.0" spacing="20.0" styleClass="content-panel" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.bpdhqt.BpbhRequestListController">
    <children>
-      <!-- Top Bar Header -->
-      <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="page-header">
-         <children>
-            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label styleClass="page-title" text="Đơn Yêu Cầu Từ Bộ Phận Bán Hàng" />
-                  <Label styleClass="page-subtitle" text="Xem và theo dõi các phiếu yêu cầu nhập hàng do nhân viên kinh doanh BPBH khởi tạo" />
-               </children>
-            </VBox>
-            <Button mnemonicParsing="false" onAction="#handleRefresh" styleClass="button, button-secondary" text="🔄 Làm Mới" />
-         </children>
+      <!-- Header -->
+      <HBox alignment="CENTER_LEFT" spacing="20">
+         <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="📋 ĐƠN YÊU CẦU TỪ BỘ PHẬN BÁN HÀNG" styleClass="title-main" />
+         </VBox>
+         <Button mnemonicParsing="false" onAction="#handleRefresh" styleClass="button-secondary" text="🔄 Làm Mới" />
       </HBox>
 
       <!-- SplitPane Layout for Master-Detail View -->

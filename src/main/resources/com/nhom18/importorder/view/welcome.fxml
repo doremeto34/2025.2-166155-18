@@ -2,12 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.WelcomeController">
+<StackPane style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nhom18.importorder.controller.WelcomeController">
+   <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+   </padding>
    <children>
-      <VBox alignment="CENTER" spacing="30.0" styleClass="card" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+      <VBox alignment="CENTER" spacing="30.0" styleClass="card" maxWidth="800.0" maxHeight="500.0">
          <children>
             <VBox alignment="CENTER" spacing="10.0">
                <children>
@@ -27,4 +30,4 @@
          </children>
       </VBox>
    </children>
-</AnchorPane>
+</StackPane>

@@ -62,6 +62,7 @@ public class BpbhRequestListController {
     private Label lblReqCreatorDate;
 
     private final IImportRequestDAO requestDAO = new SQLiteImportRequestDAO();
+    private final com.nhom18.importorder.service.ImportRequestService requestService = new com.nhom18.importorder.service.ImportRequestService();
     private final ObservableList<ImportRequest> masterData = FXCollections.observableArrayList();
 
     @FXML
@@ -245,8 +246,8 @@ public class BpbhRequestListController {
             "Bạn có chắc chắn muốn từ chối phiếu yêu cầu nhập hàng này?");
         if (confirm) {
             try {
-                requestDAO.updateStatus(selected.getId(), RequestStatus.REJECTED);
-                com.nhom18.importorder.util.AlertHelper.showInfo("Thành công", "Đã từ chối phiếu yêu cầu nhập hàng!");
+                requestService.rejectImportRequest(selected.getId());
+                com.nhom18.importorder.util.AlertHelper.showInfo("Thành công", "Đã từ chối phiếu yêu cầu nhập hàng và hoàn trả tồn kho nội bộ!");
                 loadRequests();
                 // Chọn lại dòng cũ
                 for (ImportRequest r : masterData) {

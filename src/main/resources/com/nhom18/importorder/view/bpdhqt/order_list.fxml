@@ -12,7 +12,6 @@
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
             <Label text="📦 DANH SÁCH ĐƠN HÀNG NHẬP KHẨU" styleClass="title-main" />
-            <Label text="Theo dõi và quản lý toàn bộ đơn đặt hàng quốc tế gửi tới đối tác nước ngoài." styleClass="title-sub" />
         </VBox>
         <Button fx:id="btnReallocate" text="⚡ Tái phân bổ đơn" onAction="#handleReallocate" styleClass="button-primary" style="-fx-background-color: #fb923c;" disable="true" />
         <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
@@ -32,7 +31,6 @@
                     <TableView fx:id="tblOrders" VBox.vgrow="ALWAYS">
                         <columns>
                             <TableColumn fx:id="colOrderId" text="Mã Đơn" maxWidth="70" minWidth="50" prefWidth="60" style="-fx-alignment: CENTER;" />
-                            <TableColumn fx:id="colReqId" text="Mã YC" maxWidth="70" minWidth="50" prefWidth="60" style="-fx-alignment: CENTER;" />
                             <TableColumn fx:id="colSiteName" text="Site Nhập Khẩu" prefWidth="140" />
                             <TableColumn fx:id="colDeliveryMethod" text="Vận Chuyển" maxWidth="90" minWidth="70" prefWidth="80" style="-fx-alignment: CENTER;" />
                             <TableColumn fx:id="colCreatedDate" text="Ngày Tạo" maxWidth="100" minWidth="80" prefWidth="90" style="-fx-alignment: CENTER;" />

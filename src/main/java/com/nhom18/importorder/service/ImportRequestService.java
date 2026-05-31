@@ -13,9 +13,11 @@ import java.util.List;
 
 public class ImportRequestService {
     private final IImportRequestDAO requestDAO;
+    private final com.nhom18.importorder.dao.ICompanyInventoryDAO companyInventoryDAO;
 
     public ImportRequestService() {
         this.requestDAO = new SQLiteImportRequestDAO();
+        this.companyInventoryDAO = new com.nhom18.importorder.dao.impl.SQLiteCompanyInventoryDAO();
     }
 
     public List<ImportRequest> getAllRequests() {
@@ -75,9 +77,29 @@ public class ImportRequestService {
             }
             request.setId(requestId);
             
-            // Thêm các dòng chi tiết mặt hàng
+            // Thêm các dòng chi tiết mặt hàng và thực hiện kiểm tra MRP (trừ tồn kho nội bộ)
             for (ImportRequestItem item : request.getItems()) {
                 item.setRequestId(requestId);
+                
+                // --- MRP LOGIC: Trừ kho nội bộ ---
+                com.nhom18.importorder.model.entity.CompanyInventory stock = companyInventoryDAO.getByMerchandiseCode(item.getMerchandiseCode());
+                int orderedQty = item.getQuantityOrdered();
+                int shortage = orderedQty;
+                
+                if (stock != null && stock.getInStockQuantity() > 0) {
+                    int available = stock.getInStockQuantity();
+                    int fulfilled = Math.min(orderedQty, available);
+                    shortage = orderedQty - fulfilled;
+                    
+                    // Cập nhật tồn kho nội bộ sau khi trừ
+                    companyInventoryDAO.updateStock(item.getMerchandiseCode(), available - fulfilled);
+                    System.out.println("MRP: Đã tự động đáp ứng " + fulfilled + " " + item.getUnit() + 
+                                       " của mặt hàng " + item.getMerchandiseCode() + " từ kho nội bộ. Lượng tồn kho mới: " + (available - fulfilled));
+                }
+                
+                // Thiết lập lượng shortage còn thiếu cần đặt hàng quốc tế
+                item.setQuantityShortage(shortage);
+                
                 requestDAO.insertItem(item);
             }
             
@@ -94,6 +116,57 @@ public class ImportRequestService {
             throw e;
         } finally {
             // Trả lại trạng thái auto-commit ban đầu
+            try {
+                conn.setAutoCommit(originalAutoCommit);
+            } catch (SQLException autoCommitEx) {
+                autoCommitEx.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Từ chối phiếu yêu cầu nhập hàng, đồng thời hoàn trả lại tồn kho nội bộ đã khấu trừ tạm tính (MRP rollback)
+     */
+    public void rejectImportRequest(int requestId) throws Exception {
+        ImportRequest req = requestDAO.getById(requestId);
+        if (req == null) {
+            throw new IllegalArgumentException("Không tìm thấy phiếu yêu cầu với mã: " + requestId);
+        }
+        if (req.getStatus() == RequestStatus.REJECTED) {
+            return; // Đã từ chối rồi
+        }
+
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        boolean originalAutoCommit = conn.getAutoCommit();
+        
+        try {
+            conn.setAutoCommit(false);
+            
+            // 1. Cập nhật trạng thái phiếu yêu cầu sang REJECTED
+            requestDAO.updateStatus(requestId, RequestStatus.REJECTED);
+            
+            // 2. Hoàn trả lại số lượng đã đáp ứng từ kho nội bộ
+            for (ImportRequestItem item : req.getItems()) {
+                int fulfilledQty = item.getQuantityOrdered() - item.getQuantityShortage();
+                if (fulfilledQty > 0) {
+                    com.nhom18.importorder.model.entity.CompanyInventory stock = companyInventoryDAO.getByMerchandiseCode(item.getMerchandiseCode());
+                    if (stock != null) {
+                        companyInventoryDAO.updateStock(item.getMerchandiseCode(), stock.getInStockQuantity() + fulfilledQty);
+                        System.out.println("MRP Rollback: Đã hoàn trả lại " + fulfilledQty + " " + item.getUnit() + 
+                                           " của mặt hàng " + item.getMerchandiseCode() + " vào kho nội bộ.");
+                    }
+                }
+            }
+            
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            throw e;
+        } finally {
             try {
                 conn.setAutoCommit(originalAutoCommit);
             } catch (SQLException autoCommitEx) {

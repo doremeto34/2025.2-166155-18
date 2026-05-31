@@ -11,4 +11,6 @@ public interface IImportRequestDAO {
     List<ImportRequest> getAllWithCreatorName();
     ImportRequest getById(int id);
     void updateStatus(int requestId, RequestStatus status);
+    void adjustShortageQuantity(int itemId, int delta);
+    List<ImportRequestItem> getPendingRequestItems();
 }

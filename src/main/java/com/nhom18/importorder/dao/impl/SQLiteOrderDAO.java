@@ -19,7 +19,11 @@ public class SQLiteOrderDAO implements IOrderDAO {
 
     @Override
     public Order getById(int id) {
-        String sql = "SELECT o.*, s.name as site_name FROM orders o " +
+        String sql = "SELECT o.*, s.name as site_name, " +
+                     "(SELECT iri.request_id FROM order_items oi " +
+                     " JOIN import_request_items iri ON oi.source_request_item_id = iri.id " +
+                     " WHERE oi.order_id = o.id LIMIT 1) as request_id " +
+                     "FROM orders o " +
                      "JOIN sites s ON o.site_code = s.site_code " +
                      "WHERE o.id = ?";
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -41,7 +45,11 @@ public class SQLiteOrderDAO implements IOrderDAO {
     @Override
     public List<Order> getAll() {
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT o.*, s.name as site_name FROM orders o " +
+        String sql = "SELECT o.*, s.name as site_name, " +
+                     "(SELECT iri.request_id FROM order_items oi " +
+                     " JOIN import_request_items iri ON oi.source_request_item_id = iri.id " +
+                     " WHERE oi.order_id = o.id LIMIT 1) as request_id " +
+                     "FROM orders o " +
                      "JOIN sites s ON o.site_code = s.site_code " +
                      "ORDER BY o.id DESC";
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -61,7 +69,11 @@ public class SQLiteOrderDAO implements IOrderDAO {
     @Override
     public List<Order> getBySiteCode(String siteCode) {
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT o.*, s.name as site_name FROM orders o " +
+        String sql = "SELECT o.*, s.name as site_name, " +
+                     "(SELECT iri.request_id FROM order_items oi " +
+                     " JOIN import_request_items iri ON oi.source_request_item_id = iri.id " +
+                     " WHERE oi.order_id = o.id LIMIT 1) as request_id " +
+                     "FROM orders o " +
                      "JOIN sites s ON o.site_code = s.site_code " +
                      "WHERE o.site_code = ? " +
                      "ORDER BY o.id DESC";
@@ -84,13 +96,16 @@ public class SQLiteOrderDAO implements IOrderDAO {
     @Override
     public List<Order> getByRequestId(int requestId) {
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT o.*, s.name as site_name FROM orders o " +
+        String sql = "SELECT DISTINCT o.*, s.name as site_name, ? as request_id FROM orders o " +
                      "JOIN sites s ON o.site_code = s.site_code " +
-                     "WHERE o.request_id = ? " +
+                     "JOIN order_items oi ON o.id = oi.order_id " +
+                     "JOIN import_request_items iri ON oi.source_request_item_id = iri.id " +
+                     "WHERE iri.request_id = ? " +
                      "ORDER BY o.id DESC";
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, requestId);
+            pstmt.setInt(2, requestId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Order order = mapOrder(rs);
@@ -106,10 +121,10 @@ public class SQLiteOrderDAO implements IOrderDAO {
 
     @Override
     public int insert(Order order) {
-        String sqlOrder = "INSERT INTO orders (request_id, site_code, delivery_method, status, created_date, estimated_arrival, cancel_reason) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String sqlItem = "INSERT INTO order_items (order_id, merchandise_code, quantity_ordered, quantity_confirmed, quantity_received, unit) " +
-                         "VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlOrder = "INSERT INTO orders (site_code, delivery_method, status, created_date, estimated_arrival, cancel_reason) " +
+                          "VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlItem = "INSERT INTO order_items (order_id, merchandise_code, quantity_ordered, quantity_confirmed, quantity_received, unit, source_request_item_id) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getInstance().getConnection();
         
         try {
@@ -118,13 +133,12 @@ public class SQLiteOrderDAO implements IOrderDAO {
             
             int orderId = -1;
             try (PreparedStatement pstmtOrder = conn.prepareStatement(sqlOrder, Statement.RETURN_GENERATED_KEYS)) {
-                pstmtOrder.setInt(1, order.getRequestId());
-                pstmtOrder.setString(2, order.getSiteCode());
-                pstmtOrder.setString(3, order.getDeliveryMethod().name());
-                pstmtOrder.setString(4, order.getStatus().name());
-                pstmtOrder.setString(5, order.getCreatedDate().toString());
-                pstmtOrder.setString(6, order.getEstimatedArrival().toString());
-                pstmtOrder.setString(7, order.getCancelReason());
+                pstmtOrder.setString(1, order.getSiteCode());
+                pstmtOrder.setString(2, order.getDeliveryMethod().name());
+                pstmtOrder.setString(3, order.getStatus().name());
+                pstmtOrder.setString(4, order.getCreatedDate().toString());
+                pstmtOrder.setString(5, order.getEstimatedArrival().toString());
+                pstmtOrder.setString(6, order.getCancelReason());
                 
                 pstmtOrder.executeUpdate();
                 
@@ -149,6 +163,11 @@ public class SQLiteOrderDAO implements IOrderDAO {
                     pstmtItem.setInt(4, item.getQuantityConfirmed());
                     pstmtItem.setInt(5, item.getQuantityReceived());
                     pstmtItem.setString(6, item.getUnit());
+                    if (item.getSourceRequestItemId() != null) {
+                        pstmtItem.setInt(7, item.getSourceRequestItemId());
+                    } else {
+                        pstmtItem.setNull(7, java.sql.Types.INTEGER);
+                    }
                     pstmtItem.addBatch();
                 }
                 pstmtItem.executeBatch();
@@ -229,6 +248,10 @@ public class SQLiteOrderDAO implements IOrderDAO {
                     item.setQuantityReceived(rs.getInt("quantity_received"));
                     item.setUnit(rs.getString("unit"));
                     item.setMerchandiseName(rs.getString("merchandise_name"));
+                    int srcReqItemId = rs.getInt("source_request_item_id");
+                    if (!rs.wasNull()) {
+                        item.setSourceRequestItemId(srcReqItemId);
+                    }
                     list.add(item);
                 }
             }
@@ -241,7 +264,8 @@ public class SQLiteOrderDAO implements IOrderDAO {
     private Order mapOrder(ResultSet rs) throws SQLException {
         Order order = new Order();
         order.setId(rs.getInt("id"));
-        order.setRequestId(rs.getInt("request_id"));
+        int reqId = rs.getInt("request_id");
+        order.setRequestId(rs.wasNull() ? null : reqId);
         order.setSiteCode(rs.getString("site_code"));
         order.setDeliveryMethod(DeliveryMethod.valueOf(rs.getString("delivery_method")));
         order.setStatus(OrderStatus.valueOf(rs.getString("status")));

@@ -168,12 +168,18 @@ public class OrderService {
         // 1. Cập nhật trạng thái đơn hàng sang CANCELLED kèm lý do
         orderDAO.updateCancelReason(orderId, reason);
 
-        // 2. Cộng trả lại tồn kho khả dụng cho Site
+        // 2. Cộng trả lại tồn kho khả dụng cho Site và phục hồi shortage yêu cầu BPBH
         for (OrderItem item : order.getItems()) {
             SiteInventory inventory = siteInventoryDAO.get(order.getSiteCode(), item.getMerchandiseCode());
             if (inventory != null) {
                 int newQty = inventory.getInStockQuantity() + item.getQuantityOrdered();
                 siteInventoryDAO.updateStock(order.getSiteCode(), item.getMerchandiseCode(), newQty);
+            }
+            
+            // Khôi phục shortage của BPBH nếu có liên kết
+            if (item.getSourceRequestItemId() != null) {
+                requestDAO.adjustShortageQuantity(item.getSourceRequestItemId(), item.getQuantityOrdered());
+                System.out.println("MRP: Đã hoàn trả shortage của request item #" + item.getSourceRequestItemId() + " đi +" + item.getQuantityOrdered());
             }
         }
     }
@@ -350,6 +356,9 @@ public class OrderService {
                 orderItem.setQuantityConfirmed(0);
                 orderItem.setQuantityReceived(0);
                 orderItem.setUnit(item.getUnit());
+                if (item.getId() > 0) {
+                    orderItem.setSourceRequestItemId(item.getId());
+                }
 
                 order.addItem(orderItem);
             }
@@ -359,46 +368,31 @@ public class OrderService {
     }
 
     /**
-     * Lưu phiếu yêu cầu nhập hàng tự do (APPROVED) và các đơn hàng Site tương ứng sau khi chỉnh sửa thủ công.
+     * Lưu các đơn đặt hàng mới (Purchase Orders). 
+     * Đồng thời:
+     * - Khấu trừ tồn kho tại các Site tương ứng.
+     * - Cập nhật lượng shortage trong import_request_items đối với các dòng có liên kết.
      */
     public void saveCustomFreeRequestAndOrders(LocalDate desiredDate, List<Order> customOrders) {
         if (customOrders == null || customOrders.isEmpty()) {
             throw new IllegalArgumentException("Danh sách đơn hàng rỗng!");
         }
 
-        // 1. Tạo phiếu yêu cầu nhập hàng (APPROVED)
-        User currentUser = SessionManager.getInstance().getCurrentUser();
-        int createdBy = currentUser != null ? currentUser.getId() : 9; // fallback admin nếu test
-
-        ImportRequest request = new ImportRequest();
-        request.setCreatedBy(createdBy);
-        request.setCreatedDate(LocalDate.now());
-        request.setStatus(RequestStatus.APPROVED);
-
-        int newRequestId = requestDAO.insert(request);
-        if (newRequestId == -1) {
-            throw new RuntimeException("Không thể tạo phiếu yêu cầu nhập hàng!");
-        }
-        request.setId(newRequestId);
-
-        // 2. Lưu từng đơn hàng và trừ tồn kho Site tương ứng
+        // 1. Lưu từng đơn hàng và thực hiện khấu trừ tồn kho Site & cập nhật shortage của BPBH
         for (Order order : customOrders) {
-            order.setRequestId(newRequestId);
             order.setCreatedDate(LocalDate.now());
             order.setStatus(OrderStatus.PENDING);
 
-            // Lưu đơn hàng qua DAO (tự động lưu cả OrderItems nhờ cơ chế Transaction của DAO)
+            // Lưu đơn hàng qua DAO (tự động lưu cả OrderItems)
             orderDAO.insert(order);
 
-            // Lưu các ImportRequestItem tương ứng để lưu lịch sử yêu cầu nhập ban đầu
+            // Xử lý từng dòng chi tiết đơn hàng
             for (OrderItem item : order.getItems()) {
-                ImportRequestItem reqItem = new ImportRequestItem();
-                reqItem.setRequestId(newRequestId);
-                reqItem.setMerchandiseCode(item.getMerchandiseCode());
-                reqItem.setQuantityOrdered(item.getQuantityOrdered());
-                reqItem.setUnit(item.getUnit());
-                reqItem.setDesiredDeliveryDate(desiredDate);
-                requestDAO.insertItem(reqItem);
+                // Nếu dòng này liên kết với một yêu cầu mặt hàng của BPBH, ta trừ shortage của nó
+                if (item.getSourceRequestItemId() != null) {
+                    requestDAO.adjustShortageQuantity(item.getSourceRequestItemId(), -item.getQuantityOrdered());
+                    System.out.println("MRP: Đã giảm shortage của request item #" + item.getSourceRequestItemId() + " đi -" + item.getQuantityOrdered());
+                }
 
                 // Khấu trừ tồn kho khả dụng tại Site đối tác tương ứng
                 SiteInventory inventory = siteInventoryDAO.get(order.getSiteCode(), item.getMerchandiseCode());

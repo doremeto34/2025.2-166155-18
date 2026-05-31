@@ -40,6 +40,14 @@ CREATE TABLE IF NOT EXISTS site_inventory (
     FOREIGN KEY (merchandise_code) REFERENCES merchandise(merchandise_code) ON DELETE CASCADE
 );
 
+-- Bảng tồn kho nội bộ công ty (để thực hiện MRP logic)
+CREATE TABLE IF NOT EXISTS company_inventory (
+    merchandise_code TEXT PRIMARY KEY,
+    in_stock_quantity INTEGER NOT NULL CHECK (in_stock_quantity >= 0),
+    unit TEXT NOT NULL,
+    FOREIGN KEY (merchandise_code) REFERENCES merchandise(merchandise_code) ON DELETE CASCADE
+);
+
 -- Bảng Yêu cầu nhập hàng (BPBH tạo)
 CREATE TABLE IF NOT EXISTS import_requests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,23 +63,22 @@ CREATE TABLE IF NOT EXISTS import_request_items (
     request_id INTEGER NOT NULL,
     merchandise_code TEXT NOT NULL,
     quantity_ordered INTEGER NOT NULL CHECK (quantity_ordered > 0),
+    quantity_shortage INTEGER NOT NULL CHECK (quantity_shortage >= 0),
     unit TEXT NOT NULL,
     desired_delivery_date TEXT NOT NULL, -- YYYY-MM-DD
     FOREIGN KEY (request_id) REFERENCES import_requests(id) ON DELETE CASCADE,
     FOREIGN KEY (merchandise_code) REFERENCES merchandise(merchandise_code)
 );
 
--- Bảng Đơn đặt hàng (BPĐHQT tạo gửi cho Site)
+-- Bảng Đơn đặt hàng (BPĐHQT tạo gửi cho Site, độc lập không bắt buộc có request_id ở mức đơn hàng)
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    request_id INTEGER NOT NULL,
     site_code TEXT NOT NULL,
     delivery_method TEXT NOT NULL CHECK (delivery_method IN ('SHIP', 'AIR')),
     status TEXT NOT NULL CHECK (status IN ('PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED')),
     created_date TEXT NOT NULL,    -- YYYY-MM-DD
     estimated_arrival TEXT NOT NULL, -- YYYY-MM-DD
     cancel_reason TEXT,
-    FOREIGN KEY (request_id) REFERENCES import_requests(id),
     FOREIGN KEY (site_code) REFERENCES sites(site_code)
 );
 
@@ -84,8 +91,10 @@ CREATE TABLE IF NOT EXISTS order_items (
     quantity_confirmed INTEGER DEFAULT 0 CHECK (quantity_confirmed >= 0),
     quantity_received INTEGER DEFAULT 0 CHECK (quantity_received >= 0),
     unit TEXT NOT NULL,
+    source_request_item_id INTEGER, -- Khóa ngoại liên kết dòng yêu cầu của BPBH (nếu có, Nullable nếu mua tự do)
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (merchandise_code) REFERENCES merchandise(merchandise_code)
+    FOREIGN KEY (merchandise_code) REFERENCES merchandise(merchandise_code),
+    FOREIGN KEY (source_request_item_id) REFERENCES import_request_items(id) ON DELETE SET NULL
 );
 
 -- Bảng Phiếu nhập kho (BPQLK tạo khi nhận hàng)
@@ -223,3 +232,30 @@ INSERT OR IGNORE INTO site_inventory (site_code, merchandise_code, in_stock_quan
 ('S_TOK', 'M_KEYBOARD', 200, 'Cái'),
 ('S_TOK', 'M_MOUSE', 180, 'Cái'),
 ('S_TOK', 'M_HEADSET', 220, 'Cái');
+
+-- Thêm tồn kho thực tế tại kho nội bộ của công ty (để chạy MRP logic)
+INSERT OR IGNORE INTO company_inventory (merchandise_code, in_stock_quantity, unit) VALUES
+('M_CPU_I7', 15, 'Cái'),
+('M_GPU_RTX4070', 3, 'Cái'),
+('M_RAM_16G', 20, 'Thanh'),
+('M_SSD_1T', 10, 'Cái'),
+('M_CPU_I5', 5, 'Cái'),
+('M_CPU_I9', 0, 'Cái'),
+('M_GPU_RTX4060', 4, 'Cái'),
+('M_GPU_RTX4090', 0, 'Cái'),
+('M_RAM_8G', 25, 'Thanh'),
+('M_RAM_32G', 2, 'Thanh'),
+('M_SSD_500G', 15, 'Cái'),
+('M_SSD_2T', 2, 'Cái'),
+('M_MAIN_B760', 6, 'Cái'),
+('M_MAIN_Z790', 1, 'Cái'),
+('M_PSU_650W', 10, 'Cái'),
+('M_PSU_1000W', 2, 'Cái'),
+('M_CASE_ATX', 5, 'Cái'),
+('M_COOLER_AIR', 3, 'Cái'),
+('M_COOLER_AIO', 1, 'Cái'),
+('M_MONITOR_24', 4, 'Cái'),
+('M_MONITOR_27', 2, 'Cái'),
+('M_KEYBOARD', 8, 'Cái'),
+('M_MOUSE', 10, 'Cái'),
+('M_HEADSET', 6, 'Cái');

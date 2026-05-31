@@ -9,7 +9,6 @@
     
     <VBox spacing="5">
         <Label text="➕ TẠO YÊU CẦU NHẬP HÀNG MỚI" styleClass="title-main" />
-        <Label text="Lập phiếu yêu cầu gom hàng, chọn mặt hàng từ Catalog và ấn định ngày giao hàng mong muốn." styleClass="title-sub" />
     </VBox>
     
     <SplitPane dividerPositions="0.45" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;">
