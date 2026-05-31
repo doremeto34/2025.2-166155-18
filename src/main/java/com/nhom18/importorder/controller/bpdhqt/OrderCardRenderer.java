@@ -4,7 +4,6 @@ import com.nhom18.importorder.model.entity.Order;
 import com.nhom18.importorder.model.entity.OrderItem;
 import com.nhom18.importorder.model.entity.Site;
 import com.nhom18.importorder.model.enums.DeliveryMethod;
-import com.nhom18.importorder.model.enums.OrderStatus;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -67,9 +66,7 @@ public class OrderCardRenderer {
                     return s == null ? "" : s.getName() + " (" + s.getSiteCode() + ")";
                 }
                 @Override
-                public Site fromString(String string) {
-                    return null;
-                }
+                public Site fromString(String string) { return null; }
             });
             formGrid.add(cbSite, 1, 0);
 
@@ -125,8 +122,6 @@ public class OrderCardRenderer {
 
             cbSite.valueProperty().addListener((obs, oldSite, newSite) -> {
                 if (newSite != null) {
-                    order.setSiteCode(newSite.getSiteCode());
-                    order.setSiteName(newSite.getName());
                     updateOrderMetrics.run();
                     if (oldSite != null) {
                         controller.resetCheckPassed();
@@ -149,74 +144,13 @@ public class OrderCardRenderer {
             });
 
             updateOrderMetrics.run();
-
-            Runnable renderItemsList = new Runnable() {
-                @Override
-                public void run() {
-                    vboxItems.getChildren().clear();
-                    if (order.getItems().isEmpty()) {
-                        vboxItems.getChildren().add(new Label("Chưa có mặt hàng trong đơn hàng này."));
-                    } else {
-                        for (int k = 0; k < order.getItems().size(); k++) {
-                            final int itemIndex = k;
-                            OrderItem item = order.getItems().get(itemIndex);
-
-                            HBox itemRow = new HBox();
-                            itemRow.setAlignment(Pos.CENTER_LEFT);
-                            itemRow.setSpacing(10.0);
-
-                            double unitPrice = controller.getMerchandisePrices().getOrDefault(item.getMerchandiseCode(), 0.0);
-                            VBox itemInfo = new VBox(2.0);
-                            Label lblName = new Label(item.getMerchandiseName());
-                            lblName.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
-                            
-                            Label lblPriceDetail = new Label(String.format("Mã: %s  •  Đơn giá: %,.2f USD / %s", 
-                                item.getMerchandiseCode(), unitPrice, item.getUnit()));
-                            lblPriceDetail.setStyle("-fx-text-fill: -text-secondary; -fx-font-size: 11px;");
-                            itemInfo.getChildren().addAll(lblName, lblPriceDetail);
-                            HBox.setHgrow(itemInfo, Priority.ALWAYS);
-
-                            TextField txtQtyInput = new TextField(String.valueOf(item.getQuantityOrdered()));
-                            txtQtyInput.setPrefWidth(65.0);
-                            txtQtyInput.setStyle("-fx-alignment: CENTER;");
-                            txtQtyInput.textProperty().addListener((obs, oldVal, newVal) -> {
-                                if (newVal != null && !newVal.trim().isEmpty()) {
-                                    try {
-                                        int newQty = Integer.parseInt(newVal.trim());
-                                        if (newQty > 0) {
-                                            item.setQuantityOrdered(newQty);
-                                            updateOrderMetrics.run();
-                                            controller.resetCheckPassed();
-                                        }
-                                    } catch (NumberFormatException ignored) {}
-                                }
-                            });
-
-                            Button btnDeleteItem = new Button("❌");
-                            btnDeleteItem.setStyle("-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand; -fx-font-size: 12px;");
-                            btnDeleteItem.setOnAction(event -> {
-                                order.getItems().remove(itemIndex);
-                                this.run();
-                                updateOrderMetrics.run();
-                                controller.resetCheckPassed();
-                            });
-
-                            itemRow.getChildren().addAll(itemInfo, txtQtyInput, btnDeleteItem);
-                            vboxItems.getChildren().add(itemRow);
-                        }
-                    }
-                }
-            };
-
-            renderItemsList.run();
+            OrderCardItemRenderer.render(controller, order, vboxItems, updateOrderMetrics);
             card.getChildren().add(vboxItems);
 
             Button btnAddItemToOrder = new Button("➕ Add Item from Catalog");
             btnAddItemToOrder.getStyleClass().addAll("button-secondary");
             btnAddItemToOrder.setStyle("-fx-font-size: 12px; -fx-padding: 4px 12px; -fx-background-color: transparent; -fx-border-color: #cbd5e1; -fx-border-radius: 4px;");
-            btnAddItemToOrder.setOnAction(event -> {
-                controller.openCatalogGrid(order);
-            });
+            btnAddItemToOrder.setOnAction(event -> controller.openCatalogGrid(order));
 
             card.getChildren().add(btnAddItemToOrder);
             controller.getVboxOrdersContainer().getChildren().add(card);
