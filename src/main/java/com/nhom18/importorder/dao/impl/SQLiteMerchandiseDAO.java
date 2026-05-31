@@ -16,22 +16,12 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
     public List<Merchandise> getAllActive() {
         List<Merchandise> list = new ArrayList<>();
         String sql = "SELECT * FROM merchandise WHERE active = 1 ORDER BY merchandise_code ASC";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            
             while (rs.next()) {
-                Merchandise item = new Merchandise(
-                    rs.getString("merchandise_code"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getString("unit"),
-                    rs.getDouble("price"),
-                    rs.getInt("active") == 1
-                );
-                list.add(item);
+                list.add(MerchandiseMapper.mapMerchandise(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,22 +32,13 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
     @Override
     public Merchandise getByCode(String code) {
         String sql = "SELECT * FROM merchandise WHERE merchandise_code = ?";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, code);
             ResultSet rs = stmt.executeQuery();
-            
             if (rs.next()) {
-                return new Merchandise(
-                    rs.getString("merchandise_code"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getString("unit"),
-                    rs.getDouble("price"),
-                    rs.getInt("active") == 1
-                );
+                return MerchandiseMapper.mapMerchandise(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,22 +50,12 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
     public List<Merchandise> getAll() {
         List<Merchandise> list = new ArrayList<>();
         String sql = "SELECT * FROM merchandise ORDER BY merchandise_code ASC";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            
             while (rs.next()) {
-                Merchandise item = new Merchandise(
-                    rs.getString("merchandise_code"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getString("unit"),
-                    rs.getDouble("price"),
-                    rs.getInt("active") == 1
-                );
-                list.add(item);
+                list.add(MerchandiseMapper.mapMerchandise(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +66,6 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
     @Override
     public void insert(Merchandise merchandise) {
         String sql = "INSERT INTO merchandise (merchandise_code, name, description, unit, price, active) VALUES (?, ?, ?, ?, ?, ?)";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -115,7 +85,6 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
     @Override
     public void update(Merchandise merchandise) {
         String sql = "UPDATE merchandise SET name = ?, description = ?, unit = ?, price = ?, active = ? WHERE merchandise_code = ?";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -137,7 +106,6 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
         String sql = "SELECT COUNT(*) FROM import_requests r " +
                      "JOIN import_request_items ri ON r.id = ri.request_id " +
                      "WHERE ri.merchandise_code = ? AND r.status IN ('PENDING', 'PROCESSING')";
-        
         try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -152,4 +120,3 @@ public class SQLiteMerchandiseDAO implements IMerchandiseDAO {
         return false;
     }
 }
-

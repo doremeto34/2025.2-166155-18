@@ -11,50 +11,6 @@ import java.util.List;
 
 public class AllocationEngine {
 
-    // Lớp DTO trung gian chứa phương án vận chuyển khả dụng
-    public static class AllocationOption {
-        private final Site site;
-        private final DeliveryMethod method;
-        private final int maxCapacity;
-        private final int transportDays;
-        private final LocalDate arrivalDate;
-
-        public AllocationOption(Site site, DeliveryMethod method, int maxCapacity, int transportDays, LocalDate arrivalDate) {
-            this.site = site;
-            this.method = method;
-            this.maxCapacity = maxCapacity;
-            this.transportDays = transportDays;
-            this.arrivalDate = arrivalDate;
-        }
-
-        public Site getSite() { return site; }
-        public DeliveryMethod getMethod() { return method; }
-        public int getMaxCapacity() { return maxCapacity; }
-        public int getTransportDays() { return transportDays; }
-        public LocalDate getArrivalDate() { return arrivalDate; }
-    }
-
-    // Lớp DTO chi tiết kết quả phân bổ
-    public static class AllocationDetail {
-        private final Site site;
-        private final DeliveryMethod method;
-        private int allocatedQuantity;
-        private final LocalDate estimatedArrivalDate;
-
-        public AllocationDetail(Site site, DeliveryMethod method, int allocatedQuantity, LocalDate estimatedArrivalDate) {
-            this.site = site;
-            this.method = method;
-            this.allocatedQuantity = allocatedQuantity;
-            this.estimatedArrivalDate = estimatedArrivalDate;
-        }
-
-        public Site getSite() { return site; }
-        public DeliveryMethod getMethod() { return method; }
-        public int getAllocatedQuantity() { return allocatedQuantity; }
-        public void setAllocatedQuantity(int qty) { this.allocatedQuantity = qty; }
-        public LocalDate getEstimatedArrivalDate() { return estimatedArrivalDate; }
-    }
-
     /**
      * Phân bổ số lượng mặt hàng yêu cầu giữa các Site có tồn kho phù hợp với ngày giao mong muốn.
      * Áp dụng thuật toán Greedy (Tham lam) theo thứ tự ưu tiên:
@@ -68,10 +24,9 @@ public class AllocationEngine {
         // Bước 1: Thu thập toàn bộ các phương án khả dụng
         for (SiteInventory inventory : inventories) {
             if (inventory.getInStockQuantity() <= 0) {
-                continue; // Không có hàng thì bỏ qua
+                continue;
             }
 
-            // Tìm thông tin Site tương ứng
             Site targetSite = null;
             for (Site s : sites) {
                 if (s.getSiteCode().equals(inventory.getSiteCode())) {
@@ -81,18 +36,14 @@ public class AllocationEngine {
             }
 
             if (targetSite == null || !targetSite.isActive()) {
-                continue; // Site không khả dụng hoặc bị ngưng hoạt động
+                continue;
             }
 
             // Kiểm tra phương án vận chuyển bằng TÀU (SHIP)
             LocalDate arrivalShip = currentDate.plusDays(targetSite.getShipDays());
             if (!arrivalShip.isAfter(item.getDesiredDeliveryDate())) {
                 feasibleOptions.add(new AllocationOption(
-                    targetSite,
-                    DeliveryMethod.SHIP,
-                    inventory.getInStockQuantity(),
-                    targetSite.getShipDays(),
-                    arrivalShip
+                    targetSite, DeliveryMethod.SHIP, inventory.getInStockQuantity(), targetSite.getShipDays(), arrivalShip
                 ));
             }
 
@@ -100,26 +51,19 @@ public class AllocationEngine {
             LocalDate arrivalAir = currentDate.plusDays(targetSite.getAirDays());
             if (!arrivalAir.isAfter(item.getDesiredDeliveryDate())) {
                 feasibleOptions.add(new AllocationOption(
-                    targetSite,
-                    DeliveryMethod.AIR,
-                    inventory.getInStockQuantity(),
-                    targetSite.getAirDays(),
-                    arrivalAir
+                    targetSite, DeliveryMethod.AIR, inventory.getInStockQuantity(), targetSite.getAirDays(), arrivalAir
                 ));
             }
         }
 
         // Bước 2: Sắp xếp các phương án khả dụng theo đúng quy tắc nghiệp vụ
         Collections.sort(feasibleOptions, (opt1, opt2) -> {
-            // So sánh 1: Ưu tiên SHIP trước AIR
             if (opt1.getMethod() != opt2.getMethod()) {
                 return opt1.getMethod() == DeliveryMethod.SHIP ? -1 : 1;
             }
-            // So sánh 2: Ưu tiên lượng tồn kho lớn hơn (sắp xếp giảm dần)
             if (opt1.getMaxCapacity() != opt2.getMaxCapacity()) {
                 return Integer.compare(opt2.getMaxCapacity(), opt1.getMaxCapacity());
             }
-            // So sánh 3: Ưu tiên thời gian vận chuyển ngắn hơn (nhỏ nhất)
             return Integer.compare(opt1.getTransportDays(), opt2.getTransportDays());
         });
 
@@ -138,15 +82,12 @@ public class AllocationEngine {
             int availableCapacity = option.getMaxCapacity() - alreadyAllocated;
 
             if (availableCapacity <= 0) {
-                continue; // Site này đã bị lấy hết hàng ở phương án trước
+                continue;
             }
 
             int taken = Math.min(remainingQuantity, availableCapacity);
             results.add(new AllocationDetail(
-                option.getSite(),
-                option.getMethod(),
-                taken,
-                option.getArrivalDate()
+                option.getSite(), option.getMethod(), taken, option.getArrivalDate()
             ));
 
             siteAllocated.put(siteCode, alreadyAllocated + taken);

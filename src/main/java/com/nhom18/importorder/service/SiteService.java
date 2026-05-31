@@ -24,7 +24,6 @@ public class SiteService {
         this.userDAO = new SQLiteUserDAO();
     }
 
-    // Constructor phục vụ Mock Testing
     public SiteService(ISiteDAO siteDAO, IOrderDAO orderDAO) {
         this(siteDAO, orderDAO, new SQLiteUserDAO());
     }
@@ -35,13 +34,8 @@ public class SiteService {
         this.userDAO = userDAO;
     }
 
-    public List<Site> getAllSites() {
-        return siteDAO.getAll();
-    }
-
-    public List<Site> getAllActiveSites() {
-        return siteDAO.getAllActive();
-    }
+    public List<Site> getAllSites() { return siteDAO.getAll(); }
+    public List<Site> getAllActiveSites() { return siteDAO.getAllActive(); }
 
     public Site getSiteByCode(String siteCode) {
         if (siteCode == null || siteCode.trim().isEmpty()) {
@@ -52,16 +46,12 @@ public class SiteService {
 
     public void createSite(Site site) {
         validateSite(site);
-        
-        // Kiểm tra trùng lặp mã Site
         Site existing = siteDAO.getByCode(site.getSiteCode());
         if (existing != null) {
             throw new IllegalArgumentException("Mã đối tác Site '" + site.getSiteCode() + "' đã tồn tại trên hệ thống!");
         }
-
         siteDAO.insert(site);
 
-        // Tự động tạo tài khoản đăng nhập tương ứng cho Site mới
         User newUser = new User();
         newUser.setUsername("site_" + site.getSiteCode().toLowerCase());
         newUser.setPasswordHash("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"); // "123456"
@@ -78,15 +68,12 @@ public class SiteService {
 
     public void updateSite(Site site) {
         validateSite(site);
-
         Site existing = siteDAO.getByCode(site.getSiteCode());
         if (existing == null) {
             throw new IllegalArgumentException("Đối tác Site '" + site.getSiteCode() + "' không tồn tại!");
         }
-
         siteDAO.update(site);
 
-        // Đồng bộ cập nhật họ tên trên tài khoản đăng nhập tương ứng
         User user = userDAO.getByUsername("site_" + site.getSiteCode().toLowerCase());
         if (user != null) {
             user.setFullName("Đại diện Site " + site.getName());
@@ -94,19 +81,12 @@ public class SiteService {
         }
     }
 
-    /**
-     * Bật/Tắt trạng thái hoạt động của đối tác Site.
-     * Nếu tắt trạng thái (Active -> Inactive), kiểm tra xem có đơn hàng nào dở dang hay không.
-     */
     public void toggleSiteActiveStatus(String siteCode) {
         Site site = siteDAO.getByCode(siteCode);
-        if (site == null) {
-            throw new IllegalArgumentException("Đối tác Site không tồn tại!");
-        }
+        if (site == null) throw new IllegalArgumentException("Đối tác Site không tồn tại!");
 
         boolean currentActive = site.isActive();
         if (currentActive) {
-            // Chuyển từ Active sang Inactive: Bắt buộc kiểm tra đơn hàng dở dang
             List<Order> orders = orderDAO.getBySiteCode(siteCode);
             long activeOrdersCount = orders.stream()
                 .filter(o -> o.getStatus() == OrderStatus.PENDING || 
@@ -120,11 +100,9 @@ public class SiteService {
             }
         }
 
-        // Thay đổi trạng thái
         site.setActive(!currentActive);
         siteDAO.update(site);
 
-        // Đồng bộ trạng thái tài khoản đăng nhập tương ứng
         User user = userDAO.getByUsername("site_" + siteCode.toLowerCase());
         if (user != null) {
             user.setActive(site.isActive());
@@ -133,20 +111,10 @@ public class SiteService {
     }
 
     private void validateSite(Site site) {
-        if (site == null) {
-            throw new IllegalArgumentException("Thông tin đối tác Site không được trống!");
-        }
-        if (site.getSiteCode() == null || site.getSiteCode().trim().isEmpty()) {
-            throw new IllegalArgumentException("Mã đối tác Site không được để trống!");
-        }
-        if (site.getName() == null || site.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Tên đối tác Site không được để trống!");
-        }
-        if (site.getShipDays() < 0) {
-            throw new IllegalArgumentException("Số ngày vận chuyển đường biển không thể nhỏ hơn 0!");
-        }
-        if (site.getAirDays() < 0) {
-            throw new IllegalArgumentException("Số ngày vận chuyển đường hàng không không thể nhỏ hơn 0!");
-        }
+        if (site == null) throw new IllegalArgumentException("Thông tin đối tác Site không được trống!");
+        if (site.getSiteCode() == null || site.getSiteCode().trim().isEmpty()) throw new IllegalArgumentException("Mã đối tác Site không được để trống!");
+        if (site.getName() == null || site.getName().trim().isEmpty()) throw new IllegalArgumentException("Tên đối tác Site không được để trống!");
+        if (site.getShipDays() < 0) throw new IllegalArgumentException("Số ngày vận chuyển đường biển không thể nhỏ hơn 0!");
+        if (site.getAirDays() < 0) throw new IllegalArgumentException("Số ngày vận chuyển đường hàng không không thể nhỏ hơn 0!");
     }
 }

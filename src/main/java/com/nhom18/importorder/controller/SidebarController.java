@@ -12,51 +12,14 @@ import javafx.scene.layout.VBox;
 
 public class SidebarController {
 
-    @FXML
-    private Label lblUserFullName;
+    @FXML private Label lblUserFullName, lblUserRole;
+    @FXML private VBox navContainer;
 
-    @FXML
-    private Label lblUserRole;
-
-    @FXML
-    private VBox navContainer;
-
-    /* BPBH */
-    @FXML
-    private Button btnRequestList;
-    @FXML
-    private Button btnCreateRequest;
-    @FXML
-    private Button btnMerchandiseList;
-
-    /* BPĐHQT */
-    @FXML
-    private Button btnBpbhRequestList;
-    @FXML
-    private Button btnCreateFreeRequest;
-    @FXML
-    private Button btnOrderList;
-    @FXML
-    private Button btnSiteList;
-
-    /* SITE */
-    @FXML
-    private Button btnSiteOrderList;
-    @FXML
-    private Button btnSiteInventory;
-
-    /* BPQLK */
-    @FXML
-    private Button btnWarehouseOrderList;
-    @FXML
-    private Button btnCompanyInventory;
-
-    /* ADMIN */
-    @FXML
-    private Button btnUserList;
-
-    @FXML
-    private Button btnLogout;
+    @FXML private Button btnRequestList, btnCreateRequest, btnMerchandiseList;
+    @FXML private Button btnBpbhRequestList, btnCreateFreeRequest, btnOrderList, btnSiteList;
+    @FXML private Button btnSiteOrderList, btnSiteInventory;
+    @FXML private Button btnWarehouseOrderList, btnCompanyInventory;
+    @FXML private Button btnUserList, btnLogout;
 
     @FXML
     public void initialize() {
@@ -64,8 +27,6 @@ public class SidebarController {
         if (user != null) {
             lblUserFullName.setText(user.getFullName());
             lblUserRole.setText(getFriendlyRoleName(user.getRole(), user.getSiteCode()));
-            
-            // Phân quyền hiển thị các nút chức năng
             configureNavigation(user.getRole());
         }
     }
@@ -81,26 +42,10 @@ public class SidebarController {
     }
 
     private void configureNavigation(UserRole role) {
-        // Mặc định ẩn tất cả các nút phân hệ vai trò
-        setButtonVisible(btnRequestList, false);
-        setButtonVisible(btnCreateRequest, false);
-        setButtonVisible(btnMerchandiseList, false);
-        
-        setButtonVisible(btnBpbhRequestList, false);
-        setButtonVisible(btnCreateFreeRequest, false);
-        setButtonVisible(btnOrderList, false);
-        setButtonVisible(btnSiteList, false);
-        // btnRequestProcessing removed
-        
-        setButtonVisible(btnSiteOrderList, false);
-        setButtonVisible(btnSiteInventory, false);
-        
-        setButtonVisible(btnWarehouseOrderList, false);
-        setButtonVisible(btnCompanyInventory, false);
-        
-        setButtonVisible(btnUserList, false);
+        for (Button b : new Button[]{btnRequestList, btnCreateRequest, btnMerchandiseList, btnBpbhRequestList, btnCreateFreeRequest, btnOrderList, btnSiteList, btnSiteOrderList, btnSiteInventory, btnWarehouseOrderList, btnCompanyInventory, btnUserList}) {
+            setButtonVisible(b, false);
+        }
 
-        // Hiển thị các nút tương ứng với Role đăng nhập
         switch (role) {
             case BPBH -> {
                 setButtonVisible(btnRequestList, true);
@@ -109,7 +54,6 @@ public class SidebarController {
             }
             case BPDHQT -> {
                 setButtonVisible(btnBpbhRequestList, true);
-                // btnRequestProcessing removed
                 setButtonVisible(btnCreateFreeRequest, true);
                 setButtonVisible(btnOrderList, true);
                 setButtonVisible(btnSiteList, true);
@@ -122,9 +66,7 @@ public class SidebarController {
                 setButtonVisible(btnWarehouseOrderList, true);
                 setButtonVisible(btnCompanyInventory, true);
             }
-            case ADMIN -> {
-                setButtonVisible(btnUserList, true);
-            }
+            case ADMIN -> setButtonVisible(btnUserList, true);
         }
     }
 
@@ -135,105 +77,34 @@ public class SidebarController {
         }
     }
 
-    private void clearActiveStyles() {
-        for (javafx.scene.Node node : navContainer.getChildren()) {
-            if (node instanceof Button) {
-                node.getStyleClass().remove("nav-item-active");
-            }
-        }
-    }
-
     private void setActiveButton(Button btn) {
-        clearActiveStyles();
-        if (btn != null) {
-            btn.getStyleClass().add("nav-item-active");
+        for (javafx.scene.Node node : navContainer.getChildren()) {
+            if (node instanceof Button) node.getStyleClass().remove("nav-item-active");
         }
+        if (btn != null) btn.getStyleClass().add("nav-item-active");
     }
 
-    /* ==========================================================================
-       XỬ LÝ ĐIỀU HƯỚNG SỰ KIỆN (Navigations placeholders for next modules)
-       ========================================================================== */
-
-    @FXML
-    private void handleNavigateRequestList() {
-        setActiveButton(btnRequestList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpbh/request_list.fxml");
+    private void navigate(Button btn, String path) {
+        setActiveButton(btn);
+        NavigationManager.getInstance().navigateTo(path);
     }
 
-    @FXML
-    private void handleNavigateCreateRequest() {
-        setActiveButton(btnCreateRequest);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpbh/create_request.fxml");
-    }
-
-    @FXML
-    private void handleNavigateMerchandiseList() {
-        setActiveButton(btnMerchandiseList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpbh/merchandise_list.fxml");
-    }
-
-    @FXML
-    private void handleNavigateBpbhRequestList() {
-        setActiveButton(btnBpbhRequestList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/bpbh_requests.fxml");
-    }
-
-    // handleNavigateRequestProcessing removed
-
-
-
-    @FXML
-    private void handleNavigateCreateFreeRequest() {
-        setActiveButton(btnCreateFreeRequest);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/create_free_request.fxml");
-    }
-
-    @FXML
-    private void handleNavigateOrderList() {
-        setActiveButton(btnOrderList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/order_list.fxml");
-    }
-
-    @FXML
-    private void handleNavigateSiteList() {
-        setActiveButton(btnSiteList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpdhqt/site_list.fxml");
-    }
-
-    @FXML
-    private void handleNavigateSiteOrderList() {
-        setActiveButton(btnSiteOrderList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/site/site_order_list.fxml");
-    }
-
-    @FXML
-    private void handleNavigateSiteInventory() {
-        setActiveButton(btnSiteInventory);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/site/site_inventory.fxml");
-    }
-
-    @FXML
-    private void handleNavigateWarehouseOrderList() {
-        setActiveButton(btnWarehouseOrderList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpqlk/warehouse_order_list.fxml");
-    }
-
-    @FXML
-    private void handleNavigateCompanyInventory() {
-        setActiveButton(btnCompanyInventory);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/bpqlk/company_inventory.fxml");
-    }
-
-    @FXML
-    private void handleNavigateUserList() {
-        setActiveButton(btnUserList);
-        NavigationManager.getInstance().navigateTo("/com/nhom18/importorder/view/admin/user_list.fxml");
-    }
+    @FXML private void handleNavigateRequestList() { navigate(btnRequestList, "/com/nhom18/importorder/view/bpbh/request_list.fxml"); }
+    @FXML private void handleNavigateCreateRequest() { navigate(btnCreateRequest, "/com/nhom18/importorder/view/bpbh/create_request.fxml"); }
+    @FXML private void handleNavigateMerchandiseList() { navigate(btnMerchandiseList, "/com/nhom18/importorder/view/bpbh/merchandise_list.fxml"); }
+    @FXML private void handleNavigateBpbhRequestList() { navigate(btnBpbhRequestList, "/com/nhom18/importorder/view/bpdhqt/bpbh_requests.fxml"); }
+    @FXML private void handleNavigateCreateFreeRequest() { navigate(btnCreateFreeRequest, "/com/nhom18/importorder/view/bpdhqt/create_free_request.fxml"); }
+    @FXML private void handleNavigateOrderList() { navigate(btnOrderList, "/com/nhom18/importorder/view/bpdhqt/order_list.fxml"); }
+    @FXML private void handleNavigateSiteList() { navigate(btnSiteList, "/com/nhom18/importorder/view/bpdhqt/site_list.fxml"); }
+    @FXML private void handleNavigateSiteOrderList() { navigate(btnSiteOrderList, "/com/nhom18/importorder/view/site/site_order_list.fxml"); }
+    @FXML private void handleNavigateSiteInventory() { navigate(btnSiteInventory, "/com/nhom18/importorder/view/site/site_inventory.fxml"); }
+    @FXML private void handleNavigateWarehouseOrderList() { navigate(btnWarehouseOrderList, "/com/nhom18/importorder/view/bpqlk/warehouse_order_list.fxml"); }
+    @FXML private void handleNavigateCompanyInventory() { navigate(btnCompanyInventory, "/com/nhom18/importorder/view/bpqlk/company_inventory.fxml"); }
+    @FXML private void handleNavigateUserList() { navigate(btnUserList, "/com/nhom18/importorder/view/admin/user_list.fxml"); }
 
     @FXML
     private void handleLogout() {
-        boolean confirm = AlertHelper.showConfirm("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?");
-        if (confirm) {
+        if (AlertHelper.showConfirm("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?")) {
             SessionManager.getInstance().logout();
             NavigationManager.getInstance().showLoginScreen();
         }

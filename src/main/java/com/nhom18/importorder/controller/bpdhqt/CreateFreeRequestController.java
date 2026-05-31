@@ -9,13 +9,10 @@ import com.nhom18.importorder.service.MerchandiseService;
 import com.nhom18.importorder.service.OrderService;
 import com.nhom18.importorder.service.SiteService;
 import com.nhom18.importorder.util.AlertHelper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 import java.util.*;
@@ -54,35 +51,15 @@ public class CreateFreeRequestController {
 
     @FXML
     public void initialize() {
-        colItemName.setCellValueFactory(new PropertyValueFactory<>("merchandiseName"));
-        colItemCode.setCellValueFactory(new PropertyValueFactory<>("merchandiseCode"));
-        colItemQty.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantityOrdered()).asObject());
-        colItemUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        CreateFreeRequestTableHelper.setupColumns(
+            tblSelectedItems, colItemName, colItemCode, colItemQty, colItemUnit, colItemAction,
+            selectedItemsData, this
+        );
 
-        colItemAction.setCellFactory(param -> new TableCell<>() {
-            private final Button btnDelete = new Button("❌");
-            {
-                btnDelete.setStyle("-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand;");
-                btnDelete.setOnAction(evt -> {
-                    selectedItemsData.remove(getTableView().getItems().get(getIndex()));
-                    updateTotalQuantityLabel();
-                });
-            }
-            @Override
-            protected void updateItem(Void it, boolean empty) {
-                super.updateItem(it, empty);
-                if (empty) setGraphic(null);
-                else {
-                    HBox box = new HBox(btnDelete);
-                    box.setStyle("-fx-alignment: CENTER;");
-                    setGraphic(box);
-                }
-            }
-        });
-
-        tblSelectedItems.setItems(selectedItemsData);
         activeMerchandise = merchandiseService.getAllActiveMerchandise();
-        for (Merchandise m : activeMerchandise) merchandisePrices.put(m.getMerchandiseCode(), m.getPrice());
+        for (Merchandise m : activeMerchandise) {
+            merchandisePrices.put(m.getMerchandiseCode(), m.getPrice());
+        }
         activeSites = siteService.getAllActiveSites();
         dpRequiredDate.setValue(LocalDate.now().plusDays(10));
         updateTotalQuantityLabel();
