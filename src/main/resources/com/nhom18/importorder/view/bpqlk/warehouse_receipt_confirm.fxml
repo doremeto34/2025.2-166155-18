@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpqlk.WarehouseReceiptConfirmController"
+      spacing="20" styleClass="content-panel">
+    
+    <!-- Top Bar with Back Button -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button text="⬅ Quay lại" onAction="#handleBack" styleClass="button-secondary" />
+        <VBox spacing="2">
+            <Label text="🔍 ĐỐI CHIẾU &amp; KIỂM NHẬN NHẬP KHO" styleClass="title-main" />
+            <Label fx:id="lblOrderSubtitle" text="Đơn đặt hàng #... | Site: ..." styleClass="title-sub" />
+        </VBox>
+    </HBox>
+    
+    <!-- General Info Card -->
+    <HBox spacing="20">
+        <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15">
+            <Label text="THÔNG TIN ĐƠN HÀNG" style="-fx-font-weight: bold; -fx-text-fill: -accent-cyan;" />
+            <GridPane hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="15" />
+                    <ColumnConstraints percentWidth="35" />
+                    <ColumnConstraints percentWidth="15" />
+                    <ColumnConstraints percentWidth="35" />
+                </columnConstraints>
+                
+                <Label text="Mã đơn hàng:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="label-secondary" />
+                <Label fx:id="lblOrderId" text="..." GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                
+                <Label text="Mã yêu cầu:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="label-secondary" />
+                <Label fx:id="lblReqId" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                
+                <Label text="Site đối tác:" GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="label-secondary" />
+                <Label fx:id="lblSiteName" text="..." GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                
+                <Label text="Vận chuyển:" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="label-secondary" />
+                <Label fx:id="lblDeliveryMethod" text="..." GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            </GridPane>
+        </VBox>
+        
+        <VBox styleClass="card" prefWidth="350" spacing="10">
+            <Label text="Ghi chú phiếu nhập kho:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+            <TextArea fx:id="txtReceiptNotes" promptText="Nhập ghi chú chung về đợt nhập kho này (nếu có)..." 
+                      prefHeight="70" wrapText="true" styleClass="text-input" />
+        </VBox>
+    </HBox>
+    
+    <!-- Reconciliation Table Card -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="CHI TIẾT ĐỐI CHIẾU SẢN PHẨM" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: -accent-cyan;" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Label text="Lưu ý: Tích chọn 'Đã kiểm tra' cho từng dòng sau khi xác nhận số lượng thực tế." styleClass="title-sub" style="-fx-text-fill: #fb923c;" />
+        </HBox>
+        
+        <TableView fx:id="tblReconciliation" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colChecked" text="Đã kiểm" prefWidth="80" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colMerchCode" text="Mã SP" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colMerchName" text="Tên Sản Phẩm" prefWidth="250" />
+                <TableColumn fx:id="colQtyOrdered" text="SL Đặt" prefWidth="90" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colQtyConfirmed" text="SL Site Giao" prefWidth="110" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colQtyReceived" text="SL Thực Nhận" prefWidth="130" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colDiscrepancy" text="Chênh lệch" prefWidth="100" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colDiscrepancyNotes" text="Ghi chú sai lệch" prefWidth="220" />
+            </columns>
+            <placeholder>
+                <Label text="Đơn hàng không có mặt hàng nào." />
+            </placeholder>
+        </TableView>
+        
+        <!-- Action Row -->
+        <HBox alignment="CENTER_RIGHT" spacing="15">
+            <Button text="❌ Hủy bỏ" onAction="#handleBack" styleClass="button-secondary" />
+            <Button fx:id="btnConfirmReceipt" text="✅ Xác Nhập Kho &amp; Đồng Bộ" onAction="#handleConfirmReceipt" styleClass="button" />
+        </HBox>
+    </VBox>
+    
+</VBox>

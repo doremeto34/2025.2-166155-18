@@ -1,0 +1,1032 @@
+=== Extracted from: 09-Data Modeling.pdf ===
+=== Total pages: 15 ===
+
+--- Page 1 ---
+1 2
+Data Modeling Overview
+it4490 -Software DeSIGN AND CONSTRUCTION Analysis Classes Design Classes
+Supplementary
+9. DATA MODELING Specifications
+Data Modeling
+Data Model
+Project Specific
+Some slides extracted from IBM coursewares Guidelines Design Model
+1 2
+3 4
+Content
+1. Data Models
+1. Data models uData modeling:
+2. Object model and Rational Data Model
+•Abstracting and organizing the structure of real-world
+information, which is the object to be made into a
+3. Mapping class diagram to E-R diagram database, and then expressing it
+4. Normalization
+3 4
+1
+
+[Table 1 on Page 1]
+1
+
+it4490 -Software DeSIGN AND CONSTRUCTION 9. DATA MODELING Some slides extracted from IBM coursewares
+1
+3
+
+Content 1. Data models 2. Object model and Rational Data Model 3. Mapping class diagram to E-R diagram 4. Normalization
+3
+
+[Table 2 on Page 1]
+2
+
+Data Modeling Overview Analysis Classes Design Classes Supplementary Specifications Data Modeling Data Model Project Specific Guidelines Design Model
+2
+4
+
+1. Data Models uData modeling: •Abstracting and organizing the structure of real-world information, which is the object to be made into a database, and then expressing it
+4
+
+[Table 3 on Page 1]
+ |  | 
+
+[Table 4 on Page 1]
+ |  | 
+
+--- Page 2 ---
+5 6
+1. Data Models (2) 1.1. Conceptual data model
+•3 types of data models •Naturual expressions without constraints imposed
+by DBMS
+•E-R model
+•Expressed by E-R diagram
+5 6
+7 8
+E-R Diagram 1.2. Logical Data Model
+•Three elements •3 types
+•Entities
+•relational model,
+•Relationships
+•network model,
+•Attributes
+•and hierarchical model
+7 8
+2
+
+[Table 1 on Page 2]
+5
+
+1. Data Models (2) •3 types of data models
+5
+7
+
+E-R Diagram •Three elements •Entities •Relationships •Attributes
+7
+
+[Table 2 on Page 2]
+6
+
+1.1. Conceptual data model •Naturual expressions without constraints imposed by DBMS •E-R model •Expressed by E-R diagram
+6
+8
+
+1.2. Logical Data Model •3 types •relational model, •network model, •and hierarchical model
+8
+
+--- Page 3 ---
+9 10
+1.3.1. Hierarchical Database
+1.3. Physical Data Model
+(Tree-Structure Database)
+•Logical data models, when they are implemented,
+•Divides records into parents and children and shows the
+become physical data models:
+relationship with a hierarchical structure
+•relational databases,
+•1-to-many (1:n) correspondences between parent records
+•network databases, and child records
+•or hierarchical databases
+9 10
+11 12
+1.3.2. Network Database 1.3.3. Rational database
+•Parent records and child records do not have 1-to-n (1:n) •Data is expressed in a two-dimensional table.
+correspondences; rather, they are in many-to-many (m:n)
+•Each row of the table corresponds to a record, and
+correspondence
+each column is an item of the records.
+•Sometimes called CODASYL database
+•The underlined columns indicate the primary key
+11 12
+3
+
+[Table 1 on Page 3]
+9
+
+1.3. Physical Data Model •Logical data models, when they are implemented, become physical data models: •relational databases, •network databases, •or hierarchical databases
+9
+11
+
+1.3.2. Network Database •Parent records and child records do not have 1-to-n (1:n) correspondences; rather, they are in many-to-many (m:n) correspondence •Sometimes called CODASYL database
+11
+
+[Table 2 on Page 3]
+10
+
+1.3.1. Hierarchical Database (Tree-Structure Database) •Divides records into parents and children and shows the relationship with a hierarchical structure •1-to-many (1:n) correspondences between parent records and child records
+10
+12
+
+1.3.3. Rational database •Data is expressed in a two-dimensional table. •Each row of the table corresponds to a record, and each column is an item of the records. •The underlined columns indicate the primary key
+12
+
+--- Page 4 ---
+13 14
+Content
+Three-layer schema
+•A schema is a description of the framework of a 1. Data models
+database
+2. Object model and Rational Data Model
+•Classified into 3 types:
+3. Mapping class diagram to E-R diagram
+4. Normalization
+13 14
+15 16
+2.1. Relational Databases and OO 2.2. The Object Model
+•RDBMS and Object Orientation are not •The Object Model is composed of
+entirely compatible
+•Classes (attributes)
+•R • D Fo B cu M s i S s on data •R • e A l s a s t o io c n ia s ti h on ip s s -numbe O r r : d I e n r teger +order +lineIte 1 m ..* s - - q n u u a m L n b i t n i e t e r y I : t : e I I m n n t t e e g g e e r r
+•Better suited for ad-hoc relationships and reporting application •Generalization 1
+Product
+•Expose data (column values) -number : Integer
+-description : String
+•Object Oriented system -unitPrice : Double
+•Focus is on behavior
+•Better suited to handle state-specific behavior where data is
+secondary Software Product Hardware Product
+-version : Double -assembly : String
+•Hide data (encapsulation)
+15 16
+4
+
+[Table 1 on Page 4]
+13
+
+Three-layer schema •A schema is a description of the framework of a database •Classified into 3 types:
+13
+15
+
+2.1. Relational Databases and OO •RDBMS and Object Orientation are not entirely compatible •RDBMS •Focus is on data •Better suited for ad-hoc relationships and reporting application •Expose data (column values) •Object Oriented system •Focus is on behavior •Better suited to handle state-specific behavior where data is secondary •Hide data (encapsulation)
+15
+
+[Table 2 on Page 4]
+14
+
+Content 1. Data models 2. Object model and Rational Data Model 3. Mapping class diagram to E-R diagram 4. Normalization
+14
+16
+
+2.2. The Object Model •The Object Model is composed of •Classes (attributes) •R • e A l s a s t o io c n ia s ti h on ip s s -numbe O r r : d I e n r teger +order +lineIte 1 m ..* s - - q n u u a m L n b i t n i e t e r y I : t : e I I m n n t t e e g g e e r r •Generalization 1 Product -number : Integer -description : String -unitPrice : Double Software Product Hardware Product -version : Double -assembly : String
+16
+
+[Table 3 on Page 4]
+Order
+-number : Integer
+
+[Table 4 on Page 4]
+LineItem
+-quantity : Integer -number : Integer
+
+[Table 5 on Page 4]
+Product
+-number : Integer -description : String -unitPrice : Double
+
+
+[Table 6 on Page 4]
+Software Product
+-version : Double
+
+
+[Table 7 on Page 4]
+Hardware Product
+-assembly : String
+
+
+--- Page 5 ---
+17 18
+2.3. The Relational Data Model 2.3.1. Entities/Tables
+•Relational data model is composed of •Entities is mapped to table when design physical
+•Entities -Table database
+•Relations -Relationship •Including
+àAlso called E-R model •Columns: Attributes
+•Rows: Concrete values of attributes
+Entity
+Relation
+Columns
+products
+ORDER LINE ITEM
+Order_Id L D i e n s e c I r t i e p m tio _ n Id lineItems courseID descriptio startDate endDate locatio
+Price PRODUCT n n
+lineItem order Q Pr u o a d n u t c it t y _Id Product_Id Rows
+Order_Id Name 2008.11.001 This course… 12 Nov 2008 30 Nov 2008 D3-405
+Price
+2008.11.002 This course… 22 Nov 2008 10 Dec 2008 T-403
+Columns
+17 18
+19 20
+2.3.2. Relations/Relationships Dependency relationships
+•Relations between entities or relationship •The child entity can exist only when the parent
+between tables entity exists
+•Multiplicity/Cardinality •The child entity has a foreign key referencing to
+•One-to-one (1:1) the primary key of the parent entity
+•One-to-many (1:m) •This foreign key is included in the primary key of
+•Many-to-one (m:1) the child
+•Many-to-many (m:n) •Solid line
+(Normally, many-to-many relation is devided to one-to- ChiTietHD
+HoaDon Sach
+many and many-to-one relations)
+maHD
+maHD
+maSach maSach
+tenKhach
+SL tenSach
+ngayLap
+donGia
+19 20
+5
+
+[Table 1 on Page 5]
+17
+
+2.3. The Relational Data Model •Relational data model is composed of •Entities -Table •Relations -Relationship àAlso called E-R model Entity Relation products ORDER LINE ITEM Order_Id LineItem_Id lineItems Description Price PRODUCT lineItem order Q Pr u o a d n u t c it t y _Id Product_Id Order_Id Name Price Columns
+17
+19
+
+2.3.2. Relations/Relationships •Relations between entities or relationship between tables •Multiplicity/Cardinality •One-to-one (1:1) •One-to-many (1:m) •Many-to-one (m:1) •Many-to-many (m:n) (Normally, many-to-many relation is devided to one-to- many and many-to-one relations)
+19
+
+[Table 2 on Page 5]
+18
+
+2.3.1. Entities/Tables •Entities is mapped to table when design physical database •Including •Columns: Attributes •Rows: Concrete values of attributes Columns courseID descriptio startDate endDate locatio n n Rows 2008.11.001 This course… 12 Nov 2008 30 Nov 2008 D3-405 2008.11.002 This course… 22 Nov 2008 10 Dec 2008 T-403
+18
+20
+
+Dependency relationships •The child entity can exist only when the parent entity exists •The child entity has a foreign key referencing to the primary key of the parent entity •This foreign key is included in the primary key of the child •Solid line ChiTietHD HoaDon Sach maHD maHD maSach maSach tenKhach SL tenSach ngayLap donGia
+20
+
+[Table 3 on Page 5]
+courseID | descriptio n | startDate | endDate | locatio n
+2008.11.001 | This course… | 12 Nov 2008 | 30 Nov 2008 | D3-405
+2008.11.002 | This course… | 22 Nov 2008 | 10 Dec 2008 | T-403
+
+[Table 4 on Page 5]
+ChiTietHD
+maHD maSach SL donGia
+
+[Table 5 on Page 5]
+HoaDon
+maHD tenKhach ngayLap
+
+[Table 6 on Page 5]
+Sach
+maSach tenSach
+
+--- Page 6 ---
+21 22
+Content
+Independency relationships
+•The child entity can exist even if the parent entity 1. Data models
+does not exist
+2. Object model and Rational Data Model
+•The child entity has a foreign key referencing to
+3. Mapping class diagram to E-R diagram
+the primary key of the parent entity
+•This foreign key is not included in the primary key 4. Normalization
+of the child
+•Dash line
+KhachHang HoaDon
+maKhach maHD
+tenKhach maKhach
+diaChi ngayLap
+maSoThue
+21 22
+23 24
+3. Mapping class diagram to E-R diagram 3.1. Mapping Persistent Design Classes to Entities
+-numb O er r d : e I r nteger +order +lineIt 1 em ..* s- - q n u u a m L n i b t n i e t e r y I t : : e I m I n n t t e e g g e e r r •Map persistent design •In a relational database
+1 classes to Entities • Every row is regarded as an object
+-num P be ro r d : u I c n t teger •Map class relationships to • A column in a table is equivalent to a persistent attribute of a class
+-description : String
+-unitPrice : Double Relations
+SubjectInfo
+S - o v f e t r w si a o r n e : P D ro o d u u b c l t e - H a a s r s d e w m a b r l e y P : r S o t d r u in c g t Entity Relation - - s s u u b b j j e e c c t t I N D a m : S e t : r i S n t g ring
+-numberOfCredit : int
+products
+ORDER LINE ITEM
+Order_Id LineItem_Id lineItems
+D Pr e ic sc e ription PRODUCT Attributes from subjectID subjectName numberOfCredit
+lineItem order Q Pr u o a d n u t c it t y _Id Product_Id object type
+Order_Id N Pr a ic m e e Object Instance IT0001 CS Introduction 4
+Columns
+23 24
+6
+
+[Table 1 on Page 6]
+21
+
+Independency relationships •The child entity can exist even if the parent entity does not exist •The child entity has a foreign key referencing to the primary key of the parent entity •This foreign key is not included in the primary key of the child •Dash line KhachHang HoaDon maKhach maHD tenKhach maKhach diaChi ngayLap maSoThue
+21
+23
+
+3. Mapping class diagram to E-R diagram -numb O er r d : e I r nteger +order +lineIt 1 em ..* s- - q n u u a m L n i b t n i e t e r y I t : : e I m I n n t t e e g g e e r r •Map persistent design classes to Entities 1 Product -number : Integer •Map class relationships to -description : String -unitPrice : Double Relations S - o v f e t r w si a o r n e : P D ro o d u u b c l t e - H a a s r s d e w m a b r l e y P : r S o t d r u in c g t Entity Relation products ORDER LINE ITEM Order_Id LineItem_Id lineItems Description Price PRODUCT lineItem order Q Pr u o a d n u t c it t y _Id Product_Id Order_Id Name Price Columns
+23
+
+[Table 2 on Page 6]
+22
+
+Content 1. Data models 2. Object model and Rational Data Model 3. Mapping class diagram to E-R diagram 4. Normalization
+22
+24
+
+3.1. Mapping Persistent Design Classes to Entities •In a relational database • Every row is regarded as an object • A column in a table is equivalent to a persistent attribute of a class SubjectInfo -subjectID : String -subjectName : String -numberOfCredit : int Attributes from subjectID subjectName numberOfCredit object type Object Instance IT0001 CS Introduction 4
+24
+
+[Table 3 on Page 6]
+KhachHang
+maKhach tenKhach diaChi maSoThue
+
+[Table 4 on Page 6]
+HoaDon
+maHD maKhach ngayLap
+
+[Table 5 on Page 6]
+Order
+-number : Integer
+
+[Table 6 on Page 6]
+LineItem
+-quantity : Integer -number : Integer
+
+[Table 7 on Page 6]
+Product
+-number : Integer -description : String -unitPrice : Double
+
+
+[Table 8 on Page 6]
+Software Product
+-version : Double
+
+
+[Table 9 on Page 6]
+Hardware Product
+-assembly : String
+
+
+[Table 10 on Page 6]
+Attributes from object type | subjectID | subjectName | numberOfCredit
+Object Instance | IT0001 | CS Introduction | 4
+
+--- Page 7 ---
+25 26
+3.2. Mapping Associations Between Persistent Objects 3.3. Mapping Aggregation to the Data Model
+•Associations between two persistent objects are realized
+•Aggregation is also modeled to dependency
+as foreign keys to the associated objects.
+relationship using foreign key relationships
+• A foreign key (not in primary key) is a column in one table that
+contains the primary key value of associated object •The use of composition implements a cascading delete
+• àIndependencyrelationship constraint
+Course entity CourseInfo
+courseID descriptio startDate endDate locatio -courseID: String Course entity
+CourseInfo -description: String courseID descriptio startDate endDate subjectID
+-courseID: String n n -startDate: DateTime
+-description: String -endDate: DateTime n
+- - s e t n a d rt D D a a t t e e : : D D a a t t e e T T i i m m e e Prim IT a 3 ry 5 9 K 8 e 0 y 02 This course… 12 Nov 2008 3 2 0 0 N 0 o 8 v D3-405 -location: String IT3598002 Prim T a h r is y c K o e u y rse… 12 Nov 30 Nov IT0001
+-location: String 2008 2008
+1
+1 StudyHistory entity Foreign Key Foreign Key CourseRegistration entity
+0..30 CourseRegistrationInfo
+3..30 StudyHistory historyNo studentID Result courseID … courseID studentID registeredDate
+-historyNo -registeredDate
+-resullt 5 2005.03229 A IT3598002 IT3598002 2005.03229 10 Oct 2008
+-…
+25 26
+27 28
+3.3. Mapping Aggregation to the Data Model (2) More example in Course Registration
+•In some case, we can map to independency relationship
+to simplify the primary key.
+Course entity
+CourseInfo
+•Example: CourseID is the primary key (according the -courseID: String courseID description startDate endDate subjectID
+requirements) -description: String
+-startDate: DateTime IT3598002 This course… 12 Jan 30 Nov IT3598
+SubjectInfo Subject entity - - e lo n c d a D ti a o t n e : : S D t a ri t n e g Time Primary Key 2010 2008
+-subjectID subjectID subjectName goal …
+-subjectName 1 Foreign Key Schedule entity
+-… IT3598 Object-Oriented Language and After
+scheduleID courseID day teachingPeriod
+1 Primary Key Theory finish… Schedule
+0..* 0.* - - s d c a h y e : d S u t l r e i I n D g : int 1 IT3598002 Tuesday 2
+-teachingPeriod: int
+CourseInfo Foreign Key 2 IT3598002 Monday 3
+-courseID: String Course entity
+-description: String 1 IT3672001 Friday 8
+-startDate: DateTime courseID description startDate endDate location subjectID
+-endDate: DateTime
+-location: String IT359800 This course… 12 Jan 2010 30 May D4-405 IT3598
+2 2009
+27 28
+7
+
+[Table 1 on Page 7]
+25 |  |  |  |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  | 
+3.2. Mapping Associations Between Persistent Objects •Associations between two persistent objects are realized as foreign keys to the associated objects. • A foreign key (not in primary key) is a column in one table that contains the primary key value of associated object • àIndependencyrelationship Course entity courseID descriptio startDate endDate locatio CourseInfo -courseID: String n n -description: String -startDate: DateTime Prim IT a 3 ry 5 9 K 8 e 0 y 02 This course… 12 Nov 2008 30 Nov D3-405 -endDate: DateTime 2008 -location: String 1 StudyHistory entity Foreign Key 3..30 StudyHistory historyNo studentID Result courseID … -historyNo -resullt 5 2005.03229 A IT3598002 -… |  |  |  |  |  |  |  |  |  |  | 
+ |  |  | historyNo |  | studentID |  | Result |  | courseID |  | …
+ |  |  | 5 |  | 2005.03229 |  | A |  | IT3598002 |  | 
+25 |  |  |  |  |  |  |  |  |  |  | 
+27 |  |  |  |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  | 
+3.3. Mapping Aggregation to the Data Model (2) •In some case, we can map to independency relationship to simplify the primary key. •Example: CourseID is the primary key (according the requirements) SubjectInfo Subject entity -subjectID subjectID subjectName goal … -subjectName -… IT3598 Object-Oriented Language and After 1 Primary Key Theory finish… 0..* CourseInfo Foreign Key -courseID: String Course entity -description: String -startDate: DateTime courseID description startDate endDate location subjectID -endDate: DateTime -location: String IT359800 This course… 12 Jan 2010 30 May D4-405 IT3598 2 2009 |  |  |  |  |  |  |  |  |  |  | 
+CourseInfo |  |  |  |  |  |  |  |  |  |  | 
+-courseID: String -description: String -startDate: DateTime -endDate: DateTime -location: String |  |  |  |  |  |  |  |  |  |  | 
+ | courseID | description |  | startDate |  | endDate |  | location |  | subjectID | 
+ | IT359800 2 | This course… |  | 12 Jan 2010 |  | 30 May 2009 |  | D4-405 |  | IT3598 | 
+ |  |  |  |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  | 
+27 |  |  |  |  |  |  |  |  |  |  | 
+
+[Table 2 on Page 7]
+26
+
+3.3. Mapping Aggregation to the Data Model •Aggregation is also modeled to dependency relationship using foreign key relationships •The use of composition implements a cascading delete constraint CourseInfo -courseID: String Course entity -description: String courseID descriptio startDate endDate subjectID -startDate: DateTime -endDate: DateTime n -location: String IT3598002 This course… 12 Nov 30 Nov IT0001 Primary Key 2008 2008 1 Foreign Key CourseRegistration entity 0..30 CourseRegistrationInfo courseID studentID registeredDate -registeredDate IT3598002 2005.03229 10 Oct 2008
+26
+28
+
+More example in Course Registration Course entity CourseInfo -courseID: String courseID description startDate endDate subjectID -description: String -startDate: DateTime IT3598002 This course… 12 Jan 30 Nov IT3598 - - e lo n c d a D ti a o t n e : : S D t a ri t n e g Time Primary Key 2010 2008 1 Foreign Key Schedule entity scheduleID courseID day teachingPeriod Schedule 0.* - - s d c a h y e : d S u t l r e i I n D g : int 1 IT3598002 Tuesday 2 -teachingPeriod: int 2 IT3598002 Monday 3 1 IT3672001 Friday 8
+28
+
+[Table 3 on Page 7]
+CourseInfo
+-courseID: String -description: String -startDate: DateTime -endDate: DateTime -location: String
+
+
+[Table 4 on Page 7]
+courseID | descriptio n | startDate | endDate | locatio n
+IT3598002 rimary Key | This course… | 12 Nov 2008 | 30 Nov 2008 | D3-405
+
+[Table 5 on Page 7]
+courseID | descriptio n | startDate | endDate | subjectID
+IT3598002 | This course… Primary Key | 12 Nov 2008 | 30 Nov 2008 | IT0001
+
+[Table 6 on Page 7]
+CourseRegistrationInfo
+-registeredDate
+
+[Table 7 on Page 7]
+StudyHistory
+-historyNo -resullt -…
+
+[Table 8 on Page 7]
+courseID | studentID | registeredDate
+
+[Table 9 on Page 7]
+CourseInfo
+-courseID: String -description: String -startDate: DateTime -endDate: DateTime -location: String
+
+[Table 10 on Page 7]
+courseID | description | startDate | endDate | subjectID
+
+[Table 11 on Page 7]
+SubjectInfo -subjectID
+-subjectName -…
+
+
+[Table 12 on Page 7]
+IT3598 | Object-Oriented Language and Theory | After finish… | 
+
+[Table 13 on Page 7]
+scheduleID | courseID | day | teachingPeriod
+1 | IT3598002 | Tuesday | 2
+2 | IT3598002 | Monday | 3
+1 | IT3672001 | Friday | 8
+
+[Table 14 on Page 7]
+Schedule
+-scheduleID: int -day: String -teachingPeriod: int
+
+
+--- Page 8 ---
+29 30
+UserInfo
+-userID: String
+Normalized data -userName : String
+3.4. Modeling Inheritance in the Data Model -email : String
+-phoneNumber : String
+-address : String
+•A Data Model does not support modeling
+Student Lecturer
+inheritance in a direct way - -eduBackground : String
+•Two options:
+User entity
+•Use separate tables (normalized data) userID userName email phoneNumber address
+•Duplicate all inherited associations and attributes (de- 2005.03229 Nguyễn Hoàng student_200503229@ 0988.394.394 No. 12, …
+normalized data) hut.edu.vn
+002.005.00060 Trần Nam Khánh khanhtn@hut.edu.vn 0912.473.568 No. 157, …
+Primary Key
+Lecturer entity
+lecturerID eduBackground
+Primary Key 002.005.00060 Master from HUT…
+29 30
+UserInfo
+-userID: String
+De-normalized data -userName : String
+-email : String 3.5. Mapping many-to-many cardinality
+-phoneNumber : String
+-address : String
+•Use an intermediate entity
+Student Lecturer •Example: The Cardinality of A and B is many-to-many
+- -eduBackground : String
+• Add an intermediate entity called “C”
+• Place 2 foreign keys for C, referencing to 2 primary keys of A and B
+Student entity • Add attributes to C if necessary.
+studentID studentName email phoneNumber address C
+2005.03229 Nguyễn Hoàng student_200503229@ 0988.394.394 No. 12, … A A_ C ID _ I ( D FK)
+hut.edu.vn B_ID (FK)
+A_ID c_attr_1
+Replication A * * B c_attr_2
+Lecturer entity A_ID B_ID
+lecturerID lecturerName email phoneNumber address eduBackground
+C
+002.005.00060 Trần Nam Khánh khanhtn@ 0912.473.568 No. 157, Master from HUT… B
+hut.edu.vn … c_attr_1
+c_attr_2 B_ID
+31 32
+31 32
+8
+
+[Table 1 on Page 8]
+29 |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  | 
+3.4. Modeling Inheritance in the Data Model •A Data Model does not support modeling inheritance in a direct way •Two options: •Use separate tables (normalized data) •Duplicate all inherited associations and attributes (de- normalized data) |  |  |  |  |  |  |  | 
+29 |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  | 
+ |  |  |  |  | UserInfo |  |  | 
+-userID: String De-normalized data -userName : String -email : String -phoneNumber : String -address : String Student Lecturer - -eduBackground : String Student entity studentID studentName email phoneNumber address 2005.03229 Nguyễn Hoàng student_200503229@ 0988.394.394 No. 12, … hut.edu.vn Replication Lecturer entity |  |  |  |  | -userID: String -userName : String -email : String -phoneNumber : String -address : String |  |  | 
+ |  |  |  |  |  |  |  | 
+lecturerID | l | ecturerName | email | phoneNumber |  | address | eduBackground | 
+002.005.00060 |  | Trần Nam Khánh | khanhtn@ hut.edu.vn | 0912.473.568 |  | No. 157, … | Master from HUT… | 
+31 |  |  |  |  |  |  |  | 
+31 |  |  |  |  |  |  |  | 
+
+[Table 2 on Page 8]
+30 |  | 
+ | UserInfo | 
+-userID: String Normalized data -userName : String -email : String -phoneNumber : String -address : String Student Lecturer - -eduBackground : String User entity userID userName email phoneNumber address 2005.03229 Nguyễn Hoàng student_200503229@ 0988.394.394 No. 12, … hut.edu.vn 002.005.00060 Trần Nam Khánh khanhtn@hut.edu.vn 0912.473.568 No. 157, … Primary Key Lecturer entity lecturerID eduBackground Primary Key 002.005.00060 Master from HUT… | -userID: String -userName : String -email : String -phoneNumber : String -address : String | 
+ |  | 
+30 |  | 
+ |  | 
+ |  | 
+3.5. Mapping many-to-many cardinality •Use an intermediate entity •Example: The Cardinality of A and B is many-to-many • Add an intermediate entity called “C” • Place 2 foreign keys for C, referencing to 2 primary keys of A and B • Add attributes to C if necessary. C C_ID A A_ID (FK) B_ID (FK) A_ID c_attr_1 A * * B c_attr_2 A_ID B_ID C B c_attr_1 c_attr_2 B_ID 32 |  | 
+32 |  | 
+
+[Table 3 on Page 8]
+Student | 
+- | 
+ | 
+
+[Table 4 on Page 8]
+ | Lecturer
+-eduBackground : String | 
+ | 
+
+[Table 5 on Page 8]
+userID | userName | email | phoneNumber | address
+2005.03229 | Nguyễn Hoàng | student_200503229@ hut.edu.vn | 0988.394.394 | No. 12, …
+002.005.00060 | Trần Nam Khánh | khanhtn@hut.edu.vn | 0912.473.568 | No. 157, …
+
+[Table 6 on Page 8]
+lecturerID | eduBackground
+002.005.00060 | Master from HUT…
+
+[Table 7 on Page 8]
+Student | 
+- | 
+ | 
+
+[Table 8 on Page 8]
+ | Lecturer
+-eduBackground : String | 
+ | 
+
+[Table 9 on Page 8]
+studentID | studentName | email | phoneNumber | address
+
+[Table 10 on Page 8]
+C
+C_ID A_ID (FK) B_ID (FK) c_attr_1 c_attr_2
+
+[Table 11 on Page 8]
+A
+A_ID
+
+[Table 12 on Page 8]
+A
+A_ID
+
+[Table 13 on Page 8]
+B
+B_ID
+
+[Table 14 on Page 8]
+C
+c_attr_1 c_attr_2
+
+[Table 15 on Page 8]
+B
+B_ID
+
+--- Page 9 ---
+33
+E-R diagram
+Example in Course Registration CS
+SubjectInfo
+-subjectID: String 0..*
+-subjectName: String
+-goal: String
+-numberOfCredits: int prerequisites
+-description: String
+0..3
+Prerequisite
+SubjectInfo
+prerequisiteID
+subjectID subjectID
+subjectName prerequisiteSubjectID
+numberOfCredit level
+decription
+34
+33 34
+35 36
+Content
+4.1. Overview of Normalization
+1. Data models •Normalization: the process of steps that will
+identify, for elimination, redundancies in a
+2. Object model and Rational Data Model
+database design.
+3. Mapping class diagram to E-R diagram
+•Purpose of Normalization: to improve
+4. Normalization
+•storage efficiency
+•data integrity
+•and scalability
+35 36
+9
+
+[Table 1 on Page 9]
+33
+
+Example in Course Registration CS SubjectInfo -subjectID: String 0..* -subjectName: String -goal: String -numberOfCredits: int prerequisites -description: String 0..3 Prerequisite SubjectInfo prerequisiteID subjectID subjectID subjectName prerequisiteSubjectID numberOfCredit level decription
+33
+35
+
+Content 1. Data models 2. Object model and Rational Data Model 3. Mapping class diagram to E-R diagram 4. Normalization
+35
+
+[Table 2 on Page 9]
+
+
+E-R diagram 34
+34
+36
+
+4.1. Overview of Normalization •Normalization: the process of steps that will identify, for elimination, redundancies in a database design. •Purpose of Normalization: to improve •storage efficiency •data integrity •and scalability
+36
+
+[Table 3 on Page 9]
+SubjectInfo
+subjectID subjectName numberOfCredit
+
+[Table 4 on Page 9]
+Prerequisite
+prerequisiteID subjectID prerequisiteSubjectID level decription
+
+--- Page 10 ---
+37 38
+4.1. Overview of Normalization (2) 4.2. History
+•In relational model, methods exist for quantifying •Edgar F. Codd first proposed the process of
+how efficient a database is.
+normalization and what came to be known as the
+•These classifications are called normal forms(or 1st normal form in his paper A Relational Model
+NF), and there are algorithms for converting a
+of Data for Large Shared Data Banks Codd
+given database between them.
+stated:
+•Normalization generally involves splitting existing
+“There is, in fact, a very simple elimination
+tables into multiple ones, which must be re-joined
+procedure which we shall call normalization.
+or linked each time a query is issued
+Through decomposition nonsimple domains are
+replaced by ‘domains whose elements are atomic
+(nondecomposable) values”.
+37 38
+39 40
+4.3. Normal Forms
+Functionally determines
+•Edgar F. Codd originally established three normal
+forms: 1NF, 2NF and 3NF.
+•There are now others that are generally accepted, •In a table, a set of columns X, functionally determines
+but 3NF is widely considered to be sufficient for another column Y…
+most applications.
+X → Y
+•Most tables when reaching 3NF are also in BCNF
+(Boyce-Codd Normal Form). … if and only if each X value is associated with at
+most one Y value in a table.
+•i.e. if you know X then there is only one
+possibility for Y.
+39 40
+10
+
+[Table 1 on Page 10]
+37
+
+4.1. Overview of Normalization (2) •In relational model, methods exist for quantifying how efficient a database is. •These classifications are called normal forms(or NF), and there are algorithms for converting a given database between them. •Normalization generally involves splitting existing tables into multiple ones, which must be re-joined or linked each time a query is issued
+37
+39
+
+4.3. Normal Forms •Edgar F. Codd originally established three normal forms: 1NF, 2NF and 3NF. •There are now others that are generally accepted, but 3NF is widely considered to be sufficient for most applications. •Most tables when reaching 3NF are also in BCNF (Boyce-Codd Normal Form).
+39
+
+[Table 2 on Page 10]
+38 | 
+ | 
+4.2. History •Edgar F. Codd first proposed the process of normalization and what came to be known as the 1st normal form in his paper A Relational Model of Data for Large Shared Data Banks Codd stated: “There is, in fact, a very simple elimination procedure which we shall call normalization. Through decomposition nonsimple domains are replaced by ‘domains whose elements are atomic (nondecomposable) values”. | 
+38 | 
+40 | 
+ | 
+Functionally determines •In a table, a set of columns X, functionally determines another column Y… X → Y … if and only if each X value is associated with at most one Y value in a table. •i.e. if you know X then there is only one possibility for Y. | 
+40 | 
+
+--- Page 11 ---
+41 44
+Normal forms so Far… Normalization Example
+uConsider a table uColumns
+uFirst normal form
+representing orders in an • Order
+• All data values are atomic, online store • Product
+and so everything fits into a
+mathematical relation. uThird normal form • Customer
+• As 2NF plus no non-primary- uEach entry in the table • Address
+uSecond normal form key attribute depends represents an item on a • Quantity
+• As 1NF plus no non-primary- t k r e a y nsitively on the primary particular order. (thinking • UnitPrice
+key attributeis partially in terms of records. Yuk.)
+dependant on the primary uPrimary key is {Order,
+key Product}
+41 44
+45 46
+Functional Dependencies Example – FD Diagram
+Each order is for a singlecustomer {Order} ®{Customer}
+1NF
+R
+Each customer has a singleaddress {Customer} ®{Address}
+Order Product Customer Address Quantity UnitPrice
+Each product has a singleprice {Product} ®{UnitPrice}
+FD’s 1 and 2 are transitive {Order} ®{Address}
+45 46
+11
+
+[Table 1 on Page 11]
+41
+
+Normal forms so Far… uFirst normal form • All data values are atomic, and so everything fits into a mathematical relation. uThird normal form • As 2NF plus no non-primary- uSecond normal form key attribute depends transitively on the primary • As 1NF plus no non-primary- key key attributeis partially dependant on the primary key
+41
+45
+
+Functional Dependencies Each order is for a singlecustomer {Order} ®{Customer} Each customer has a singleaddress {Customer} ®{Address} Each product has a singleprice {Product} ®{UnitPrice} FD’s 1 and 2 are transitive {Order} ®{Address}
+45
+
+[Table 2 on Page 11]
+44
+
+Normalization Example uConsider a table uColumns representing orders in an • Order online store • Product • Customer uEach entry in the table • Address represents an item on a • Quantity particular order. (thinking • UnitPrice in terms of records. Yuk.) uPrimary key is {Order, Product}
+44
+46
+
+Example – FD Diagram 1NF R Order Product Customer Address Quantity UnitPrice
+46
+
+--- Page 12 ---
+47 48
+Normalization to 2NF
+Normalization to 2NF
+1NF
+uRemember 2nd normal form means no partial
+dependencies on the key. But we have: R
+Order Product Customer Address Quantity UnitPrice
+{Order} ®{Customer, Address}
+{Product} ®{UnitPrice}
+And a primary key of: {Order, Product}
+• So to get rid of the first FD we projectover: R1 Order Customer Address
+{Order, Customer, Address}
+and R2 Order Product Quantity UnitPrice
+{Order, Product, Quantity and UnitPrice}
+47 48
+49 50
+Normalization to 2NF Normalization to 2NF
+1NF R2
+uR1 is now in 2NF, but there is still a partial FD in R2:
+Order Product Quantity UnitPrice
+{Product} ®{UnitPrice}
+Order Product Quantity UnitPrice
+2NF
+• To remove this we project over:
+R3 R4
+{Product, UnitPrice} and {Order, Product, Quantity}
+Product UnitPrice Order Product Quantity
+49 50
+12
+
+[Table 1 on Page 12]
+47
+
+Normalization to 2NF uRemember 2nd normal form means no partial dependencies on the key. But we have: {Order} ®{Customer, Address} {Product} ®{UnitPrice} And a primary key of: {Order, Product} • So to get rid of the first FD we projectover: {Order, Customer, Address} and {Order, Product, Quantity and UnitPrice}
+47
+49
+
+Normalization to 2NF uR1 is now in 2NF, but there is still a partial FD in R2: {Product} ®{UnitPrice} Order Product Quantity UnitPrice • To remove this we project over: {Product, UnitPrice} and {Order, Product, Quantity}
+49
+
+[Table 2 on Page 12]
+48
+
+Normalization to 2NF 1NF R Order Product Customer Address Quantity UnitPrice R1 Order Customer Address R2 Order Product Quantity UnitPrice
+48
+50
+
+Normalization to 2NF 1NF R2 Order Product Quantity UnitPrice 2NF R3 R4 Product UnitPrice Order Product Quantity
+50
+
+[Table 3 on Page 12]
+Order | Product | Customer | Address | Quantity | UnitPrice
+
+[Table 4 on Page 12]
+ | 
+
+[Table 5 on Page 12]
+Order | Customer | Address
+
+[Table 6 on Page 12]
+ | 
+
+[Table 7 on Page 12]
+Order | Produc | t Quantity | UnitPrice
+
+[Table 8 on Page 12]
+Order | Product | Quantity | UnitPrice
+
+[Table 9 on Page 12]
+Order | Product | Quantity | UnitPrice
+
+[Table 10 on Page 12]
+Product | UnitPrice
+
+[Table 11 on Page 12]
+Order | Product | Quantity
+
+--- Page 13 ---
+51 52
+Now let’s go 3NF… So more chopping…
+• R has now been split into 3 relations -R1, R3, and R4… but R1 2NF
+has a transitive FD on its key…
+R1 Order Customer Address
+R1 Order Customer Address
+{Order} ®{Customer} ®{Address}
+• To remove this problem we project R1 over: 3NF
+{Order, Customer} and{Customer, Address}
+R5 Order Customer R6 Customer Address
+51 52
+53 54
+Let’s summarize that: So this…
+• 1NF: 0NF
+{Order, Product, Customer, Address, Quantity, UnitPrice}
+• 2NF:
+{Order, Customer, Address} R
+{Product, UnitPrice}
+{Order, Product, Quantity} Order Product Customer Address Quantity UnitPrice
+• 3NF:
+{Product, UnitPrice}
+{Order, Product, Quantity}
+{Order, Customer}
+{Customer, Address}
+53 54
+13
+
+[Table 1 on Page 13]
+51
+
+Now let’s go 3NF… • R has now been split into 3 relations -R1, R3, and R4… but R1 has a transitive FD on its key… R1 Order Customer Address {Order} ®{Customer} ®{Address} • To remove this problem we project R1 over: {Order, Customer} and{Customer, Address}
+51
+53
+
+Let’s summarize that: • 1NF: {Order, Product, Customer, Address, Quantity, UnitPrice} • 2NF: {Order, Customer, Address} {Product, UnitPrice} {Order, Product, Quantity} • 3NF: {Product, UnitPrice} {Order, Product, Quantity} {Order, Customer} {Customer, Address}
+53
+
+[Table 2 on Page 13]
+52
+
+So more chopping… 2NF R1 Order Customer Address 3NF R5 Order Customer R6 Customer Address
+52
+54
+
+So this… 0NF R Order Product Customer Address Quantity UnitPrice
+54
+
+[Table 3 on Page 13]
+ | 
+
+[Table 4 on Page 13]
+Order | Customer
+
+[Table 5 on Page 13]
+Customer | Address
+
+[Table 6 on Page 13]
+Order | Product | Customer | Address | Quantity | UnitPrice
+
+[Table 7 on Page 13]
+ | 
+
+--- Page 14 ---
+55 56
+has become this… “Register for course” use case
+•Make the E-R diagram from the previous
+3NF step for “Register for course” use case to
+Prices Product UnitPrice
+become:
+Amounts Order Product Quantity •The first normal form
+•The second normal form
+Purchase Order Customer •The third normal form
+Details Customer Address
+55 56
+57 1NF 58
+57 58
+14
+
+[Table 1 on Page 14]
+55
+
+has become this… 3NF Prices Product UnitPrice Amounts Order Product Quantity Purchase Order Customer Details Customer Address
+55
+57
+
+
+
+57
+
+[Table 2 on Page 14]
+56 |  | 
+ |  | 
+“Register for course” use case •Make the E-R diagram from the previous step for “Register for course” use case to become: •The first normal form •The second normal form •The third normal form |  | 
+56 |  | 
+ |  | 58
+ | 1NF | 
+ |  | 
+ |  | 
+58 |  | 
+
+[Table 3 on Page 14]
+3NF Prices Product UnitPrice Amounts Order Product Quantity Purchase Order Customer Details Customer Address | 
+ | 
+
+[Table 4 on Page 14]
+Product | UnitPrice
+
+[Table 5 on Page 14]
+Order | Product | Quantity
+
+[Table 6 on Page 14]
+Order | Customer
+
+[Table 7 on Page 14]
+Customer | Address
+
+--- Page 15 ---
+2NF 59 3NF 60
+59 60
+61
+Question?
+61
+15
+
+[Table 1 on Page 15]
+ |  | 59
+ | 2NF | 
+ |  | 
+59 |  | 
+61 |  | 
+ |  | 
+Question? |  | 
+61 |  | 
+
+[Table 2 on Page 15]
+ |  | 60
+ | 3NF | 
+ |  | 
+60 |  | 

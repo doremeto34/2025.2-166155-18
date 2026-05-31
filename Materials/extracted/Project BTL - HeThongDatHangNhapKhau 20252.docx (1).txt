@@ -1,0 +1,125 @@
+=== Extracted from: Project BTL - HeThongDatHangNhapKhau 20252.docx (1).pdf ===
+=== Total pages: 4 ===
+
+--- Page 1 ---
+Hệ thống phần mềm đặt hàng nhập khẩu
+1 Mô tả hệ thống
+Dưới đây là mô tả hiện trạng của Hệ thống đặt hàng nhập khẩu (Import assignment system)
+của Công ty kinh doanh hàng nhập ngoại (a merchandise importing and sales company).
+(1) Mỗi khi có nhu cầu nhập hàng, Bộ phận bán hàng (Sales department) gửi thông tin về
+danh sách các mặt hàng cần đặt1 cho Bộ phận đặt hàng quốc tế (Overseas order placement
+department). Thông tin này bao gồm: mã hàng (merchandise code), số lượng (quantity
+ordered), đơn vị (unit), và ngày nhận mong muốn (delivery date desired). Định dạng thông
+tin chi tiết như sau:
+Merchandise Desired delivery date
+Quantity ordered Unit
+code Year Month Date
+(2) Nhận được thông tin trên, Bộ phận đặt hàng quốc tế trước tiên tìm các Site nhập khẩu2 ở
+nước ngoài (Overseas Import Sites) có kinh doanh ít nhất một trong các mặt hàng cần đặt.
+Với mỗi Site S tìm được, bộ phận này lọc từ danh sách ban đầu ra danh sách các mặt hàng mà
+Site S kinh doanh. Tiếp theo, bộ phận này gửi danh sách lọc được cho Site S để hỏi về số
+lượng trong kho (in-stock quantity) của từng mặt hàng trong danh sách.
+(3) Trong bước tiếp theo, các Site trả về cho Bộ phận đặt hàng quốc tế thông tin số lượng
+trong kho của các mặt hàng được yêu cầu. Mặt hàng Site không còn, số lượng sẽ có giá trị là 0.
+Bộ phận đặt hàng quốc tế ghi lại các thông tin này vào Tệp thông tin kho, có định dạng như
+sau:
+Site code Merchandise code In-stock quantity Unit
+(4) Bộ phận đặt hàng quốc tế đã tạo và lưu sẵn Tệp thông tin site, chứa thông tin vận chuyển
+chi tiết của từng Site. Để vận chuyển hàng hóa từ các Site tới Bộ phận bán hàng, có thể dùng
+phương tiện tàu (delivery by ship) hoặc hàng không (delivery by air). Số ngày vận chuyển
+hàng hóa (number of days for delivery) thay đổi theo Site và theo loại hình vận chuyển. Các
+thông tin này được cung cấp bởi mỗi Site. Khi có thay đổi, các Site sẽ thông báo cho Bộ phận
+đặt hàng quốc tế. Định dạng thông tin này trong Tệp thông tin site như sau:
+1 Tại cùng một thời điểm, Bộ phận bán hàng có thể có nhiều danh sách yêu cầu như vậy.
+2 Hiện tại, 50 Site nhập khẩu trên toàn thế giới đã được kết nối với Bộ phận đặt hàng quốc tế. Mỗi Site
+kinh doanh nhiều mặt hàng khác nhau; các Site khác nhau có thể cùng kinh doanh một số mặt hàng
+giống nhau. Khi thay đổi danh sách các mặt hàng kinh doanh, mỗi Site sẽ gửi lại danh sách mới cho
+Bộ phận đặt hàng quốc tế.
+
+[Table 1 on Page 1]
+Merchandise code | Quantity ordered | Unit | Desired delivery date |  | 
+ |  |  | Year | Month | Date
+
+[Table 2 on Page 1]
+Site code | Merchandise code | In-stock quantity | Unit
+
+--- Page 2 ---
+Site Import site Number of days Number of days Other
+code name for delivery by for delivery by air information
+ship
+(5) Dựa trên thông tin về lượng hàng trong kho và số ngày vận chuyển của mỗi Site, Bộ phận
+đặt hàng quốc tế sẽ quyết định nhập về số lượng mặt hàng cụ thể từ các Site. Bộ phận đặt hàng
+quốc tế sẽ xử lý từng mặt hàng một cách độc lập như sau. Với mỗi mặt hàng, tìm danh sách
+các Site đáp ứng được ngày nhận mong muốn. Nếu một Site không cung cấp đủ mặt hàng đó,
+phải chấp nhận nhập hàng từ nhiều Site. Nếu không thể đạt được số lượng nhập khẩu như yêu
+cầu, cần đưa ra thông báo lỗi. Các Site được lựa chọn theo các tiêu chí với mức độ ưu tiên
+giảm dần như sau:
+a. Ưu tiên phương tiện tàu hơn hàng không
+b. Ưu tiên Site có lượng hàng trong kho lớn
+c. Số lượng các Site được chọn nhỏ nhất có thể
+(6) Trong bước cuối cùng, Bộ phận đặt hàng quốc tế gửi thông tin đặt hàng tới các Site đã
+chọn. Định dạng của thông tin này như sau (Trong đó phương tiện vận chuyển – Delivery
+means – được lưu là “ship delivery” hoặc “air delivery”)
+Site code Merchandise code Quantity ordered Unit Delivery means
+(7) Khi hàng hóa được vận chuyển tới nơi, Bộ phận quản lý kho sẽ kiểm hàng, so sánh hàng
+về thực tế với hàng đặt trong danh sách, rồi lưu vào hệ thống quản lý kho của riêng họ.
+Nhiệm vụ: cần tin học hóa Hệ thống đặt hàng nhập khẩu nói trên
+Lưu ý: Với tất cả các bài tập, luôn luôn phải có file doc, pdf, và các file
+ảnh
+Bài tập 2
+Vẽ biểu đồ use case (bao gồm biểu đồ tổng quan và các biểu đồ phân rã nếu có)
+Bài tập cá nhân: Mỗi thành viên chọn một use case nghiệp vụ (bỏ qua các use case đăng
+nhập đăng ký) để thực hiện. Cần chỉ rõ ai làm use case nào. Trừ khi không còn use case, sinh
+viên không được phép chọn các use case dễ (ví dụ use case xóa dữ liệu, xem 1 bản ghi dữ liệu
+đơn giản). Use case được chọn phải có giao diện người dùng (GUI). Mỗi thành viên sẽ làm việc
+xuyên suốt với use case này. Trong bài tập này, mỗi thành viên cần đặc tả use case mình phụ
+trách. Trong đặc tả có thêm biểu đồ hoạt động (activity diagram) cho 1 luồng nào đó. Mỗi cá
+nhân nộp tài liệu SRS theo mẫu trong thư mục Google Drive.
+Bài tập nhóm: Tập hợp các kết quả của các thành viên thành tại liệu đặc tả yêu cầu phần
+mềm SRS (Sofware Requirement Specification) cho cả nhóm
+Lưu ý trong thư mục group và thư mục cá nhân cần có: file doc SRS, file pdf SRS, file project
+Astah, file ảnh biểu đồ export từ Astah.
+Bài tập 3 (Phân tích use case)
+Bài tập cá nhân: Vẽ các biểu đồ trình tự (mức phân tích) trong use case mình phụ trách. Có
+thể cần vẽ nhiều biểu đồ, mỗi biểu đồ ứng với một scenario (luồng sự kiện) trong use case.
+Cần chọn ít nhất 1 biểu đồ trình tự đã vẽ và vẽ thêm biểu đồ giao tiếp biểu diễn tương đương
+
+[Table 1 on Page 2]
+Site code | Import site name | Number of days for delivery by ship | Number of days for delivery by air | Other information
+
+[Table 2 on Page 2]
+Site code | Merchandise code | Quantity ordered | Unit | Delivery means
+
+--- Page 3 ---
+với biểu đồ trình tự này.
+Dựa trên các biểu đồ trình tự đã vẽ, vẽ biểu đồ lớp (mức phân tích) cho use case mình phụ
+trách.
+Bài tập nhóm: Vẽ biểu đồ lớp (mức phân tích) cho cả nhóm. Lưu ý: các lớp cùng chức năng ở
+nhiều use case phải dùng thống nhất cùng 1 tên. Các hành vi giống nhau trong các use case
+khác nhau cũng phải có cùng tên.
+Bài tập 4 (Thiết kế giao diện)
+Bài tập nhóm: Vẽ sơ đồ chuyển đổi màn hình (screen transition diagram), từ màn hình login
+đến tất cả các màn hình chi tiết trong các use case nhóm phụ trách.
+Bài tập cá nhân: Vẽ sơ đồ chuyển đổi màn hình (screen transition diagram), từ màn hình
+home đến tất cả các màn hình chi tiết trong các use case mà mình phụ trách.
+Thiết kế tất cả các màn hình dẫn từ trang home tới use case của mình.
+Đặc tả tất cả các màn hình trong use case của mình.
+Thiết kế từng subsystem (nếu có) trong use case của mình (vẽ biểu đồ trình tự cho từng hành
+vi mà subsystem cung cấp như minh họa trong hình dưới đây, mỗi hành vi một biểu đồ trình
+tự). Vẽ biểu đồ lớp cho từng subsystem
+Bài tập 5 (Thiết kế chi tiết lớp)
+Bài tập cá nhân: Vẽ các biểu đồ trình tự (mức thiết kế) trong use case mình phụ trách. Có
+thể cần vẽ nhiều biểu đồ, mỗi biểu đồ ứng với một scenario trong use case. Sau đó tìm các
+hành vi và thuộc tính cho các lớp thiết kế và vẽ biểu đồ lớp (mức thiết kế) cho use case mình
+
+--- Page 4 ---
+phụ trách.
+Lưu ý: cần dùng interaction ref để biểu đồ trình tự không bị quá phức tạp trong 1 hình vẽ
+Vẽ biểu đồ phụ thuộc gói
+Bài tập nhóm: Gộp lại các biểu đồ lớp (mức thiết kế) của mỗi thành viên, tổ chức thành các
+package cho hợp lý, thống nhất cách thức đặt tên.
+Sau đó, vẽ biểu đồ phụ thuộc package cho toàn nhóm và cho từng cá nhân (cần phân thành
+các tầng)
+Bài tập 6
+Chỉnh sửa lại thiết kế, áp dụng các nguyên lý thiết kế và các mẫu thiết kế đã học. Phân tích
+cách chỉnh sửa và ý nghĩa đem lại.

@@ -1,0 +1,111 @@
+Phân tích yêu cầu
+Nhóm 18:
+Đỗ Thành Hưng - UC17 — Tạo đơn hàng
+
+
+HW2
+Đặc tả use case
+
+Mã Use case | UC17 | Tên Usecase | Tạo đơn hàng
+Tác nhân | Bộ phận đặt hàng quốc tế
+Hệ thống | Bộ phận đặt hàng quốc tế
+Hệ thống | Bộ phận đặt hàng quốc tế
+Hệ thống
+Tiền điều kiện | Người dùng đã đăng nhập hệ thống
+Người dùng có quyền xử lý yêu cầu đặt hàng | Người dùng đã đăng nhập hệ thống
+Người dùng có quyền xử lý yêu cầu đặt hàng | Người dùng đã đăng nhập hệ thống
+Người dùng có quyền xử lý yêu cầu đặt hàng
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Thành công:
+Danh sách yêu cầu được cập nhật
+Thông tin được lưu vào hệ thống
+Ghi nhận lịch sử thay đổi
+Thất bại:
+Trạng thái không thay đổi
+Hiển thị thông báo lỗi | Thành công:
+Danh sách yêu cầu được cập nhật
+Thông tin được lưu vào hệ thống
+Ghi nhận lịch sử thay đổi
+Thất bại:
+Trạng thái không thay đổi
+Hiển thị thông báo lỗi | Thành công:
+Danh sách yêu cầu được cập nhật
+Thông tin được lưu vào hệ thống
+Ghi nhận lịch sử thay đổi
+Thất bại:
+Trạng thái không thay đổi
+Hiển thị thông báo lỗi
+
+
+Activity diagram
+
+
+
+HW3
+Sequence diagram (mức phân tích)
+
+
+Communication diagram
+
+
+Class diagram (mức phân tích)
+
+
+HW4
+Sơ đồ chuyển màn hình UC Tạo đơn hàng
+
+Trang chủ bộ phận đặt hàng quốc tếMàn hình danh sách đơn hàng quốc tếMàn hình tạo đơn hàng quốc tếCatalog mặt hàng
+Màn hình danh sách đơn hàng quốc tế
+
+
+Màn hình tạo đơn hàng quốc tế
+
+
+
+Màn hình catalog mặt hàng
+
+
+
+Màn hình kết quả phân bổ mặt hàng
+
+
+
+HW5
+Sequence diagram mở catalog mặt hàng
+
+
+
+Sequence diagram chọn mặt hàng
+
+
+
+Sequence diagram phân bổ mặt hàng
+
+
+
+Sequence diagram subsystem phân bổ mặt hàng
+
+
+
+Sequence diagram tạo và xóa đơn hàng thủ công
+
+
+
+Sequence diagram thêm mặt hàng thủ công
+
+
+
+Sequence diagram xóa mặt hàng thủ công
+
+
+
+Sequence diagram sửa số lượng mặt hàng thủ công
+
+
+
+Class diagram (mức thiết kế)
+
+
+

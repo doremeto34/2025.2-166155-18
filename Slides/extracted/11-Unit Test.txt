@@ -1,0 +1,1448 @@
+=== Extracted from: 11-Unit Test.pdf ===
+=== Total pages: 24 ===
+
+--- Page 1 ---
+1 2
+Content
+1. Testing overview
+IT4490 –SOFTWARE DESIGN AND CONSTRUCTION 2. Unit Test
+11. UNIT TEST
+3. Integration Test
+1 2
+3 4
+Testing Why?
+¨“[T]he means by which the presence, quality, or •Why testing?
+genuineness of anything is determined; a means of trial.” – • Improve software design
+dictionary.com • Make software easier to understand
+¨A software test executes a program to determine whether a • Reduce debugging time
+property of the program holds or doesn’t hold • Catch integration errors
+¨A test passes[fails] if the property holds[doesn’t hold] on •In short, to Produce Better Code
+that run •Preconditions
+• Working code
+• Good set of unit tests
+3 4
+1
+
+[Table 1 on Page 1]
+1
+
+IT4490 –SOFTWARE DESIGN AND CONSTRUCTION 11. UNIT TEST
+1
+3
+
+Testing ¨“[T]he means by which the presence, quality, or genuineness of anything is determined; a means of trial.” – dictionary.com ¨A software test executes a program to determine whether a property of the program holds or doesn’t hold ¨A test passes[fails] if the property holds[doesn’t hold] on that run
+3
+
+[Table 2 on Page 1]
+2
+
+Content 1. Testing overview 2. Unit Test 3. Integration Test
+2
+4
+
+Why? •Why testing? • Improve software design • Make software easier to understand • Reduce debugging time • Catch integration errors •In short, to Produce Better Code •Preconditions • Working code • Good set of unit tests
+4
+
+--- Page 2 ---
+5 6
+Software Quality Assurance (QA)
+V Model – Different test level
+Testing plus other activities including
+•Static analysis (assessing code without executing it) •Unit test: ONE module at a time
+•Proofs of correctness (theorems about program properties) •Integration test: The linking modules
+•Code reviews (people reviewing others’ code) •System test: The whole (entire) system
+•Software process (placing structure on the development
+lifecycle)
+•…and many more ways to find problems and to increase
+confidence
+No single activity or approach
+can guarantee software quality
+5 6
+7 8
+Test levels Content
+•Unit Testing: Does each unit (class, method, etc.) do 1. Testing overview
+what it supposed to do?
+2. Unit Test
+•Smallest programming units
+•Strategies: Black box and white box testing
+3. Integration Test
+•Techniques, Tools
+•Integration Testing: do you get the expected results
+when the parts are put together?
+•Strategies: Bottom-up, top-down testing
+•System Testing: does it work within the overall
+system?
+•Acceptance Testing: does it match to user needs?
+7 8
+2
+
+[Table 1 on Page 2]
+5
+
+Software Quality Assurance (QA) Testing plus other activities including •Static analysis (assessing code without executing it) •Proofs of correctness (theorems about program properties) •Code reviews (people reviewing others’ code) •Software process (placing structure on the development lifecycle) •…and many more ways to find problems and to increase confidence No single activity or approach can guarantee software quality
+5
+7
+
+Test levels •Unit Testing: Does each unit (class, method, etc.) do what it supposed to do? •Smallest programming units •Strategies: Black box and white box testing •Techniques, Tools •Integration Testing: do you get the expected results when the parts are put together? •Strategies: Bottom-up, top-down testing •System Testing: does it work within the overall system? •Acceptance Testing: does it match to user needs?
+7
+
+[Table 2 on Page 2]
+6
+
+V Model – Different test level •Unit test: ONE module at a time •Integration test: The linking modules •System test: The whole (entire) system
+6
+8
+
+Content 1. Testing overview 2. Unit Test 3. Integration Test
+8
+
+--- Page 3 ---
+9 10
+2.1. Unit test strategies
+It’s not black-and-white, but…
+Black box and White box testing
+A. Choose input data (“test inputs”) Black box White box
+B. Define the expected outcome (“soict”) Must choose inputs without Can choose inputs with
+C. Run the unit (“SUT” or “software under test”) on the input knowledgeof the knowledgeof the
+and record the results implementation implementation
+D. Examine results against the expected outcome (“soict”)
+•Has to focus on the •Common use: coverage
+Specification behavior of the SUT •Basic idea: if your test
+Precondition Postcondition •Needs an “soict” suite never causes a
+Implementation =soict? •Or at least an statement to be
+executed, then that
+expectationof
+Black box White box whether or not an statement might be
+Must choose inputs without Can choose inputs with exception is thrown buggy
+knowledgeof the knowledgeof the
+implementation implementation
+9 10
+11 12
+Terms
+•Test case
+•a set of conditions/variables to determine whether a
+system under test satisfies requirements or works
+correctly
+•Test suite
+•a collection of test cases related to the same test
+work
+•Test plan
+•a document which describes testing approach and
+methodologies being used for testing the project,
+risks, scope of testing, specific tools
+11 12
+3
+
+[Table 1 on Page 3]
+9
+
+2.1. Unit test strategies Black box and White box testing A. Choose input data (“test inputs”) B. Define the expected outcome (“soict”) C. Run the unit (“SUT” or “software under test”) on the input and record the results D. Examine results against the expected outcome (“soict”) Specification Precondition Postcondition Implementation =soict? Black box White box Must choose inputs without Can choose inputs with knowledgeof the knowledgeof the implementation implementation
+9
+11
+
+Terms •Test case •a set of conditions/variables to determine whether a system under test satisfies requirements or works correctly •Test suite •a collection of test cases related to the same test work •Test plan •a document which describes testing approach and methodologies being used for testing the project, risks, scope of testing, specific tools
+11
+
+[Table 2 on Page 3]
+10
+
+It’s not black-and-white, but… Black box White box Must choose inputs without Can choose inputs with knowledgeof the knowledgeof the implementation implementation •Has to focus on the •Common use: coverage behavior of the SUT •Basic idea: if your test •Needs an “soict” suite never causes a •Or at least an statement to be executed, then that expectationof whether or not an statement might be exception is thrown buggy
+10
+12
+
+
+12
+
+[Table 3 on Page 3]
+Specification | 
+Precondition | Postcondition
+Implementation | 
+
+--- Page 4 ---
+13 14
+Good test case design Test suite
+•An good test case satisfies the following criteria: •Example of test suite
+• Reasonable probability of catching an error • Test case 1: Login
+• Does interesting things • Test case 2: Add New Products
+• Doesn’t do unnecessary things • Test case 3: Checkout
+• Neither too simple nor too complex • Test case 4: Logout
+• Not redundant with other tests
+• Makes failures obvious
+• Mutually Exclusive, Collectively Exhaustive
+13 14
+15
+Unit Testing techniques 2.2.1. Equivalence Partitioning
+•For test case design •Create the encompassing test cases by analyzing the input
+•(2.2) Test Techniques for Black Box Test data space and dividing into equivalence classes
+• Equivalence Partitioning Analysis • Input condition space is partitioned into equivalence classes
+• Boundary-value Analysis • Every input taken from a equivalence class produces the same
+result
+• Decision Table
+• Use Case-based Test
+•(2.3) Test Techniques for White Box Test
+• Control Flow Test with C0, C1 coverage
+• Sequence chart coverage test
+15 16
+4
+
+[Table 1 on Page 4]
+13
+
+Good test case design •An good test case satisfies the following criteria: • Reasonable probability of catching an error • Does interesting things • Doesn’t do unnecessary things • Neither too simple nor too complex • Not redundant with other tests • Makes failures obvious • Mutually Exclusive, Collectively Exhaustive
+13
+15
+
+Unit Testing techniques •For test case design •(2.2) Test Techniques for Black Box Test • Equivalence Partitioning Analysis • Boundary-value Analysis • Decision Table • Use Case-based Test •(2.3) Test Techniques for White Box Test • Control Flow Test with C0, C1 coverage • Sequence chart coverage test
+15
+
+[Table 2 on Page 4]
+14
+
+Test suite •Example of test suite • Test case 1: Login • Test case 2: Add New Products • Test case 3: Checkout • Test case 4: Logout
+14
+
+
+2.2.1. Equivalence Partitioning •Create the encompassing test cases by analyzing the input data space and dividing into equivalence classes • Input condition space is partitioned into equivalence classes • Every input taken from a equivalence class produces the same result
+16
+
+--- Page 5 ---
+17 18
+Example: Examination Judgment Program Equivalence Partitioning of Input space and test cases
+•Program Title: “Examination Judgment Program”
+•Subject: Two subjects as Mathematics, and Physics
+80
+Judgment
+•Specification:
+60
+• Passed if
+• scores of both mathematics and physics are greater than or equal to 70
+out of 100
+or, 40
+• average of mathematics and physics is greater than or equal to 80 out
+of 100
+• Failed => Otherwise 20
+20 40 60 80
+17 18
+21
+Analysis and discussions 2.2.2. Boundary-value analysis
+•We tried to create encompassing test cases based on •Extract test data to be expected by analyzing boundary
+external specification. input values => Effective test data
+•Successful? “Yes” ! • Boundary values can detect many defects effectively
+àE.g. mathematics/physics score is 69 and 70
+•Next question. The test cases/data are fully effective? •The programmer has described the following wrong code:
+•We have to focus on the place in which many defects are there, if (mathscore > 70) {
+don’t we? ...................
+}
+•Where is the place ?
+•Instead of the following correct code;
+if (mathscore >= 70) {
+à“Boundary-value analysis”
+...................
+}
+20 21
+5
+
+[Table 1 on Page 5]
+17
+
+Example: Examination Judgment Program •Program Title: “Examination Judgment Program” •Subject: Two subjects as Mathematics, and Physics Judgment •Specification: • Passed if • scores of both mathematics and physics are greater than or equal to 70 out of 100 or, • average of mathematics and physics is greater than or equal to 80 out of 100 • Failed => Otherwise
+17
+
+
+Analysis and discussions •We tried to create encompassing test cases based on external specification. •Successful? “Yes” ! •Next question. The test cases/data are fully effective? •We have to focus on the place in which many defects are there, don’t we? •Where is the place ? à“Boundary-value analysis”
+20
+
+[Table 2 on Page 5]
+18
+
+Equivalence Partitioning of Input space and test cases 80 60 40 20 20 40 60 80
+18
+21
+
+2.2.2. Boundary-value analysis •Extract test data to be expected by analyzing boundary input values => Effective test data • Boundary values can detect many defects effectively àE.g. mathematics/physics score is 69 and 70 •The programmer has described the following wrong code: if (mathscore > 70) { ................... } •Instead of the following correct code; if (mathscore >= 70) { ................... }
+21
+
+[Table 3 on Page 5]
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+
+--- Page 6 ---
+22
+Example: Boundary-value analysis 2.2.3. Decision Table
+•Boundary values of the mathematics score of small •Relations between the conditions for and the contents of
+case study: the processing are expressed in the form of a table
+•A decision table is a tabular form tool used when complex
+conditions are combined
+•What about the boundary value analysis for the
+average of mathematics and physics?
+22 23
+Example: Decision Table Decision Table for “Examination Judgement”
+•The conditions for creating reports from employee files •Condition1: Mathematics score >= 70
+•Condition2: Physics score >= 70
+•Condition3: Average of Mathematics, and Physics >= 80
+Under age 30 Y Y N N
+Male Y N Y N
+Married N Y Y N
+Output Report 1 - X - -
+Output Report 2 - - - X
+Output Report 3 X - - -
+Output Report 4 - - X -
+24 25
+6
+
+[Table 1 on Page 6]
+22
+
+Example: Boundary-value analysis •Boundary values of the mathematics score of small case study: •What about the boundary value analysis for the average of mathematics and physics?
+22
+
+
+Example: Decision Table •The conditions for creating reports from employee files Under age 30 Y Y N N Male Y N Y N Married N Y Y N Output Report 1 - X - - Output Report 2 - - - X Output Report 3 X - - - Output Report 4 - - X -
+24
+
+[Table 2 on Page 6]
+
+
+2.2.3. Decision Table •Relations between the conditions for and the contents of the processing are expressed in the form of a table •A decision table is a tabular form tool used when complex conditions are combined
+23
+
+
+Decision Table for “Examination Judgement” •Condition1: Mathematics score >= 70 •Condition2: Physics score >= 70 •Condition3: Average of Mathematics, and Physics >= 80
+25
+
+[Table 3 on Page 6]
+Under age 30 | Y | Y | N | N
+Male | Y | N | Y | N
+Married | N | Y | Y | N
+Output Report 1 | - | X | - | -
+Output Report 2 | - | - | - | X
+Output Report 3 | X | - | - | -
+Output Report 4 | - | - | X | -
+
+--- Page 7 ---
+Decision Table for “Examination Judgement” Decision Table for “Examination Judgement”???
+•Invalid input data (integer)
+Test Data from Equivalence Analysis
+(8) Average Score
+• Condition1: Mathematics score = valid that means “0=< the score =< 100” is 80.
+100
+• Condition2: Physics score = valid that means “0=< the score =< 100” Score of (2) Score Math. Physics Result
+--------------------------------TCI1----------TCI2--------TCI3-------TCI4-------- Physics. (1) (5) (10) (1) 55 85 Failed
+Condition1 Valid Invalid Valid Invalid 80 (4) (2) 67 97 Passed
+Condition2 Valid Valid Invalid Invalid - 70 (3) (3) 96 68 Passed
+--------------------------------------------------------------------------------------- 60 Average (4) 77 80 Passed
+Score
+“Normal results” Yes --- --- --- is 80. (5) 85 92 Passed
+40 (7) (6) (6) 79 58 Failed
+“Error message math” --- Yes --- Yes
+(7) 52 58 Failed
+“Error message phys” --- --- Yes Yes
+20 (8) 15 120 Invalid
+Score of (9) 68 -66 Invalid
+If both of mathematics score and physics score are invalid, two messages are Math. (10) 118 85 Invalid
+expected to be output. Is it correct specifications? Please confirm it? 0 20 40 60 70 80 100
+(9) (11) -18 80 Invalid
+27 28
+29
+2.2.4. Use case Testing Test cases for Use case “Log in”?
+•Helps us identify test cases that exercise the whole
+system on a transaction by transaction basis from start
+to finish.
+•Use cases are defined in terms of the end user and
+not the system, use case describe what the user does
+and what the user sees rather than what inputs the
+software system expects and what the system outputs.
+•Each usecasemust specify any preconditions that
+need to be met for the use case to work. Use cases
+must also specify post conditions that are observable
+results and a description of the final state of the
+system after the use case has been executed
+successfully.
+29 30
+7
+
+[Table 1 on Page 7]
+
+
+Decision Table for “Examination Judgement” •Invalid input data (integer) • Condition1: Mathematics score = valid that means “0=< the score =< 100” • Condition2: Physics score = valid that means “0=< the score =< 100” --------------------------------TCI1----------TCI2--------TCI3-------TCI4-------- Condition1 Valid Invalid Valid Invalid Condition2 Valid Valid Invalid Invalid - --------------------------------------------------------------------------------------- “Normal results” Yes --- --- --- “Error message math” --- Yes --- Yes “Error message phys” --- --- Yes Yes If both of mathematics score and physics score are invalid, two messages are expected to be output. Is it correct specifications? Please confirm it?
+27
+29
+
+2.2.4. Use case Testing •Helps us identify test cases that exercise the whole system on a transaction by transaction basis from start to finish. •Use cases are defined in terms of the end user and not the system, use case describe what the user does and what the user sees rather than what inputs the software system expects and what the system outputs. •Each usecasemust specify any preconditions that need to be met for the use case to work. Use cases must also specify post conditions that are observable results and a description of the final state of the system after the use case has been executed successfully.
+29
+
+[Table 2 on Page 7]
+
+
+Decision Table for “Examination Judgement”??? Test Data from Equivalence Analysis (8) Average Score is 80. 100 Score of (2) Score Math. Physics Result Physics. (1) (5) (10) (1) 55 85 Failed 80 (4) (2) 67 97 Passed 70 (3) (3) 96 68 Passed 60 Average (4) 77 80 Passed Score is 80. (5) 85 92 Passed 40 (7) (6) (6) 79 58 Failed (7) 52 58 Failed 20 (8) 15 120 Invalid Score of (9) 68 -66 Invalid Math. (10) 118 85 Invalid 0 20 40 60 70 80 100 (9) (11) -18 80 Invalid
+28
+
+
+Test cases for Use case “Log in”?
+30
+
+[Table 3 on Page 7]
+(8) 100 Score of Physics. 80 70 60 40 20 0 | Average Score is 80. |  |  | (10) Average Score is 80. Score of Math. 0
+ | (1) | (2) | (5) (4) | 
+ | (7) |  | (3) (6) | 
+ | 20 40 60 70 80 10 (9) |  |  | 
+
+--- Page 8 ---
+Creating test cases from use cases 2.3. Techniques for White Box testing
+•Identify all of the scenarios for the given use case
+•Alternative scenarios should be drawn in a graph fo
+each action
+•Create scenarios for
+•a basic flow,
+•one scenario covering each alternative flow,
+•and some reasonable combinations of alternative
+flows
+•Create infinite loops
+31 32
+E.g. Control flow test of “Examination Judgment
+2.3. Techniques for White Box testing
+Program”
+•Test cases should cover all processing structure in Start
+code Get a score
+=> Typical test coverage
+False
+•C0 measure: Executed statements # / all statements # Mathematics
+=>70
+• C0 measure at 100% means “all statements are executed”.
+True
+•C1 measure: Branches passed # / all blanches #
+• C1 measure at 100% means “all blanches are executed” Physics False (M+P)/2 False
+=>70 =>80
+True True
+=> Prevent statements/blanches from being left as non-
+tested parts “Passed” “Failed”
+=> Cannot detect functions which aren't implemented
+End
+33 34
+8
+
+[Table 1 on Page 8]
+
+
+Creating test cases from use cases •Identify all of the scenarios for the given use case •Alternative scenarios should be drawn in a graph fo each action •Create scenarios for •a basic flow, •one scenario covering each alternative flow, •and some reasonable combinations of alternative flows •Create infinite loops
+31
+
+
+2.3. Techniques for White Box testing •Test cases should cover all processing structure in code => Typical test coverage •C0 measure: Executed statements # / all statements # • C0 measure at 100% means “all statements are executed”. •C1 measure: Branches passed # / all blanches # • C1 measure at 100% means “all blanches are executed” => Prevent statements/blanches from being left as non- tested parts => Cannot detect functions which aren't implemented
+33
+
+[Table 2 on Page 8]
+
+
+2.3. Techniques for White Box testing
+32
+
+
+E.g. Control flow test of “Examination Judgment Program” Start Get a score False Mathematics =>70 True Physics False (M+P)/2 False =>70 =>80 True True “Passed” “Failed” End
+34
+
+--- Page 9 ---
+E.g. Control flow test of “Examination Judgment E.g. Control flow test of “Examination Judgment
+Program” –100% C0 coverage Program” –100% C1 coverage
+TC1int: Math score: 88, Physics score: 75 à“Passed” TC1int: Math score: 88, Physics score: 75 à“Passed”
+TC1int TC S 2 ta i r n t t TC2int: Math score: 68, Physics score: 90 à“Failed” TC1int TC S 2 ta i r n t t T T C C 2 3 i i n n t t : : M M a a t t h h s s c c o o r r e e : : 6 9 8 8 , , P P h h y y s s i i c c s s s s c c o o r r e e : : 9 6 0 8 à à “ “ F P a a i s le s d e ” d”
+Get a score Get a score
+All statements are executed. TC3int All branches are executed.
+False ALL False ONLY 3 TEST
+Mathematics BRANCHES Mathematics CASES???
+=>70 =>70 Compared to 7
+?
+True True TCs?
+Physics False (M+P)/2 False Physics False (M+P)/2 False
+=>70 =>80 =>70 =>80
+True True True True
+“Passed” “Failed” “Passed” “Failed”
+End End
+35 36
+E.g. Control flow test of “Examination Judgment
+Decision Table for “Examination Judgement”
+Program” –100% C1 coverage
+TC2 is covered by TC2int and TC3int?
+Condition1: Mathematics score >= 70 Start
+C C o on n d d i i t t i i o o n n 3 2 : : A P v h e y r s a ic g s e s o c f o M re a t > h = e m 70 atics, and Physics >= 80 TC1int Get Ta T C C s6c 2 o in r T e tC2 TC6is covered by TC3int and TC2int?
+---------------------------TC5-----------TC4-----------TC3-----------TC6-----------TC2------------TC1-------------TCNG--------TC7
+Condition1 True True True True False False False False TC3int BLACK
+Condition2 True True False False True True False False
+False
+C --- o - n -- d -- it - i - o -- n - 3 ------------- T - r -- u - e ------------- F -- a -- l - s - e ---------- T -- r - u -- e ------------- F -- a -- ls -- e ---------- T -- r - u -- e ------------ F -- a - l - s -- e ------------ T -- r - u - e - ( - n - one) False Mathematics BOX!!!
+“Passed” Yes Yes Yes --- Yes --- N/A -- =>70
+“Failed” --- --- --- Yes --- Yes N/A Yes True
+• One TCxint can cover plural TCs, based on the correct control flow structure False False
+• TC1int covers TC5 and TC4 Physics (M+P)/2
+• TC2int covers TC1 and TC7 =>70 =>80
+• TC3int covers to TC3. True True
+• TC2 and TC6 are left in no execution.
+“Passed” “Failed”
+End
+37 38
+9
+
+[Table 1 on Page 9]
+
+
+E.g. Control flow test of “Examination Judgment Program” –100% C0 coverage TC1int: Math score: 88, Physics score: 75 à“Passed” Start TC1int TC2int TC2int: Math score: 68, Physics score: 90 à“Failed” Get a score All statements are executed. False ALL Mathematics BRANCHES =>70 ? True Physics False (M+P)/2 False =>70 =>80 True True “Passed” “Failed” End
+35
+
+
+Decision Table for “Examination Judgement” Condition1: Mathematics score >= 70 Condition2: Physics score >= 70 Condition3: Average of Mathematics, and Physics >= 80 ---------------------------TC5-----------TC4-----------TC3-----------TC6-----------TC2------------TC1-------------TCNG--------TC7 Condition1 True True True True False False False False Condition2 True True False False True True False False Condition3 True False True False True False True(none) False --------------------------------------------------------------------------------------------------------------------------------------- “Passed” Yes Yes Yes --- Yes --- N/A -- “Failed” --- --- --- Yes --- Yes N/A Yes • One TCxint can cover plural TCs, based on the correct control flow structure • TC1int covers TC5 and TC4 • TC2int covers TC1 and TC7 • TC3int covers to TC3. • TC2 and TC6 are left in no execution.
+37
+
+[Table 2 on Page 9]
+
+
+E.g. Control flow test of “Examination Judgment Program” –100% C1 coverage TC1int: Math score: 88, Physics score: 75 à“Passed” Start TC2int: Math score: 68, Physics score: 90 à“Failed” TC1int TC2int TC3int: Math score: 98, Physics score: 68 à“Passed” Get a score TC3int All branches are executed. False ONLY 3 TEST Mathematics CASES??? =>70 Compared to 7 True TCs? False False Physics (M+P)/2 =>70 =>80 True True “Passed” “Failed” End
+36
+
+
+E.g. Control flow test of “Examination Judgment Program” –100% C1 coverage TC2 is covered by TC2int and TC3int? Start TC1int Get Ta T C C s6c 2 o in r T e tC2 TC6is covered by TC3int and TC2int? TC3int BLACK False Mathematics BOX!!! =>70 True False False Physics (M+P)/2 =>70 =>80 True True “Passed” “Failed” End
+38
+
+[Table 3 on Page 9]
+“F | ailed”
+
+[Table 4 on Page 9]
+“F | ailed”
+
+[Table 5 on Page 9]
+t Get | TC2 TaC s6c | inTtC ore
+
+[Table 6 on Page 9]
+“Pas | sed”
+
+[Table 7 on Page 9]
+ | “F | ailed”
+
+--- Page 10 ---
+42
+How to test a loop structure program Example
+•For the control flow testing in the software including a class LoopTestExampleApp{
+public static BufferedReaderkeyboardInput=
+loop, the following criteria are usually adopted instead new BufferedReader(new InputStreamReader(System.in));
+of C0/C1 coverage measures. private static final intMINIMUM = 1;
+private static final intMAXIMUM = 10;
+•Skip the loop.
+public static void main(String[] args) throws IOException{
+•One and two passes through the loop. System.out.println("Input an integer value:");
+intinput = new Integer(keyboardInput.readLine()).intValue();
+•Typical times m passes through the loop
+intnumberOfIterations=0;
+•n, n-1, n+1 passes through the loop for(intindex=input;index>= MINIMUM && index <= MAXIMUM;index++) {
+numberOfIterations++;
+•n is maximum number, m is typical number (m<n) }
+•Example: 6 cases based on boundary-value analysis:
+System.out.println("Number of iterations = " + numberOfIterations);
+}
+}
+0 12 typical times: m n-1 n n+1
+41 42
+43
+Examples for “Examination Judgment Program” Examples for “Examination Judgment Program”
+Start
+¨ Input two subjects scores, Mathematics and Physics, for each Exercise:
+member of one class. The input form is “tabular form”. Class Create the test cases using the
+Get “number of students”
+members can be allowed only 0 (zero) through 50. criteria two pages before based
+counter = zero
+¨ Output/Print out the “Examination result report for a class”. The on the following assumptions.
+output form is also “tabular form” that has the columns such as 1. “Examination
+student name, scores (Math., Physics), passed or failed. counter < False Judgment
+number of students program” are
+True already tested.
+2. Input data of this
+Function: “Examination Print out “examination module are
+Judgment program” result report for a
+already checked,
+class”.
+and valid.
+counter = counter +
+1
+End
+43 44
+10
+
+[Table 1 on Page 10]
+
+
+How to test a loop structure program •For the control flow testing in the software including a loop, the following criteria are usually adopted instead of C0/C1 coverage measures. •Skip the loop. •One and two passes through the loop. •Typical times m passes through the loop •n, n-1, n+1 passes through the loop •n is maximum number, m is typical number (m<n) •Example: 6 cases based on boundary-value analysis: 0 12 typical times: m n-1 n n+1
+41
+43
+
+Examples for “Examination Judgment Program” ¨ Input two subjects scores, Mathematics and Physics, for each member of one class. The input form is “tabular form”. Class members can be allowed only 0 (zero) through 50. ¨ Output/Print out the “Examination result report for a class”. The output form is also “tabular form” that has the columns such as student name, scores (Math., Physics), passed or failed.
+43
+
+[Table 2 on Page 10]
+42
+
+Example class LoopTestExampleApp{ public static BufferedReaderkeyboardInput= new BufferedReader(new InputStreamReader(System.in)); private static final intMINIMUM = 1; private static final intMAXIMUM = 10; public static void main(String[] args) throws IOException{ System.out.println("Input an integer value:"); intinput = new Integer(keyboardInput.readLine()).intValue(); intnumberOfIterations=0; for(intindex=input;index>= MINIMUM && index <= MAXIMUM;index++) { numberOfIterations++; } System.out.println("Number of iterations = " + numberOfIterations); } }
+42
+
+
+Examples for “Examination Judgment Program” Start Exercise: Create the test cases using the Get “number of students” criteria two pages before based counter = zero on the following assumptions. 1. “Examination counter < False Judgment number of students program” are True already tested. 2. Input data of this Function: “Examination Print out “examination module are Judgment program” result report for a already checked, class”. and valid. counter = counter + 1 End
+44
+
+--- Page 11 ---
+How to test for nested loops structure 2.4. Combination of Black/White Box test
+•Advantage of Black box
+At first, first loop’s control
+• Encompassing test based on external specification
+number is determined at
+• Very powerful and fundamental to develop high-quality software
+typical number, and second
+•Advantage of White box
+loop is tested as a simple loop.
+• If any paths/flows don’t appear in the written specifications, the
+paths/flows might be missed in the encompassing tests => White
+Next, second loop’s control box test
+number is determined at • for data of more than two years before => alternative paths
+typical number, and first loop • “0 =< score =< 100” => code: “if 0 =< score ” and “if score =< 100”
+is tested as a simple loop.
+45 46
+48
+How to carry out efficient and sufficient test
+•First, carry out tests based on the external specifications
+•If all test cases are successful
+=> All external specifications are correctly implemented 2.5. JUNIT
+•Second, carry out tests based on the internal specifications
+•Add test cases to execute the remaining paths/flow,
+within external specifications
+•If all test cases are successful with coverage = 100%
+=> All functions specified in the external specification are
+successfully implemented without any redundant codes
+47 48
+11
+
+[Table 1 on Page 11]
+
+
+How to test for nested loops structure At first, first loop’s control number is determined at typical number, and second loop is tested as a simple loop. Next, second loop’s control number is determined at typical number, and first loop is tested as a simple loop.
+45
+
+
+How to carry out efficient and sufficient test •First, carry out tests based on the external specifications •If all test cases are successful => All external specifications are correctly implemented •Second, carry out tests based on the internal specifications •Add test cases to execute the remaining paths/flow, within external specifications •If all test cases are successful with coverage = 100% => All functions specified in the external specification are successfully implemented without any redundant codes
+47
+
+[Table 2 on Page 11]
+
+
+2.4. Combination of Black/White Box test •Advantage of Black box • Encompassing test based on external specification • Very powerful and fundamental to develop high-quality software •Advantage of White box • If any paths/flows don’t appear in the written specifications, the paths/flows might be missed in the encompassing tests => White box test • for data of more than two years before => alternative paths • “0 =< score =< 100” => code: “if 0 =< score ” and “if score =< 100”
+46
+48
+
+2.5. JUNIT
+48
+
+--- Page 12 ---
+49 50
+What is a testing framework? Why use a testing framework?
+•A test framework provides reusable test functionality which: •Each class must be tested when it is developed
+• Is easier to use (e.g. don’t have to write the same code for each •Each class needs a regression test
+class)
+•Regression tests need to have standard interfaces
+• Is standardized and reusable
+• Provides a base for regression tests
+•Thus, we can build the regression test when building the
+class and have a better, more stable product for less work
+49 50
+51 52
+Mannual testing vs. Automated testing JUnit
+•JUnit is a unit testing framework for Java programming
+Manual Testing Automated Testing
+language(junit.org)
+Taking tool support and executing the test
+Executing a test cases manually without any
+cases by using an automation tool is known •Junit test generators now part of many Java IDEs (Eclipse,
+tool support is known as manual testing.
+as automation testing. BlueJ, Jbuilder, DrJava)
+Time-consuming and tedious− Since test
+cases are executed by human resources, it is
+Fast− Automation runs test cases •Xunit tools have since been developed for many other
+very slow and tedious. significantly faster than human resources. languages (Perl, C++, Python, Visual Basic, C#, …)
+Less investment in human resources−
+Huge investment in human resources− As
+Test cases are executed using automation
+test cases need to be executed manually,
+tools, so less number of testers are required
+more testers are required in manual testing.
+in automation testing.
+Less reliable− Manual testing is less More reliable− Automation tests are precise
+reliable, as it has to account for human errors. and reliable.
+Non-programmable− No programming can Programmable− Testers can program
+be done to write sophisticated tests to fetch sophisticated tests to bring out hidden
+hidden information. information.
+51 52
+12
+
+[Table 1 on Page 12]
+49
+
+What is a testing framework? •A test framework provides reusable test functionality which: • Is easier to use (e.g. don’t have to write the same code for each class) • Is standardized and reusable • Provides a base for regression tests
+49
+51
+
+Mannual testing vs. Automated testing Manual Testing Automated Testing Taking tool support and executing the test Executing a test cases manually without any cases by using an automation tool is known tool support is known as manual testing. as automation testing. Time-consuming and tedious− Since test Fast− Automation runs test cases cases are executed by human resources, it is significantly faster than human resources. very slow and tedious. Less investment in human resources− Huge investment in human resources− As Test cases are executed using automation test cases need to be executed manually, tools, so less number of testers are required more testers are required in manual testing. in automation testing. Less reliable− Manual testing is less More reliable− Automation tests are precise reliable, as it has to account for human errors. and reliable. Non-programmable− No programming can Programmable− Testers can program be done to write sophisticated tests to fetch sophisticated tests to bring out hidden hidden information. information.
+51
+
+[Table 2 on Page 12]
+50
+
+Why use a testing framework? •Each class must be tested when it is developed •Each class needs a regression test •Regression tests need to have standard interfaces •Thus, we can build the regression test when building the class and have a better, more stable product for less work
+50
+52
+
+JUnit •JUnit is a unit testing framework for Java programming language(junit.org) •Junit test generators now part of many Java IDEs (Eclipse, BlueJ, Jbuilder, DrJava) •Xunit tools have since been developed for many other languages (Perl, C++, Python, Visual Basic, C#, …)
+52
+
+--- Page 13 ---
+54
+Architectural overview
+JUnit 3 – TestCase example (1/2)
+public class Counter {
+•JUnit test framework is a int count = 0;
+package of classes that lets
+you write tests for each public int increment() {
+method, then easily run return ++count;
+those tests
+}
+•Test Runnerruns tests and
+reports TestResults
+public int decrement() {
+•You test your class by return --count;
+extending abstract class
+}
+TestCase
+public int getCount() {
+•To write test cases, you
+return count;
+need to know and
+}
+understand the
+}
+Assertclass
+53 54
+JUnit 3 – TestCase example (2/2) Why create a test suite?
+public class CounterTest extends junit.framework.TestCase { •Obviously you have to test your code—right?
+Counter counter1;
+public CounterTest() { } // default constructor • You can do ad hoc testing (running whatever tests occur to you at
+the moment), or
+protected void setUp() { // creates a (simple) test fixture • You can build a test suite (a thorough set of tests that can be run at
+counter1 = new Counter();
+any time)
+}
+•Disadvantages of a test suite
+Note that each test begins
+pub a l s i s c e v rt o T i r d u t e e ( s c t o I u n n cr t e e m r1 e .i n n t c ( r ) e { ment() == 1); with a brand newcounter • It’s a lot of extra programming
+assertTrue(counter1.increment() == 2); • True, but use of a good test framework can help quite a bit
+} • You don’t have time to do all that extra work
+public void testDecrement() { This means you don’t • F tim al e s e m ! o E r x e p t e h r a im n e th n e ts a r m ep o e u a n t t e s d p ly e s n h t o b w ui l t d h i a n t g t e th s e t s te u s it t e s s u r i e te duce debugging
+assertTrue(counter1.decrement() == -1); have to worry about the
+} order in which the tests •Advantages of a test suite
+are run • Reduces total number of bugs in delivered code
+protected void tearDown() { } • Makes code much more maintainable and refactorable
+}
+55 56
+13
+
+[Table 1 on Page 13]
+
+
+Architectural overview •JUnit test framework is a package of classes that lets you write tests for each method, then easily run those tests •Test Runnerruns tests and reports TestResults •You test your class by extending abstract class TestCase •To write test cases, you need to know and understand the Assertclass
+53
+
+
+JUnit 3 – TestCase example (2/2) public class CounterTest extends junit.framework.TestCase { Counter counter1; public CounterTest() { } // default constructor protected void setUp() { // creates a (simple) test fixture counter1 = new Counter(); } Note that each test begins public void testIncrement() { assertTrue(counter1.increment() == 1); with a brand newcounter assertTrue(counter1.increment() == 2); } public void testDecrement() { This means you don’t assertTrue(counter1.decrement() == -1); have to worry about the } order in which the tests are run protected void tearDown() { } }
+55
+
+[Table 2 on Page 13]
+54
+
+JUnit 3 – TestCase example (1/2) public class Counter { int count = 0; public int increment() { return ++count; } public int decrement() { return --count; } public int getCount() { return count; } }
+54
+
+
+Why create a test suite? •Obviously you have to test your code—right? • You can do ad hoc testing (running whatever tests occur to you at the moment), or • You can build a test suite (a thorough set of tests that can be run at any time) •Disadvantages of a test suite • It’s a lot of extra programming • True, but use of a good test framework can help quite a bit • You don’t have time to do all that extra work • False! Experiments repeatedly show that test suites reduce debugging time more than the amount spent building the test suite •Advantages of a test suite • Reduces total number of bugs in delivered code • Makes code much more maintainable and refactorable
+56
+
+--- Page 14 ---
+58
+JUnit 3 – TestSuite JUnit 3 – Run a TestSuite
+• TestSuites collect a selection of tests to run them as a unit public class TestRunner {
+• Collections automatically use TestSuites, however to specify the order public static void main(String[] args) {
+in which tests are run, write your own:
+public class TestSuiteExample { Result result = JUnitCore.runClasses(TestSuiteExample.class);
+public static Test suite() {
+TestSuite suite = new TestSuite();
+suite.addTest(new CounterTest(“testIncrement”)); for (Failure failure : result.getFailures()) {
+suite.addTest(new CounterTest(“testDecrement”)); System.out.println(failure.toString());
+return suite;
+} }
+}
+• Can create TestSuites that test a whole package:
+public static Test suite() { System.out.println(result.wasSuccessful());
+TestSuite suite = new TestSuite(); }
+suite.addTestSuite(CounterTest.class);
+suite.addTestSuite(TestXXX.class); }
+return suite;
+}
+57 58
+59 60
+JUnit 4 – Basic example (1/4) JUnit 4 – Basic example (2/4)
+public class MessageUtil { import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+private String message;
+public class TestJunit {
+//Constructor
+//@param message to be printed String message = "Hello World";
+MessageUtil messageUtil = new MessageUtil(message);
+public MessageUtil(String message){
+this.message = message; @Test
+} public void testPrintMessage() {
+assertEquals(message, messageUtil.printMessage());
+// prints the message }
+public String printMessage(){ }
+System.out.println(message);
+return message;
+}
+}
+59 60
+14
+
+[Table 1 on Page 14]
+
+
+JUnit 3 – TestSuite • TestSuites collect a selection of tests to run them as a unit • Collections automatically use TestSuites, however to specify the order in which tests are run, write your own: public class TestSuiteExample { public static Test suite() { TestSuite suite = new TestSuite(); suite.addTest(new CounterTest(“testIncrement”)); suite.addTest(new CounterTest(“testDecrement”)); return suite; } } • Can create TestSuites that test a whole package: public static Test suite() { TestSuite suite = new TestSuite(); suite.addTestSuite(CounterTest.class); suite.addTestSuite(TestXXX.class); return suite; }
+57
+59
+
+JUnit 4 – Basic example (1/4) public class MessageUtil { private String message; //Constructor //@param message to be printed public MessageUtil(String message){ this.message = message; } // prints the message public String printMessage(){ System.out.println(message); return message; } }
+59
+
+[Table 2 on Page 14]
+58
+
+JUnit 3 – Run a TestSuite public class TestRunner { public static void main(String[] args) { Result result = JUnitCore.runClasses(TestSuiteExample.class); for (Failure failure : result.getFailures()) { System.out.println(failure.toString()); } System.out.println(result.wasSuccessful()); } }
+58
+60
+
+JUnit 4 – Basic example (2/4) import org.junit.Test; import static org.junit.Assert.assertEquals; public class TestJunit { String message = "Hello World"; MessageUtil messageUtil = new MessageUtil(message); @Test public void testPrintMessage() { assertEquals(message, messageUtil.printMessage()); } }
+60
+
+--- Page 15 ---
+61 62
+JUnit 4 – Basic example (3/4) JUnit 4 – Basic example (4/4)
+import org.junit.runner.JUnitCore; import org.junit.Test;
+import org.junit.runner.Result; import static org.junit.Assert.assertEquals;
+import org.junit.runner.notification.Failure;
+public class TestJunit {
+public class TestRunner {
+public static void main(String[] args) { String message = "Hello World";
+Result result = JUnitCore.runClasses(TestJunit.class); MessageUtil messageUtil = new MessageUtil(message);
+for (Failure failure : result.getFailures()) { @Test
+System.out.println(failure.toString()); public void testPrintMessage() {
+} message = "New Word";
+assertEquals(message,messageUtil.printMessage());
+System.out.println(result.wasSuccessful()); }
+} }
+}
+Hello World
+Hello World testPrintMessage(TestJunit): expected:<[New Wor]d> but was:<[Hello Worl]d>
+true false
+61 62
+63 64
+JUnit 4 –Another way to run the Testcase JUnit - Execution Procedure
+import org.junit.runner.RunWith; import org.junit.After;
+import org.junit.AfterClass; //execute for each test, before executing test
+import org.junit.runners.Suite; @Before
+import org.junit.Before; public void before() {
+import org.junit.BeforeClass; System.out.println("in before");
+@RunWith(Suite.class) }
+import org.junit.Ignore;
+@Suite.SuiteClasses({ import org.junit.Test; //execute for each test, after executing test
+TestJunit.class, @After
+public class ExecutionProcedureJunit { public void after() {
+YYY.class System.out.println("in after");
+}) //execute only once, in the starting }
+@BeforeClass
+public class AllTests { public static void beforeClass() { //test case 1
+// this class remains completely System.out.println("in before class"); @Test
+// empty, being used only as a } pu S b y li s c t e v m oid .o t u e t. s p tC rin a t s ln e ( 1 " ( in ) { test case 1");
+// holder for the above //execute only once, in the end }
+// annotations @ pu A bl f i t c e r s C ta la ti s c s void afterClass() { //test case 2
+} System.out.println("in after class"); @Test
+} public void testCase2() {
+System.out.println("in test case 2");
+}
+}
+63 64
+15
+
+[Table 1 on Page 15]
+61
+
+JUnit 4 – Basic example (3/4) import org.junit.runner.JUnitCore; import org.junit.runner.Result; import org.junit.runner.notification.Failure; public class TestRunner { public static void main(String[] args) { Result result = JUnitCore.runClasses(TestJunit.class); for (Failure failure : result.getFailures()) { System.out.println(failure.toString()); } System.out.println(result.wasSuccessful()); } } Hello World true
+61
+63
+
+JUnit 4 –Another way to run the Testcase import org.junit.runner.RunWith; import org.junit.runners.Suite; @RunWith(Suite.class) @Suite.SuiteClasses({ TestJunit.class, YYY.class }) public class AllTests { // this class remains completely // empty, being used only as a // holder for the above // annotations }
+63
+
+[Table 2 on Page 15]
+62
+
+JUnit 4 – Basic example (4/4) import org.junit.Test; import static org.junit.Assert.assertEquals; public class TestJunit { String message = "Hello World"; MessageUtil messageUtil = new MessageUtil(message); @Test public void testPrintMessage() { message = "New Word"; assertEquals(message,messageUtil.printMessage()); } } Hello World testPrintMessage(TestJunit): expected:<[New Wor]d> but was:<[Hello Worl]d> false
+62
+64
+
+JUnit - Execution Procedure import org.junit.After; import org.junit.AfterClass; //execute for each test, before executing test @Before import org.junit.Before; public void before() { import org.junit.BeforeClass; System.out.println("in before"); } import org.junit.Ignore; import org.junit.Test; //execute for each test, after executing test @After public class ExecutionProcedureJunit { public void after() { System.out.println("in after"); //execute only once, in the starting } @BeforeClass public static void beforeClass() { //test case 1 System.out.println("in before class"); @Test } public void testCase1() { System.out.println("in test case 1"); //execute only once, in the end } @AfterClass public static void afterClass() { //test case 2 System.out.println("in after class"); @Test } public void testCase2() { System.out.println("in test case 2"); } }
+64
+
+--- Page 16 ---
+Assert methods Assert methods
+•assertTrue(String message, Boolean test)
+•Each assert method has parameters like these: •assertFalse(String message, Boolean test)
+message, expected-value, actual-value •assertNull(String message, Object object)
+•Assert methods dealing with floating point
+•assertNotNull(String message, Object object)
+•assertEquals(String message, Object expected, Object actual)
+numbers get an additional argument, a tolerance
+(uses equals method)
+•Each assert method has an equivalent version •assertSame(String message, Object expected, Object actual)
+that does not take a message –however, this use (uses == operator)
+is not recommended because:
+•assertNotSame(String message, Object expected, Object
+actual)
+•messages helps documents the tests
+•messages provide additional information when
+reading failure logs
+65 66
+67 68
+Assert methods JUnit - Time Test
+import org.junit.Test; //Check that a condition is true
+import static org.junit.Assert.*; assertTrue(val1 < val2); import org.junit.Test;
+public class TestAssertions { / a / s C s h e e r c tF k a t l h s a e t ( v a a c l1 o n > d v it a io l2 n ) ; is false public class TimeoutTest {
+@Test
+public void testAssertions() { //Check that an object isn't null //This test will always failed :)
+//test data assertNotNull(str1); @Test(timeout = 1000)
+String str1 = new String ("abc");
+String str2 = new String ("abc"); //Check that an object is null public void infinity() {
+String str3 = null; assertNull(str3); while (true) ;
+S S t t r r i i n n g g s s t t r r 4 5 = = " " a a b b c c " " ; ; //Check if two object references point to the }
+same object
+int val1 = 5; assertSame(str4,str5); //This test can't run more than 5 seconds, else failed
+int val2 = 6; //Check if two object references not point to @Test(timeout = 5000)
+String[] expectedArray = {"one", "two", the same object public void testSlowMethod() {
+"three"}; assertNotSame(str1,str3); //...
+"th S r t e ri e n " g }; [] resultArray = {"one", "two", //Check whether two arrays are equal to }
+each other.
+//Check that two objects are equal assertArrayEquals(expectedArray, }
+assertEquals(str1, str2); resultArray);
+}
+}
+67 68
+16
+
+[Table 1 on Page 16]
+
+
+Assert methods •Each assert method has parameters like these: message, expected-value, actual-value •Assert methods dealing with floating point numbers get an additional argument, a tolerance •Each assert method has an equivalent version that does not take a message –however, this use is not recommended because: •messages helps documents the tests •messages provide additional information when reading failure logs
+65
+67
+
+Assert methods import org.junit.Test; //Check that a condition is true import static org.junit.Assert.*; assertTrue(val1 < val2); public class TestAssertions { //Check that a condition is false assertFalse(val1 > val2); @Test public void testAssertions() { //Check that an object isn't null //test data assertNotNull(str1); String str1 = new String ("abc"); String str2 = new String ("abc"); //Check that an object is null String str3 = null; assertNull(str3); String str4 = "abc"; String str5 = "abc"; //Check if two object references point to the same object int val1 = 5; assertSame(str4,str5); int val2 = 6; //Check if two object references not point to String[] expectedArray = {"one", "two", the same object "three"}; assertNotSame(str1,str3); String[] resultArray = {"one", "two", "three"}; //Check whether two arrays are equal to each other. //Check that two objects are equal assertArrayEquals(expectedArray, assertEquals(str1, str2); resultArray); } }
+67
+
+[Table 2 on Page 16]
+
+
+Assert methods •assertTrue(String message, Boolean test) •assertFalse(String message, Boolean test) •assertNull(String message, Object object) •assertNotNull(String message, Object object) •assertEquals(String message, Object expected, Object actual) (uses equals method) •assertSame(String message, Object expected, Object actual) (uses == operator) •assertNotSame(String message, Object expected, Object actual)
+66
+68
+
+JUnit - Time Test import org.junit.Test; public class TimeoutTest { //This test will always failed :) @Test(timeout = 1000) public void infinity() { while (true) ; } //This test can't run more than 5 seconds, else failed @Test(timeout = 5000) public void testSlowMethod() { //... } }
+68
+
+--- Page 17 ---
+69 70
+JUnit – Exception (1/2) JUnit – Exception (2/2)
+public class MessageUtil { import org.junit.Test; Inside testPrintMessage()
+private String message; import org.junit.Ignore; Robert
+public MessageUtil(String message){ import static org.junit.Assert.assertEquals; Inside testSalutationMessage()
+this.message = message; public class TestJunit { H t i r ! u R e obert
+}
+public void printMessage(){ String message = "Robert";
+System.out.println(message); MessageUtil messageUtil = new MessageUtil(message);
+int a = 0;
+@Test(expected = ArithmeticException.class)
+int b = 1/a; public void testPrintMessage() {
+} System.out.println("Inside testPrintMessage()");
+public String salutationMessage(){ messageUtil.printMessage();
+message = "Hi!" + message; }
+System.out.println(message);
+@Test
+return message; public void testSalutationMessage() {
+} System.out.println("Inside testSalutationMessage()");
+} message = "Hi!" + "Robert";
+assertEquals(message,messageUtil.salutationMessage());
+}
+}
+69 70
+71 72
+JUnit – Parameterized Test (1/3) JUnit – Parameterized Test (2/3)
+import java.util.*;
+public class PrimeNumberChecker { import java.util.Collection;
+import org.junit.Test;
+public Boolean validate(final Integer primeNumber) {
+import org.junit.Before;
+for (int i = 2; i < (primeNumber / 2); i++) { import org.junit.runners.*;
+import org.junit.runners.Parameterized.*
+if (primeNumber % i == 0) { import static org.junit.Assert.assertEquals;
+return false; @RunWith(Parameterized.class)
+public class PrimeNumberCheckerTest {
+} private Integer inputNumber;
+private Boolean expectedResult;
+} private PrimeNumberChecker primeNumberChecker;
+return true; @Before
+public void initialize() {
+} primeNumberChecker = new PrimeNumberChecker();
+}
+}
+public PrimeNumberCheckerTest(Integer inputNumber, Boolean expectedResult) {
+this.inputNumber = inputNumber;
+this.expectedResult = expectedResult;
+}
+71 72
+17
+
+[Table 1 on Page 17]
+69
+
+JUnit – Exception (1/2) public class MessageUtil { private String message; public MessageUtil(String message){ this.message = message; } public void printMessage(){ System.out.println(message); int a = 0; int b = 1/a; } public String salutationMessage(){ message = "Hi!" + message; System.out.println(message); return message; } }
+69
+71
+
+JUnit – Parameterized Test (1/3) public class PrimeNumberChecker { public Boolean validate(final Integer primeNumber) { for (int i = 2; i < (primeNumber / 2); i++) { if (primeNumber % i == 0) { return false; } } return true; } }
+71
+
+[Table 2 on Page 17]
+70
+
+JUnit – Exception (2/2) import org.junit.Test; Inside testPrintMessage() import org.junit.Ignore; Robert import static org.junit.Assert.assertEquals; Inside testSalutationMessage() Hi!Robert public class TestJunit { true String message = "Robert"; MessageUtil messageUtil = new MessageUtil(message); @Test(expected = ArithmeticException.class) public void testPrintMessage() { System.out.println("Inside testPrintMessage()"); messageUtil.printMessage(); } @Test public void testSalutationMessage() { System.out.println("Inside testSalutationMessage()"); message = "Hi!" + "Robert"; assertEquals(message,messageUtil.salutationMessage()); } }
+70
+72
+
+JUnit – Parameterized Test (2/3) import java.util.*; import java.util.Collection; import org.junit.Test; import org.junit.Before; import org.junit.runners.*; import org.junit.runners.Parameterized.* import static org.junit.Assert.assertEquals; @RunWith(Parameterized.class) public class PrimeNumberCheckerTest { private Integer inputNumber; private Boolean expectedResult; private PrimeNumberChecker primeNumberChecker; @Before public void initialize() { primeNumberChecker = new PrimeNumberChecker(); } public PrimeNumberCheckerTest(Integer inputNumber, Boolean expectedResult) { this.inputNumber = inputNumber; this.expectedResult = expectedResult; }
+72
+
+--- Page 18 ---
+73 74
+JUnit – Parameterized Test (3/3) JUnit – Eclipse plugin
+@Parameterized.Parameters
+public static Collection primeNumbers() {
+return Arrays.asList(new Object[][] {
+{ 2, true },
+{ 6, false },
+{ 19, true },
+{ 22, false },
+{ 23, true }
+});
+}
+// This test will run 5 times since we have 5 parameters defined
+@Test
+public void testPrimeNumberChecker() {
+System.out.println("Parameterized Number is : " + inputNumber);
+assertEquals(expectedResult,
+primeNumberChecker.validate(inputNumber));
+}
+} Parameterized Number is : 2
+Parameterized Number is : 6
+Parameterized Number is : 19
+Parameterized Number is : 22
+Parameterized Number is : 23
+true
+73 74
+75 76
+JUnit – Eclipse plugin
+75 76
+18
+
+[Table 1 on Page 18]
+73
+
+JUnit – Parameterized Test (3/3) @Parameterized.Parameters public static Collection primeNumbers() { return Arrays.asList(new Object[][] { { 2, true }, { 6, false }, { 19, true }, { 22, false }, { 23, true } }); } // This test will run 5 times since we have 5 parameters defined @Test public void testPrimeNumberChecker() { System.out.println("Parameterized Number is : " + inputNumber); assertEquals(expectedResult, primeNumberChecker.validate(inputNumber)); } } Parameterized Number is : 2 Parameterized Number is : 6 Parameterized Number is : 19 Parameterized Number is : 22 Parameterized Number is : 23 true
+73
+75
+
+
+75
+
+[Table 2 on Page 18]
+74
+
+JUnit – Eclipse plugin
+74
+76
+
+JUnit – Eclipse plugin
+76
+
+--- Page 19 ---
+77 78
+Running JUnit tests Another example –Testing RandomHello
+•There are many ways to run JUnit •“Create your first Java class with amainmethod that
+test method, test classes, and test will randomly choose, and then print to the console,
+suites
+one of five possible greetings that you define.”
+•Generally, select the method,
+•We’ll focus on the method getGreeting, which
+class or suite and Run As >> • A failure is when the
+randomly returns one of the five greetings
+JUnit Test test doesn’t pass –
+•A green bar says “all tests pass” that is, the oracle it •We’ll focus on black-box testing–we will work with
+•A red bar says at least one test computes is incorrect no knowledge of the implementation
+failed or was in error • An erroris when •And we’ll focus on unit testing using the JUnit
+something goes
+•The failure trace shows which
+wrong with the
+framework
+tests failed and why
+program that the test
+didn’t check for (e.g., •Intermixing, with any luck, slides and a demo
+a null pointer
+exception)
+77 78
+79 80
+RandomHello class Does it even run and return?
+import java.util.Random; •If getGreetingdoesn’t run and return without throwing
+an exception, it cannot meet the specification
+public class RandomHello {
+public static String[] greetings = new String[] {
+"Hello World", JUnittag “this is a test” @Test
+"Hola Mundo", name of test public void test_NoException(){
+"Bonjour Monde",
+"Hallo Welt", Run getGreeting RandomHello.getGreeting();
+"Ciao Mondo" JUnit“test passed” assertTrue(true);
+};
+(doesn’t execute if }
+public static String getGreeting() { exception thrown)
+Random randomGenerator = new Random();
+return greetings[randomGenerator.nextInt(5)]; Tests should have A unit test is a (stylized)
+} descriptive (often program! When you’re writing
+} very long) names unit tests (and many other tests),
+you’re programming!
+79 80
+19
+
+[Table 1 on Page 19]
+77
+
+Running JUnit tests •There are many ways to run JUnit test method, test classes, and test suites •Generally, select the method, class or suite and Run As >> • A failure is when the JUnit Test test doesn’t pass – •A green bar says “all tests pass” that is, the oracle it •A red bar says at least one test computes is incorrect failed or was in error • An erroris when something goes •The failure trace shows which wrong with the tests failed and why program that the test didn’t check for (e.g., a null pointer exception)
+77
+79
+
+RandomHello class import java.util.Random; public class RandomHello { public static String[] greetings = new String[] { "Hello World", "Hola Mundo", "Bonjour Monde", "Hallo Welt", "Ciao Mondo" }; public static String getGreeting() { Random randomGenerator = new Random(); return greetings[randomGenerator.nextInt(5)]; } }
+79
+
+[Table 2 on Page 19]
+78
+
+Another example –Testing RandomHello •“Create your first Java class with amainmethod that will randomly choose, and then print to the console, one of five possible greetings that you define.” •We’ll focus on the method getGreeting, which randomly returns one of the five greetings •We’ll focus on black-box testing–we will work with no knowledge of the implementation •And we’ll focus on unit testing using the JUnit framework •Intermixing, with any luck, slides and a demo
+78
+80
+
+Does it even run and return? •If getGreetingdoesn’t run and return without throwing an exception, it cannot meet the specification JUnittag “this is a test” @Test name of test public void test_NoException(){ Run getGreeting RandomHello.getGreeting(); JUnit“test passed” assertTrue(true); (doesn’t execute if } exception thrown) Tests should have A unit test is a (stylized) descriptive (often program! When you’re writing unit tests (and many other tests), very long) names you’re programming!
+80
+
+[Table 3 on Page 19]
+JUnittag “this is a test” | @Test
+name of test | public void test_NoException(){
+Run getGreeting | RandomHello.getGreeting();
+JUnit“test passed” (doesn’t execute if exception thrown) | assertTrue(true);
+ | }
+
+--- Page 20 ---
+81 82
+Don’t forget that
+Eclipse can help you
+Does it return one of the greetings? A JUnit test class
+get the right import
+statements –use
+Organize Imports
+•If it doesn’t return one of the defined greetings, it import org.junit.*;
+(Ctrl-Shift-O)
+import static org.junit.Assert.*;
+cannot satisfy the specification
+public class RandomHelloTest() {
+@Test @Test
+public void testDoes_getGreeting_returnDefinedGreeting() { public void test_ReturnDefinedGreeting() {
+String rg = RandomHello.getGreeting(); …
+for (String s : RandomHello.greetings) { }
+if (rg.equals(s)) { @Test
+assertTrue(true); public void test_EveryGreetingReturned() {
+return; …
+} }
+} … q All @Testmethods run
+fail("Returned greeting not in greetings array"); } when the test class is run
+} q That is, a JUnittest class is
+a set of tests (methods)
+that share a (class) name
+81 82
+83 84
+Does it return a random greeting? What about a sleazy developer?
+if (randomGenerator.nextInt(2) == 0) {
+@Test
+return(greetings[0]);
+public void testDoes_getGreetingNeverReturnSomeGreeting() {
+int greetingCount = RandomHello.greetings.length; } else
+int count[] = new int[greetingCount]; return(greetings[randomGenerator.nextInt(5)]);
+for (int c = 0; c < greetingCount; c++)
+Run it 100
+count[c] = 0;
+fo S r t r ( i i n n g t r i s = = 0 R ; a i n d < o m 1 H 0 e 0 l ; l o i . + g + e ) t G { reeting(); times ¨ Flip a coin and select either a random or a specific
+for (int j = 0; j < greetingCount; j++) greeting
+if (rs.equals(RandomHello.greetings[j])) If even one
+} count[j]++; greeting is ¨ The previous “is it random?” test will almost always
+never
+for (int j = 0; j < greetingCount; j++) pass given this implementation
+if (count[j] == 0) returned,
+fail(j+"th [0-4] greeting never returned"); it’s unlikely ¨ But it doesn’t satisfy the specification, since it’s not a
+assertTrue(true);
+to be
+} random choice
+random (~1-
+0.8100)
+83 84
+20
+
+[Table 1 on Page 20]
+81
+
+Does it return one of the greetings? •If it doesn’t return one of the defined greetings, it cannot satisfy the specification @Test public void testDoes_getGreeting_returnDefinedGreeting() { String rg = RandomHello.getGreeting(); for (String s : RandomHello.greetings) { if (rg.equals(s)) { assertTrue(true); return; } } fail("Returned greeting not in greetings array"); }
+81
+83
+
+Does it return a random greeting? @Test public void testDoes_getGreetingNeverReturnSomeGreeting() { int greetingCount = RandomHello.greetings.length; int count[] = new int[greetingCount]; for (int c = 0; c < greetingCount; c++) Run it 100 count[c] = 0; for (int i = 0; i < 100; i++) { times String rs = RandomHello.getGreeting(); for (int j = 0; j < greetingCount; j++) if (rs.equals(RandomHello.greetings[j])) If even one count[j]++; greeting is } never for (int j = 0; j < greetingCount; j++) if (count[j] == 0) returned, fail(j+"th [0-4] greeting never returned"); it’s unlikely assertTrue(true); to be } random (~1- 0.8100)
+83
+
+[Table 2 on Page 20]
+82
+
+Don’t forget that Eclipse can help you A JUnit test class get the right import statements –use Organize Imports import org.junit.*; (Ctrl-Shift-O) import static org.junit.Assert.*; public class RandomHelloTest() { @Test public void test_ReturnDefinedGreeting() { … } @Test public void test_EveryGreetingReturned() { … } … q All @Testmethods run } when the test class is run q That is, a JUnittest class is a set of tests (methods) that share a (class) name
+82
+84
+
+What about a sleazy developer? if (randomGenerator.nextInt(2) == 0) { return(greetings[0]); } else return(greetings[randomGenerator.nextInt(5)]); ¨ Flip a coin and select either a random or a specific greeting ¨ The previous “is it random?” test will almost always pass given this implementation ¨ But it doesn’t satisfy the specification, since it’s not a random choice
+84
+
+[Table 3 on Page 20]
+q All @Testmethods run when the test class is run q That is, a JUnittest class is
+a set of tests (methods) that share a (class) name
+
+--- Page 21 ---
+85 86
+Instead: Use simple statistics A JUnit test suite
+@Test import org.junit.runner.RunWith; q Define one suite for each
+public void test_UniformGreetingDistribution() { import org.junit.runners.Suite; program (for now)
+// …count frequencies of messages returned, as in q The suite allows multiple test
+// …previous test (test_EveryGreetingReturned)
+@RunWith(Suite.class) classes –each of which has its
+@Suite.SuiteClasses({ own set of @Testmethods –to
+float chiSquared = 0f; RandomHelloTest.class, be defined and run together
+float expected = 20f; SleazyRandomHelloTest.class q Add tc.classto the
+for (int i = 0; i < greetingCount; i++)
+}) @Suite.SuiteClasses
+chiSquared = chiSquared + annotation if you add a new
+( ( ( c c o o u u n n t t [ [ i i ] ]- - e e x x p p e e c c t t e e d d ) ) * ) pu / b / l i t c h i c s l a c s l s a s A s l l r T e e m s a t i s n s { completely q t S e o s , t a c la JU ss n i n t a t m es e t d s u t it c e is a set of
+// empty, being used only as a
+/expected; test classes (which makes it a set
+if (chiSquared > 13.277) // df 4, pvalue .01 // holder for the above of a set of test methods)
+fail("Too much variance"); // annotations
+}
+}
+85 86
+87 88
+ArrayIntList: example tests A few hints: data structures
+@Test @Test •Need to pass lots of arrays? Use array literals
+public void testAddGet1() { public void testIsEmpty() {
+public void exampleMethod(int[] values) { ... }
+ArrayIntList list = new ArrayIntList list = new
+ArrayIntList(); ArrayIntList(); ...
+list.add(42); assertTrue(list.isEmpty()); exampleMethod(new int[] {1, 2, 3, 4});
+list.add(-3); list.add(123);
+exampleMethod(new int[] {5, 6, 7});
+list.add(15); assertFalse(list.isEmpty());
+assertEquals(42, list.get(0)); list.remove(0);
+assertEquals(-3, list.get(1)); assertTrue(list.isEmpty());
+•Need a quick ArrayList?
+assertEquals(15, list.get(2)); }
+} List<Integer> list = Arrays.asList(7, 4, -2, 3, 9, 18);
+¨ High-level concept: test behaviors in combination •Need a quick set, queue, etc.? Many take a list
+Set<Integer> list = new HashSet<Integer>(
+¨ Maybe add works when called once, but not when call twice
+Arrays.asList(7, 4, -2, 9));
+¨ Maybe addworks by itself, but fails (or causes a failure) after
+calling remove
+87 88
+21
+
+[Table 1 on Page 21]
+85
+
+Instead: Use simple statistics @Test public void test_UniformGreetingDistribution() { // …count frequencies of messages returned, as in // …previous test (test_EveryGreetingReturned) float chiSquared = 0f; float expected = 20f; for (int i = 0; i < greetingCount; i++) chiSquared = chiSquared + ((count[i]-expected)* (count[i]-expected)) /expected; if (chiSquared > 13.277) // df 4, pvalue .01 fail("Too much variance"); }
+85
+87
+
+ArrayIntList: example tests @Test @Test public void testAddGet1() { public void testIsEmpty() { ArrayIntList list = new ArrayIntList list = new ArrayIntList(); ArrayIntList(); list.add(42); assertTrue(list.isEmpty()); list.add(-3); list.add(123); list.add(15); assertFalse(list.isEmpty()); assertEquals(42, list.get(0)); list.remove(0); assertEquals(-3, list.get(1)); assertTrue(list.isEmpty()); assertEquals(15, list.get(2)); } } ¨ High-level concept: test behaviors in combination ¨ Maybe add works when called once, but not when call twice ¨ Maybe addworks by itself, but fails (or causes a failure) after calling remove
+87
+
+[Table 2 on Page 21]
+86
+
+A JUnit test suite import org.junit.runner.RunWith; q Define one suite for each import org.junit.runners.Suite; program (for now) q The suite allows multiple test @RunWith(Suite.class) classes –each of which has its @Suite.SuiteClasses({ own set of @Testmethods –to RandomHelloTest.class, be defined and run together SleazyRandomHelloTest.class q Add tc.classto the }) @Suite.SuiteClasses annotation if you add a new public class AllTests { // this class remains completely test class named tc q So, a JUnittest suite is a set of // empty, being used only as a test classes (which makes it a set // holder for the above of a set of test methods) // annotations }
+86
+88
+
+A few hints: data structures •Need to pass lots of arrays? Use array literals public void exampleMethod(int[] values) { ... } ... exampleMethod(new int[] {1, 2, 3, 4}); exampleMethod(new int[] {5, 6, 7}); •Need a quick ArrayList? List<Integer> list = Arrays.asList(7, 4, -2, 3, 9, 18); •Need a quick set, queue, etc.? Many take a list Set<Integer> list = new HashSet<Integer>( Arrays.asList(7, 4, -2, 9));
+88
+
+--- Page 22 ---
+89 90
+A few general hints Test case dangers
+•Test one thing at a time per test method •Dependent test order
+• 10 small tests are much better than one large test •If running Test A before Test B gives different results from
+•Be stingy with assertstatements running Test B then Test A, then something is likely confusing
+and should be made explicit
+• The first assertthat fails stops the test –provides no
+information about whether a later assertion would have failed •Mutable shared state
+•Be stingy with logic •Tests A and B both use a shared object –if A breaks the
+• Avoid try/catch–if it’s supposed to throw an exception, use object, what happens to B?
+expected=... if not, let JUnit catch it •This is a form of dependent test order
+•We will explicitly talk about invariants over data
+representations and testing if the invariants are ever broken
+89 90
+91 92
+Content 3. Integration Test
+1. Testing overview •Integration testing is a logical extension of unit testing
+2. Unit Test
+3. Integration Test
+91 92
+22
+
+[Table 1 on Page 22]
+89
+
+A few general hints •Test one thing at a time per test method • 10 small tests are much better than one large test •Be stingy with assertstatements • The first assertthat fails stops the test –provides no information about whether a later assertion would have failed •Be stingy with logic • Avoid try/catch–if it’s supposed to throw an exception, use expected=... if not, let JUnit catch it
+89
+91
+
+Content 1. Testing overview 2. Unit Test 3. Integration Test
+91
+
+[Table 2 on Page 22]
+90
+
+Test case dangers •Dependent test order •If running Test A before Test B gives different results from running Test B then Test A, then something is likely confusing and should be made explicit •Mutable shared state •Tests A and B both use a shared object –if A breaks the object, what happens to B? •This is a form of dependent test order •We will explicitly talk about invariants over data representations and testing if the invariants are ever broken
+90
+92
+
+3. Integration Test •Integration testing is a logical extension of unit testing
+92
+
+--- Page 23 ---
+93 94
+Stubs and Drivers in Integration testing Integration testing types
+•Stubs •2 groups:
+• are dummy modules that are always distinguish as "called • Incremental software integration: Top-Down, Bottom-Up, Sandwich
+programs“ testing
+• used when sub programs are under construction. • Non Incremental software integration: Big bang integration
+• simulate the low level modules approach
+•Drivers
+• dummy modules which are always distinguished as "calling
+programs”
+• used when main programs are under construction
+• simulate the high level modules
+93 94
+95 96
+3.1. Top-down approach 3.1. Top-down approach
+•Defects based on misunderstanding of specification can be
+detected early
+•Effective in newly developed systems
+•Need test stubs (can be simply
+returning a value)
+95 96
+23
+
+[Table 1 on Page 23]
+93
+
+Stubs and Drivers in Integration testing •Stubs • are dummy modules that are always distinguish as "called programs“ • used when sub programs are under construction. • simulate the low level modules •Drivers • dummy modules which are always distinguished as "calling programs” • used when main programs are under construction • simulate the high level modules
+93
+95
+
+3.1. Top-down approach •Defects based on misunderstanding of specification can be detected early •Effective in newly developed systems •Need test stubs (can be simply returning a value)
+95
+
+[Table 2 on Page 23]
+94
+
+Integration testing types •2 groups: • Incremental software integration: Top-Down, Bottom-Up, Sandwich testing • Non Incremental software integration: Big bang integration approach
+94
+96
+
+3.1. Top-down approach
+96
+
+--- Page 24 ---
+97 98
+3.2. Bottom-up approach 3.3. Other integration test techniques
+•Lower modules are independent => test independently and •Sandwich test
+on a parallel
+•Where lower-level modules are tested bottom-up and
+•Effective in developing systems by modifying existing higher-level modules are tested top-down
+systems
+•Need test drivers (more complex with controlling)
+•Big-bang test
+•Wherein all the modules that have completed the unit
+tests are linked all at once and tested
+•Reducing the number of testing procedures in small-
+scale program; but not easy to locate errors
+97 98
+99
+3.4. Regression test
+“When you fix one bug, you introduce several new bugs”
+•Re-testing an application after its code has been modified
+to verify that it still functions correctly
+• Re-running existing test cases
+• Checking that code changes did not break any previously working
+functions (side-effect)
+•Run as often as possible
+•With an automated regression testing tool
+99 100
+24
+
+[Table 1 on Page 24]
+97
+
+3.2. Bottom-up approach •Lower modules are independent => test independently and on a parallel •Effective in developing systems by modifying existing systems •Need test drivers (more complex with controlling)
+97
+99
+
+3.4. Regression test “When you fix one bug, you introduce several new bugs” •Re-testing an application after its code has been modified to verify that it still functions correctly • Re-running existing test cases • Checking that code changes did not break any previously working functions (side-effect) •Run as often as possible •With an automated regression testing tool
+99
+
+[Table 2 on Page 24]
+98
+
+3.3. Other integration test techniques •Sandwich test •Where lower-level modules are tested bottom-up and higher-level modules are tested top-down •Big-bang test •Wherein all the modules that have completed the unit tests are linked all at once and tested •Reducing the number of testing procedures in small- scale program; but not easy to locate errors
+98
+
+
+
+100

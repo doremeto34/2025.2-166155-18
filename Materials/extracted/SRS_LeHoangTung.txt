@@ -1,0 +1,134 @@
+HW2
+ Phân tích yêu cầu
+Nhóm18
+Lê Hoàng Tùng - UC16 — Xem đơn hàng BPĐHQT
+
+
+Biểu đồ Use case
+
+Biểu đồ Use case phân rã
+Đặc tả Use case
+
+Use case “Xem đơn hàng BPĐHQT”
+
+Mã Use case | UC16 | Tên Usecase | Xem đơn hàng BPĐHQT
+Tác nhân | Bộ phận đặt hàng quốc tế | Bộ phận đặt hàng quốc tế | Bộ phận đặt hàng quốc tế
+Tiền điều kiện | Người dùng đã đăng nhập vào hệ thống; mặt hàng tồn tại trong danh mục mặt hàng | Người dùng đã đăng nhập vào hệ thống; mặt hàng tồn tại trong danh mục mặt hàng | Người dùng đã đăng nhập vào hệ thống; mặt hàng tồn tại trong danh mục mặt hàng
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Hệ thống hiển thị thông tin chi tiết của mặt hàng được chọn để người dùng tham khảo; không làm thay đổi dữ liệu trong hệ thống | Hệ thống hiển thị thông tin chi tiết của mặt hàng được chọn để người dùng tham khảo; không làm thay đổi dữ liệu trong hệ thống | Hệ thống hiển thị thông tin chi tiết của mặt hàng được chọn để người dùng tham khảo; không làm thay đổi dữ liệu trong hệ thống
+
+
+* Dữ liệu đầu vào của thông tin cá nhân gồm các trường dữ liệu sau:
+STT | Trường    dữ liệu | Mô tả | Bắt buộc? | Điều kiện hợp lệ | Ví dụ
+1. | Mã mặt hàng | Mã định danh của mặt hàng cần xem | Có | Tồn tại trong hệ thống | MH001
+2. | Tên mặt hàng | Tên của mặt hàng | Không | Có thể dùng để tìm kiếm | Máy in HP
+3. | Site | Site cung cấp mặt hàng | Không | Tồn tại trong danh sách Site | Site JP01
+4. | Từ khóa tìm kiếm | Từ khóa hỗ trợ tìm kiếm mặt hàng | Không | Không vượt quá giới hạn ký tự | Máy in
+5. | Bộ lọc | Điều kiện lọc danh sách mặt hàng | Không | Hợp lệ theo hệ thống | Theo Site
+
+Activity Diagram
+
+
+
+Từ điển thuật ngữ
+Introduction to Glossary…
+Course
+…
+Credit
+…
+Đặc tả phụ trợ
+Chức năng
+Cxxx
+Hiệu năng
+Xxxx
+Độ tin cậy
+… 
+
+
+HW3
+Sequence Diagram
+
+Communication Diagram
+
+
+
+
+
+
+
+
+Class Diagram
+
+HW4
+Sơ đồ chuyển màn hình
+Home / Dashboard OrderListScreen OrderDetailScreen 
+
+Màn hình Danh sách đơn hàng
+
+
+
+Đặc tả 
+
+STT | Thành phần | Loại | Mô tả
+1 | Import Orders Menu | Navigation Item | Chức năng chuyển đến màn hình danh sách các đơn nhập khẩu đã gửi tới các Site cung ứng.
+2 | Page Title | Header Text | Hiển thị tiêu đề màn hình “Import Orders”.
+3 | Page Description | Description Text | Hiển thị mô tả “Track orders sent to supplier sites”.
+4 | Search Orders | Search Box | Ô tìm kiếm đơn nhập khẩu theo Order ID, Site hoặc trạng thái đơn hàng.
+5 | Create Import Order | Primary Button | Nút chuyển sang màn hình tạo đơn nhập khẩu mới.
+6 | Import Order Table | Data Table | Bảng hiển thị danh sách các đơn nhập khẩu trong hệ thống.
+7 | Order ID | Data Column | Hiển thị mã định danh của đơn nhập khẩu.
+8 | Site | Data Column | Hiển thị tên Site/kho cung ứng của đơn nhập khẩu.
+9 | Items | Data Column | Hiển thị số lượng loại mặt hàng trong đơn nhập khẩu.
+10 | Total Price | Data Column | Hiển thị tổng giá trị đơn nhập khẩu theo đơn vị USD.
+11 | Transport | Data Column | Hiển thị phương thức vận chuyển: Air, Sea hoặc Rail, kèm biểu tượng nhận diện.
+12 | Status | Badge Label | Hiển thị trạng thái đơn nhập khẩu bằng badge màu sắc: pending, shipped, delivered, cancelled.
+13 | Est. Arrival | Data Column | Hiển thị ngày dự kiến hàng đến.
+14 | Actions | Action Column | Cột chứa thao tác với từng đơn nhập khẩu.
+15 | View Details | Action Button | Cho phép xem chi tiết đơn nhập khẩu. Khi nhấn sẽ chuyển sang màn hình ImportOrderDetailsScreen.
+16 | Empty Result Message | Notification Message | Hiển thị thông báo khi không tìm thấy đơn nhập khẩu phù hợp với điều kiện tìm kiếm.
+
+
+
+
+
+Màn hình Chi tiết đơn hàng
+
+Đặc tả
+
+STT | Thành phần | Loại | Mô tả
+1 | Back to Import Orders | Navigation Button | Quay lại màn hình danh sách đơn nhập khẩu ImportOrdersScreen.
+2 | Page Title | Header Text | Hiển thị tiêu đề màn hình “Import Order Details”.
+3 | Order ID | Label Text | Hiển thị mã định danh của đơn nhập khẩu hiện tại.
+4 | Order Status | Badge Label | Hiển thị trạng thái hiện tại của đơn nhập khẩu, ví dụ: cancelled.
+5 | Reallocate Order | Action Button | Cho phép phân bổ lại đơn nhập khẩu nếu đơn bị hủy hoặc cần xử lý lại.
+6 | Site Information | Information Card | Khu vực hiển thị thông tin Site cung ứng của đơn nhập khẩu.
+7 | Site Name | Data Label | Hiển thị tên Site/kho cung ứng, ví dụ: Beijing Warehouse.
+8 | Transport Method | Information Card | Khu vực hiển thị phương thức vận chuyển của đơn nhập khẩu.
+9 | Method | Data Label | Hiển thị phương thức vận chuyển, ví dụ: Air.
+10 | Estimated Arrival | Information Card | Khu vực hiển thị thời gian dự kiến hàng đến.
+11 | Date | DateTime Label | Hiển thị ngày và giờ dự kiến hàng đến, ví dụ: May 11, 2026 at 09:35 AM.
+12 | Order Items | Data Table | Bảng hiển thị danh sách các mặt hàng trong đơn nhập khẩu.
+13 | Item Name | Data Column | Hiển thị tên mặt hàng trong đơn nhập khẩu.
+14 | Item ID | Data Column | Hiển thị mã định danh của mặt hàng.
+15 | Quantity | Data Column | Hiển thị số lượng của từng mặt hàng.
+16 | Unit Price | Data Column | Hiển thị đơn giá của từng mặt hàng theo USD.
+17 | Total | Data Column | Hiển thị tổng giá trị của từng mặt hàng.
+18 | Total Amount | Currency Label | Hiển thị tổng giá trị của toàn bộ đơn nhập khẩu.
+19 | Order Timeline | Timeline Section | Hiển thị lịch sử trạng thái của đơn nhập khẩu, ví dụ: thời điểm đơn được tạo.
+20 | Error Message | Notification Message | Hiển thị thông báo lỗi nếu không thể tải chi tiết đơn nhập khẩu.
+21 | Partial Data Warning | Warning Message | Hiển thị cảnh báo nếu thông tin đơn nhập khẩu chưa đầy đủ hoặc chưa được cập nhật.
+
+
+Subsystem
+
+HW5
+Sequence Diagram
+
+
+
+
+Class Diagram
+
+Biểu đồ phụ thuộc gói

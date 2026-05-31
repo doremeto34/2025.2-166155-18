@@ -1,0 +1,434 @@
+=== Extracted from: 07-Identify Design Elements.pdf ===
+=== Total pages: 5 ===
+
+--- Page 1 ---
+1
+Objectives: Identify Design Elements
+•Define the purpose of Identify Design Elements
+and demonstrate where in the lifecycle it is
+IT4490 -SOFTWARE DESIGN AND CONSTRUCTION
+performed
+7. IDENTIFY DESIGN ELEMENTS
+•Analyze interactions of analysis classes and
+identify Design Model elements => Design
+classes
+Some slides extracted from IBM coursewares
+1 2
+Identify Design Elements in Context Identify Design Elements Overview
+[Early
+Elaboration [Inception
+Iteration] Iteration (Optional)]
+Define a Candidate Perform
+Architecture Architectural
+Synthesis Software Project Specific
+Architecture Guidelines
+Document
+Supplementary
+Analyze Behavior Specifications
+Id E e le n m tif e y n D ts esign Architect A R rc e h fi i n te e c t t h u e re (Optional) Identify
+Design
+Elements
+Design Design the
+Components Database
+Design Model
+Analysis Model
+3 4
+Page 1
+1
+
+[Table 1 on Page 1]
+1
+
+IT4490 -SOFTWARE DESIGN AND CONSTRUCTION 7. IDENTIFY DESIGN ELEMENTS Some slides extracted from IBM coursewares
+1
+
+
+Identify Design Elements in Context [Early Elaboration [Inception Iteration] Iteration (Optional)] Define a Candidate Perform Architecture Architectural Synthesis Analyze Behavior Id E e le n m tif e y n D ts esign Architect A R rc e h fi i n te e c t t h u e re (Optional) Design Design the Components Database
+3
+
+[Table 2 on Page 1]
+
+
+Objectives: Identify Design Elements •Define the purpose of Identify Design Elements and demonstrate where in the lifecycle it is performed •Analyze interactions of analysis classes and identify Design Model elements => Design classes
+2
+
+
+Identify Design Elements Overview Software Project Specific Architecture Guidelines Document Supplementary Specifications Identify Design Elements Design Model Analysis Model
+4
+
+[Table 3 on Page 1]
+ | 
+
+[Table 4 on Page 1]
+ | 
+
+--- Page 2 ---
+From Analysis Classes to Design Elements
+Identifying Design Classes
+Analysis Classes Design Elements
+<<boundary>> •An analysis class maps directly
+to a design class if:
+•It is a simple class
+<<control>>
+<<subsystem>> •It represents a single logical abstraction
+Subsystem
+•More complex analysis classes may
+<<entity>> •Split into multiple classes
+•Become a package
+•Become a subsystem (discussed later)
+<<boundary>> •Any combination …
+<<subsystem>>
+Subsystem
+Many-to-Many Mapping
+5 6
+Review: Class and Package Group Design Classes in Packages
+•What is a class? •You can base your packaging criteria on a
+•A description of a set of objects that share the same number of different factors, including:
+responsibilities, relationships, operations, attributes, and •Configuration units
+semantics
+Class Name •Allocation of resources among development teams
+•Reflect the user types
+•What is a package? •Represent the existing products Package C
+•A general purpose mechanism for organizing elements and services the system uses
+into groups Package B
+Package A
+•A model element which can contain other model
+elements
+Package
+Name
+7 8
+Page 2
+2
+
+[Table 1 on Page 2]
+
+
+From Analysis Classes to Design Elements Analysis Classes Design Elements <<boundary>> <<control>> <<subsystem>> Subsystem <<entity>> <<boundary>> <<subsystem>> Subsystem Many-to-Many Mapping
+5
+
+
+Review: Class and Package •What is a class? •A description of a set of objects that share the same responsibilities, relationships, operations, attributes, and semantics Class Name •What is a package? •A general purpose mechanism for organizing elements into groups •A model element which can contain other model elements Package Name
+7
+
+[Table 2 on Page 2]
+
+
+Identifying Design Classes •An analysis class maps directly to a design class if: •It is a simple class •It represents a single logical abstraction •More complex analysis classes may •Split into multiple classes •Become a package •Become a subsystem (discussed later) •Any combination …
+6
+
+
+Group Design Classes in Packages •You can base your packaging criteria on a number of different factors, including: •Configuration units •Allocation of resources among development teams •Reflect the user types •Represent the existing products Package C and services the system uses Package B Package A
+8
+
+[Table 3 on Page 2]
+<<boundary>> |  |  | 
+ |  |  | 
+ | <<co | ntr | ol>>
+
+[Table 4 on Page 2]
+
+
+
+[Table 5 on Page 2]
+Class Name
+
+
+[Table 6 on Page 2]
+ | 
+Package C | 
+ | 
+ | 
+
+[Table 7 on Page 2]
+ | 
+Package A | 
+
+[Table 8 on Page 2]
+
+Package Name
+
+--- Page 3 ---
+Packaging Tips: Boundary Classes Packaging Tips:
+Functionally Related Classes
+If it is likelythe system interface If it is unlikelythe system
+will undergo considerable interface will undergo •Criteria for determining if classes are functionally
+changes considerable changes related:
+•Changes in one class' behavior and/or structure
+necessitate changes in another class
+•Removal of one class impacts the other class
+•Two objects interact with a large number of messages
+or have a complex intercommunication
+•A boundary class can be functionally related to a
+particular entity class if the function of the boundary
+class is to present the entity class
+•Two classes interact with, or are affected by changes in
+Boundary classes placed in Boundary classes packaged
+the same actor
+separate packages with functionally related classes
+9 10
+Packaging Tips:
+Package Dependencies: Package Element Visibility
+Functionally Related Classes (continued)
+PackageA
+•Criteria for determining if classes are functionally A
++ Class A1
+related (continued):
++ Class A2
+•Two classes have relationships between each other
++ Class A3
+•One class creates instances of another class
+•Criteria for determining when two classes should B Only public classes
+NOTbe placed in the same package: can be referenced
+PackageB
+outside of the
+•Two classes that are related to different actors should owning package
+not be placed in the same package Public visibility + Class B1
+-Class B2
+•An optional and a mandatory class should not be placed Private visibility
+in the same package
+OO Principle: Encapsulation
+11 12
+Page 3
+3
+
+[Table 1 on Page 3]
+
+
+Packaging Tips: Boundary Classes If it is likelythe system interface If it is unlikelythe system will undergo considerable interface will undergo changes considerable changes Boundary classes placed in Boundary classes packaged separate packages with functionally related classes
+9
+
+
+Packaging Tips: Functionally Related Classes (continued) •Criteria for determining if classes are functionally related (continued): •Two classes have relationships between each other •One class creates instances of another class •Criteria for determining when two classes should NOTbe placed in the same package: •Two classes that are related to different actors should not be placed in the same package •An optional and a mandatory class should not be placed in the same package
+11
+
+[Table 2 on Page 3]
+
+
+Packaging Tips: Functionally Related Classes •Criteria for determining if classes are functionally related: •Changes in one class' behavior and/or structure necessitate changes in another class •Removal of one class impacts the other class •Two objects interact with a large number of messages or have a complex intercommunication •A boundary class can be functionally related to a particular entity class if the function of the boundary class is to present the entity class •Two classes interact with, or are affected by changes in the same actor
+10
+
+
+Package Dependencies: Package Element Visibility PackageA A + Class A1 + Class A2 + Class A3 B Only public classes can be referenced PackageB outside of the owning package Public visibility + Class B1 -Class B2 Private visibility OO Principle: Encapsulation
+12
+
+[Table 3 on Page 3]
+
+
+
+[Table 4 on Page 3]
+
+
+
+[Table 5 on Page 3]
+
+
+
+[Table 6 on Page 3]
+
+
+
+[Table 7 on Page 3]
+
+
+
+[Table 8 on Page 3]
+PackageA
++ Class A1 + Class A2 + Class A3
+
+[Table 9 on Page 3]
+
+A
+
+[Table 10 on Page 3]
+ | + Class A2
+ | 
++ Class A3 | 
+ | 
+
+[Table 11 on Page 3]
+
+B
+
+[Table 12 on Page 3]
+PackageB
++ Class B1 -Class B2
+
+--- Page 4 ---
+Package Coupling: Tips
+Example: Registration Package
+•Packages should not be A X B MainStudentForm MainRegistrarForm
+cross-coupled
+1 1
+A
+•Packages in lower layers Upper 0..1 0..1
+Layer
+should not be dependent <<boundary>> <<boundary>>
+X RegisterForCoursesForm CloseRegistrationForm
+upon packages in upper X
+Lower
+layers Layer B 1
+1 1
+<<control>> <<control>>
+•In general, dependencies RegistrationController CloseRegistrationController
+should not skip layers C
+X = Coupling violation
+13 14
+Example: University Artifacts Package: Example: University Artifacts Package:
+Generalization Associations
+<<entity>>
+<<entity>> Schedule
+Student 1 0..*
+<<entity>> <<entity>>
+Student ScheduleOfferingInfo 0..* 0..*
+primaryCourses alternateCourses
+0..2
+0..4
+<<entity>> instructor <<entity>> <<entity>> 0..*
+<<entity>> <<entity>> <<entity>> Professor CourseOffering Course 0..*
+FulltimeStudent ParttimeStudent PrimaryScheduleOfferingInfo 0..1 0..* 0..* 1 Prerequisites
+0..*
+1
+CourseOfferingList
+15 16
+Page 4
+4
+
+[Table 1 on Page 4]
+
+
+Package Coupling: Tips •Packages should not be A X B cross-coupled A Upper •Packages in lower layers Layer should not be dependent X upon packages in upper X Lower layers B Layer •In general, dependencies should not skip layers C X = Coupling violation
+13
+
+
+Example: University Artifacts Package: Generalization <<entity>> <<entity>> Student ScheduleOfferingInfo <<entity>> <<entity>> <<entity>> FulltimeStudent ParttimeStudent PrimaryScheduleOfferingInfo
+15
+
+[Table 2 on Page 4]
+
+
+Example: Registration Package MainStudentForm MainRegistrarForm 1 1 0..1 0..1 <<boundary>> <<boundary>> RegisterForCoursesForm CloseRegistrationForm 1 1 1 <<control>> <<control>> RegistrationController CloseRegistrationController
+14
+
+
+Example: University Artifacts Package: Associations <<entity>> <<entity>> Schedule Student 1 0..* 0..* 0..* primaryCourses alternateCourses 0..2 0..4 <<entity>> instructor <<entity>> <<entity>> 0..* Professor CourseOffering Course 0..* 0..1 0..* 0..* 1 Prerequisites 0..* 1 CourseOfferingList
+16
+
+[Table 3 on Page 4]
+
+A
+
+[Table 4 on Page 4]
+
+B
+
+[Table 5 on Page 4]
+MainStudentForm
+
+
+
+[Table 6 on Page 4]
+MainRegistrarForm
+
+
+
+[Table 7 on Page 4]
+
+A
+
+[Table 8 on Page 4]
+<<boundary>> RegisterForCoursesForm
+
+
+
+[Table 9 on Page 4]
+<<boundary>> CloseRegistrationForm
+
+
+
+[Table 10 on Page 4]
+
+B
+
+[Table 11 on Page 4]
+<<control>> RegistrationController
+
+
+[Table 12 on Page 4]
+<<control>> CloseRegistrationController
+
+
+[Table 13 on Page 4]
+
+C
+
+[Table 14 on Page 4]
+<entity>>
+Schedule
+
+
+
+[Table 15 on Page 4]
+<<entity>> ScheduleOfferingInfo
+
+
+
+[Table 16 on Page 4]
+<<entity>> Professor
+
+
+
+[Table 17 on Page 4]
+<<entity>> CourseOffering
+
+
+
+[Table 18 on Page 4]
+<<entity>> Course
+
+
+
+[Table 19 on Page 4]
+<<entity>> FulltimeStudent
+
+
+
+[Table 20 on Page 4]
+<<entity>> ParttimeStudent
+
+
+
+[Table 21 on Page 4]
+<<entity>> PrimaryScheduleOfferingInfo
+
+
+
+[Table 22 on Page 4]
+CourseOfferingList
+
+
+
+--- Page 5 ---
+Example: External System Interfaces
+Package
+<<Interface>> <<Interface>>
+IBillingSystem ICourseCatalogSystem
+17
+Page 5
+5
+
+[Table 1 on Page 5]
+
+
+Example: External System Interfaces Package <<Interface>> <<Interface>> IBillingSystem ICourseCatalogSystem
+17
+
+[Table 2 on Page 5]
+ | <<Interface>> | 
+ | IBillingSystem | 
+ |  | 
+ |  | 
+
+[Table 3 on Page 5]
+<<Interface>> ICourseCatalogSystem
+
+

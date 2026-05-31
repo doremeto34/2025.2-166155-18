@@ -1,0 +1,98 @@
+HW2
+Phân tích yêu cầu
+Nhóm18
+
+-        Nguyễn Thiện Nam - UC29 - Xem đơn hàng Site
+1        Biểu đồ Use case
+
+
+Biểu đồ Use case phân rã
+
+2        Đặc tả Use case
+ 
+2.1   Use case “Xử lý đơn hàng hủy”
+Mã Use case | UC29 | Tên Usecase | Xem đơn hàng Site
+Tác nhân | Site nhập khẩu | Site nhập khẩu | Site nhập khẩu
+Tiền điều kiện | Site đã đăng nhập hệ thống
+Có ít nhất 1 đơn hàng được gửi đến Site | Site đã đăng nhập hệ thống
+Có ít nhất 1 đơn hàng được gửi đến Site | Site đã đăng nhập hệ thống
+Có ít nhất 1 đơn hàng được gửi đến Site
+Luồng sự kiện chính
+(Thành công) |  |  | 
+Luồng sự kiện thay thế |  |  | 
+Hậu điều kiện | Thông tin chi tiết đơn hàng được hiển thị
+Không làm thay đổi dữ liệu hệ thống | Thông tin chi tiết đơn hàng được hiển thị
+Không làm thay đổi dữ liệu hệ thống | Thông tin chi tiết đơn hàng được hiển thị
+Không làm thay đổi dữ liệu hệ thống
+
+ 
+Activity Diagram
+
+ 
+ 
+
+ 
+3        Từ điển thuật ngữ
+Introduction to Glossary…
+3.1       Course
+…
+3.2       Credit
+…
+4        Đặc tả phụ trợ
+4.1       Chức năng
+Cxxx
+4.2       Hiệu năng
+Xxxx
+4.3       Độ tin cậy
+…
+ 
+
+
+
+
+HW3
+Sequence Diagram
+
+
+Class Diagram
+
+HW4
+Sơ đồ chuyển màn hình
+
+
+
+
+
+
+
+
+
+
+
+
+
+Đặc tả
+STT | Tên mục | Phân loại | Giải thích chi tiết
+1 | Search items... | Input Field | Cho phép người dùng tìm kiếm nhanh các mặt hàng theo tên hoặc mã sản phẩm.
+2 | All Categories | Dropdown | Bộ lọc sản phẩm theo danh mục (ví dụ: Electronics, Furniture) để thu hẹp phạm vi tìm kiếm.
+3 | Item Card | Container | Mỗi thẻ đại diện cho một sản phẩm trong kho, hiển thị đầy đủ: Tên, Mã (SKU), Phân loại, Mô tả ngắn và Ảnh minh họa.
+4 | Item Name & Description | Label | Hiển thị tên sản phẩm (ví dụ: Laptop Computer) và mô tả đặc tính (ví dụ: High-performance laptop).
+5 | SKU Badge | Label | Mã định danh kỹ thuật của sản phẩm trong hệ thống (ví dụ: TECH-001, FURN-001).
+6 | Category Tag | Label | Nhãn phân loại sản phẩm, được mã hóa màu để phân biệt (Đen/Xanh cho Electronics, Đen cho Furniture).
+7 | Qty | Input Number | Ô nhập số lượng cần nhập cho mặt hàng tương ứng trước khi thêm vào danh sách chờ.
+8 | Add Button | Button | Nút xác nhận thêm mặt hàng với số lượng đã nhập vào danh sách phân bổ. Khi nhấn sẽ kích hoạt method khoiTao() trong thiết kế của bạn.
+9 | Close | Button | Nút đóng popup để quay lại màn hình chính mà không thực hiện thêm hành động.
+
+
+
+Subsystem
+
+
+HW5
+Sequence Diagram
+
+
+
+
+Class Diagram
+Biểu đồ phụ thuộc gói
