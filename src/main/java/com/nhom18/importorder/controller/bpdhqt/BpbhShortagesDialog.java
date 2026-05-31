@@ -6,7 +6,6 @@ import com.nhom18.importorder.model.entity.ImportRequestItem;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -92,80 +91,7 @@ public class BpbhShortagesDialog {
 
         TableColumn<ImportRequestItem, Void> colAction = new TableColumn<>("Hành Động");
         colAction.setPrefWidth(100);
-        colAction.setCellFactory(param -> new TableCell<ImportRequestItem, Void>() {
-            private final Button btnAdd = new Button("➕ Chọn");
-            {
-                btnAdd.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px; -fx-cursor: hand; -fx-border-radius: 4px; -fx-background-radius: 4px;");
-                btnAdd.setOnAction(event -> {
-                    ImportRequestItem pendingItem = getTableView().getItems().get(getIndex());
-                    
-                    boolean duplicate = false;
-                    for (ImportRequestItem item : controller.getSelectedItemsData()) {
-                        if (item.getId() == pendingItem.getId()) {
-                            duplicate = true;
-                            break;
-                        }
-                    }
-
-                    if (!duplicate) {
-                        ImportRequestItem newItem = new ImportRequestItem();
-                        newItem.setId(pendingItem.getId()); 
-                        newItem.setRequestId(pendingItem.getRequestId());
-                        newItem.setMerchandiseCode(pendingItem.getMerchandiseCode());
-                        newItem.setMerchandiseName(pendingItem.getMerchandiseName());
-                        
-                        int qty = pendingItem.getQuantityShortage() > 0 ? pendingItem.getQuantityShortage() : pendingItem.getQuantityOrdered();
-                        newItem.setQuantityOrdered(qty);
-                        newItem.setQuantityShortage(qty);
-                        
-                        newItem.setUnit(pendingItem.getUnit());
-                        newItem.setDesiredDeliveryDate(pendingItem.getDesiredDeliveryDate());
-                        
-                        controller.getSelectedItemsData().add(newItem);
-                        controller.getTblSelectedItems().refresh();
-                        controller.updateTotalQuantityLabel();
-                        
-                        if (controller.getSelectedItemsData().size() == 1) {
-                            controller.getDpRequiredDate().setValue(pendingItem.getDesiredDeliveryDate());
-                        }
-                    }
-
-                    btnAdd.setText("✓ Thêm");
-                    btnAdd.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px;");
-                    btnAdd.setDisable(true);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    ImportRequestItem rowItem = getTableView().getItems().get(getIndex());
-                    boolean exists = false;
-                    for (ImportRequestItem selected : controller.getSelectedItemsData()) {
-                        if (selected.getId() == rowItem.getId()) {
-                            exists = true;
-                            break;
-                        }
-                    }
-                    if (exists) {
-                        btnAdd.setText("✓ Thêm");
-                        btnAdd.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px;");
-                        btnAdd.setDisable(true);
-                    } else {
-                        btnAdd.setText("➕ Chọn");
-                        btnAdd.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px; -fx-cursor: hand; -fx-border-radius: 4px; -fx-background-radius: 4px;");
-                        btnAdd.setDisable(false);
-                    }
-                    HBox container = new HBox(btnAdd);
-                    container.setStyle("-fx-alignment: CENTER;");
-                    setGraphic(container);
-                }
-            }
-        });
-
+        colAction.setCellFactory(new BpbhShortageActionCellFactory(controller));
         table.getColumns().add(colAction);
 
         Button btnClose = new Button("Đóng");

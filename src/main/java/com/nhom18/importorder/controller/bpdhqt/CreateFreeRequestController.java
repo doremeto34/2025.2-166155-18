@@ -17,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -60,18 +59,18 @@ public class CreateFreeRequestController {
         colItemQty.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantityOrdered()).asObject());
         colItemUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
-        colItemAction.setCellFactory(param -> new TableCell<ImportRequestItem, Void>() {
+        colItemAction.setCellFactory(param -> new TableCell<>() {
             private final Button btnDelete = new Button("❌");
             {
-                btnDelete.setStyle("-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-padding: 2px; -fx-cursor: hand; -fx-font-weight: bold;");
+                btnDelete.setStyle("-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand;");
                 btnDelete.setOnAction(evt -> {
                     selectedItemsData.remove(getTableView().getItems().get(getIndex()));
                     updateTotalQuantityLabel();
                 });
             }
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
+            protected void updateItem(Void it, boolean empty) {
+                super.updateItem(it, empty);
                 if (empty) setGraphic(null);
                 else {
                     HBox box = new HBox(btnDelete);
@@ -83,9 +82,7 @@ public class CreateFreeRequestController {
 
         tblSelectedItems.setItems(selectedItemsData);
         activeMerchandise = merchandiseService.getAllActiveMerchandise();
-        for (Merchandise m : activeMerchandise) {
-            merchandisePrices.put(m.getMerchandiseCode(), m.getPrice());
-        }
+        for (Merchandise m : activeMerchandise) merchandisePrices.put(m.getMerchandiseCode(), m.getPrice());
         activeSites = siteService.getAllActiveSites();
         dpRequiredDate.setValue(LocalDate.now().plusDays(10));
         updateTotalQuantityLabel();
@@ -140,26 +137,19 @@ public class CreateFreeRequestController {
         btnSaveAll.setDisable(true);
     }
 
-    // --- Package-private Getters và Setters ---
-    
     public boolean isCheckPassed() { return isCheckPassed; }
     public void setCheckPassed(boolean val) { this.isCheckPassed = val; }
-    
     OrderService getOrderService() { return orderService; }
     ISiteInventoryDAO getSiteInventoryDAO() { return siteInventoryDAO; }
-    
     DatePicker getDpRequiredDate() { return dpRequiredDate; }
     TableView<ImportRequestItem> getTblSelectedItems() { return tblSelectedItems; }
     ObservableList<ImportRequestItem> getSelectedItemsData() { return selectedItemsData; }
     ObservableList<Order> getProposedOrdersData() { return proposedOrdersData; }
-    
     VBox getVboxOrdersContainer() { return vboxOrdersContainer; }
     Label getLblOrdersCount() { return lblOrdersCount; }
     Button getBtnSaveAll() { return btnSaveAll; }
-    
     VBox getBoxError() { return boxError; }
     Label getLblAllocationError() { return lblAllocationError; }
-    
     List<Merchandise> getActiveMerchandise() { return activeMerchandise; }
     List<Site> getActiveSites() { return activeSites; }
     Map<String, Double> getMerchandisePrices() { return merchandisePrices; }
