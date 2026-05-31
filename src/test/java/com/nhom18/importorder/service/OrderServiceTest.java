@@ -367,7 +367,16 @@ public class OrderServiceTest {
         public void insertItem(ImportRequestItem item) {
             ImportRequest req = getById(item.getRequestId());
             if (req != null) {
-                req.addItem(item);
+                boolean exists = false;
+                for (ImportRequestItem existing : req.getItems()) {
+                    if (existing == item || (existing.getMerchandiseCode() != null && existing.getMerchandiseCode().equals(item.getMerchandiseCode()))) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    req.addItem(item);
+                }
             }
         }
 
@@ -377,6 +386,24 @@ public class OrderServiceTest {
             if (r != null) {
                 r.setStatus(status);
             }
+        }
+
+        @Override
+        public void adjustShortageQuantity(int itemId, int delta) {
+            // Mock empty implementation
+        }
+
+        @Override
+        public List<ImportRequestItem> getPendingRequestItems() {
+            List<ImportRequestItem> pending = new ArrayList<>();
+            for (ImportRequest req : requests) {
+                if (req.getStatus() == RequestStatus.PENDING || req.getStatus() == RequestStatus.PROCESSING || req.getStatus() == RequestStatus.APPROVED) {
+                    for (ImportRequestItem item : req.getItems()) {
+                        pending.add(item);
+                    }
+                }
+            }
+            return pending;
         }
     }
 

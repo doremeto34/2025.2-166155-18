@@ -2,26 +2,37 @@ package com.nhom18.importorder.service;
 
 import com.nhom18.importorder.dao.IOrderDAO;
 import com.nhom18.importorder.dao.ISiteDAO;
+import com.nhom18.importorder.dao.IUserDAO;
 import com.nhom18.importorder.dao.impl.SQLiteOrderDAO;
 import com.nhom18.importorder.dao.impl.SQLiteSiteDAO;
+import com.nhom18.importorder.dao.impl.SQLiteUserDAO;
 import com.nhom18.importorder.model.entity.Order;
 import com.nhom18.importorder.model.entity.Site;
+import com.nhom18.importorder.model.entity.User;
 import com.nhom18.importorder.model.enums.OrderStatus;
+import com.nhom18.importorder.model.enums.UserRole;
 import java.util.List;
 
 public class SiteService {
     private final ISiteDAO siteDAO;
     private final IOrderDAO orderDAO;
+    private final IUserDAO userDAO;
 
     public SiteService() {
         this.siteDAO = new SQLiteSiteDAO();
         this.orderDAO = new SQLiteOrderDAO();
+        this.userDAO = new SQLiteUserDAO();
     }
 
     // Constructor phục vụ Mock Testing
     public SiteService(ISiteDAO siteDAO, IOrderDAO orderDAO) {
+        this(siteDAO, orderDAO, new SQLiteUserDAO());
+    }
+
+    public SiteService(ISiteDAO siteDAO, IOrderDAO orderDAO, IUserDAO userDAO) {
         this.siteDAO = siteDAO;
         this.orderDAO = orderDAO;
+        this.userDAO = userDAO;
     }
 
     public List<Site> getAllSites() {
@@ -49,6 +60,20 @@ public class SiteService {
         }
 
         siteDAO.insert(site);
+
+        // Tự động tạo tài khoản đăng nhập tương ứng cho Site mới
+        User newUser = new User();
+        newUser.setUsername("site_" + site.getSiteCode().toLowerCase());
+        newUser.setPasswordHash("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"); // "123456"
+        newUser.setFullName("Đại diện Site " + site.getName());
+        newUser.setRole(UserRole.SITE);
+        newUser.setSiteCode(site.getSiteCode());
+        newUser.setActive(site.isActive());
+
+        User existingUser = userDAO.getByUsername(newUser.getUsername());
+        if (existingUser == null) {
+            userDAO.insert(newUser);
+        }
     }
 
     public void updateSite(Site site) {
@@ -60,6 +85,13 @@ public class SiteService {
         }
 
         siteDAO.update(site);
+
+        // Đồng bộ cập nhật họ tên trên tài khoản đăng nhập tương ứng
+        User user = userDAO.getByUsername("site_" + site.getSiteCode().toLowerCase());
+        if (user != null) {
+            user.setFullName("Đại diện Site " + site.getName());
+            userDAO.update(user);
+        }
     }
 
     /**
@@ -91,6 +123,13 @@ public class SiteService {
         // Thay đổi trạng thái
         site.setActive(!currentActive);
         siteDAO.update(site);
+
+        // Đồng bộ trạng thái tài khoản đăng nhập tương ứng
+        User user = userDAO.getByUsername("site_" + siteCode.toLowerCase());
+        if (user != null) {
+            user.setActive(site.isActive());
+            userDAO.update(user);
+        }
     }
 
     private void validateSite(Site site) {

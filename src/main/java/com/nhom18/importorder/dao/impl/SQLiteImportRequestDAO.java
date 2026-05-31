@@ -181,7 +181,6 @@ public class SQLiteImportRequestDAO implements IImportRequestDAO {
                      "JOIN import_requests r ON ri.request_id = r.id " +
                      "JOIN merchandise m ON ri.merchandise_code = m.merchandise_code " +
                      "WHERE r.status IN ('PENDING', 'PROCESSING', 'APPROVED') " +
-                     "AND ri.quantity_shortage > 0 " +
                      "ORDER BY r.id ASC";
         
         try {

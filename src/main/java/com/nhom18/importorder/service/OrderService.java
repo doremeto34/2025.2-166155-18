@@ -378,8 +378,49 @@ public class OrderService {
             throw new IllegalArgumentException("Danh sách đơn hàng rỗng!");
         }
 
-        // 1. Lưu từng đơn hàng và thực hiện khấu trừ tồn kho Site & cập nhật shortage của BPBH
+        // 1. Tạo và lưu phiếu Yêu cầu nhập khẩu tự do (ImportRequest) đại diện
+        ImportRequest request = new ImportRequest();
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        request.setCreatedBy(currentUser != null ? currentUser.getId() : 9); // Mặc định admin_sys (id = 9)
+        request.setCreatedDate(LocalDate.now());
+        request.setStatus(RequestStatus.APPROVED);
+
+        // Gom các mặt hàng đặt mua từ tất cả các đơn hàng con
+        Map<String, ImportRequestItem> requestItemMap = new HashMap<>();
         for (Order order : customOrders) {
+            for (OrderItem oi : order.getItems()) {
+                String code = oi.getMerchandiseCode();
+                ImportRequestItem ri = requestItemMap.get(code);
+                if (ri == null) {
+                    ri = new ImportRequestItem();
+                    ri.setMerchandiseCode(code);
+                    ri.setMerchandiseName(oi.getMerchandiseName());
+                    ri.setQuantityOrdered(0);
+                    ri.setQuantityShortage(0);
+                    ri.setUnit(oi.getUnit());
+                    ri.setDesiredDeliveryDate(desiredDate);
+                    requestItemMap.put(code, ri);
+                }
+                ri.setQuantityOrdered(ri.getQuantityOrdered() + oi.getQuantityOrdered());
+            }
+        }
+        
+        for (ImportRequestItem ri : requestItemMap.values()) {
+            request.addItem(ri);
+        }
+
+        int requestId = requestDAO.insert(request);
+        request.setId(requestId);
+        
+        // Lưu từng dòng item vào database
+        for (ImportRequestItem ri : new ArrayList<>(request.getItems())) {
+            ri.setRequestId(requestId);
+            requestDAO.insertItem(ri);
+        }
+
+        // 2. Lưu từng đơn hàng và thực hiện khấu trừ tồn kho Site & cập nhật shortage của BPBH
+        for (Order order : customOrders) {
+            order.setRequestId(requestId); // Liên kết đơn hàng với yêu cầu nhập vừa tạo
             order.setCreatedDate(LocalDate.now());
             order.setStatus(OrderStatus.PENDING);
 

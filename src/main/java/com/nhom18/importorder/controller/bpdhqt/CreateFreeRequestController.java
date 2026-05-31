@@ -375,7 +375,8 @@ public class CreateFreeRequestController {
             if (cell.getValue() == null) {
                 return new SimpleIntegerProperty(0).asObject();
             }
-            return new SimpleIntegerProperty(cell.getValue().getQuantityShortage()).asObject();
+            int dispQty = cell.getValue().getQuantityShortage() > 0 ? cell.getValue().getQuantityShortage() : cell.getValue().getQuantityOrdered();
+            return new SimpleIntegerProperty(dispQty).asObject();
         });
         colShortage.setPrefWidth(120);
 
@@ -424,8 +425,9 @@ public class CreateFreeRequestController {
                         newItem.setRequestId(pendingItem.getRequestId());
                         newItem.setMerchandiseCode(pendingItem.getMerchandiseCode());
                         newItem.setMerchandiseName(pendingItem.getMerchandiseName());
-                        newItem.setQuantityOrdered(pendingItem.getQuantityShortage()); // lúc đầu đặt toàn bộ lượng shortage
-                        newItem.setQuantityShortage(pendingItem.getQuantityShortage());
+                        int qty = pendingItem.getQuantityShortage() > 0 ? pendingItem.getQuantityShortage() : pendingItem.getQuantityOrdered();
+                        newItem.setQuantityOrdered(qty);
+                        newItem.setQuantityShortage(qty);
                         newItem.setUnit(pendingItem.getUnit());
                         newItem.setDesiredDeliveryDate(pendingItem.getDesiredDeliveryDate());
                         

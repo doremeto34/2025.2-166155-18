@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.nhom18.importorder.dao.IOrderDAO;
 import com.nhom18.importorder.dao.ISiteDAO;
+import com.nhom18.importorder.dao.IUserDAO;
 import com.nhom18.importorder.model.entity.Order;
 import com.nhom18.importorder.model.entity.Site;
+import com.nhom18.importorder.model.entity.User;
 import com.nhom18.importorder.model.enums.OrderStatus;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +20,14 @@ public class SiteServiceTest {
     private SiteService siteService;
     private MockSiteDAO mockSiteDAO;
     private MockOrderDAO mockOrderDAO;
+    private MockUserDAO mockUserDAO;
 
     @BeforeEach
     public void setUp() {
         mockSiteDAO = new MockSiteDAO();
         mockOrderDAO = new MockOrderDAO();
-        siteService = new SiteService(mockSiteDAO, mockOrderDAO);
+        mockUserDAO = new MockUserDAO();
+        siteService = new SiteService(mockSiteDAO, mockOrderDAO, mockUserDAO);
     }
 
     @Test
@@ -178,6 +182,65 @@ public class SiteServiceTest {
         assertTrue(s1.isActive(), "Site phải chuyển sang Active");
     }
 
+    @Test
+    public void testCreateSiteAutomaticallyCreatesUser() {
+        Site newSite = new Site("BANGKOK", "Bangkok Site", 5, 2, "Thailand", true);
+        siteService.createSite(newSite);
+
+        // Kiểm tra xem User tương ứng có được tạo không
+        User createdUser = mockUserDAO.getByUsername("site_bangkok");
+        assertNotNull(createdUser, "Tài khoản đăng nhập tự động cho Site phải tồn tại");
+        assertEquals("Đại diện Site Bangkok Site", createdUser.getFullName());
+        assertEquals("BANGKOK", createdUser.getSiteCode());
+        assertTrue(createdUser.isActive());
+    }
+
+    @Test
+    public void testUpdateSiteAutomaticallyUpdatesUserFullName() {
+        Site s1 = new Site("TOKYO", "Tokyo Site", 10, 2, "Japan", true);
+        mockSiteDAO.sites.add(s1);
+
+        // Tạo tài khoản sẵn
+        User u1 = new User();
+        u1.setUsername("site_tokyo");
+        u1.setFullName("Đại diện Site Tokyo");
+        u1.setSiteCode("TOKYO");
+        u1.setActive(true);
+        mockUserDAO.users.add(u1);
+
+        // Cập nhật tên Site
+        Site updated = new Site("TOKYO", "Tokyo Premium Site", 10, 2, "Japan", true);
+        siteService.updateSite(updated);
+
+        // Xác minh tên User được đồng bộ
+        User updatedUser = mockUserDAO.getByUsername("site_tokyo");
+        assertNotNull(updatedUser);
+        assertEquals("Đại diện Site Tokyo Premium Site", updatedUser.getFullName());
+    }
+
+    @Test
+    public void testToggleSiteActiveStatusTogglesUserActiveStatus() {
+        Site s1 = new Site("TOKYO", "Tokyo Site", 10, 2, "Japan", true);
+        mockSiteDAO.sites.add(s1);
+
+        // Tạo tài khoản sẵn
+        User u1 = new User();
+        u1.setUsername("site_tokyo");
+        u1.setFullName("Đại diện Site Tokyo");
+        u1.setSiteCode("TOKYO");
+        u1.setActive(true);
+        mockUserDAO.users.add(u1);
+
+        // Toggle hoạt động (sang Inactive)
+        siteService.toggleSiteActiveStatus("TOKYO");
+
+        assertFalse(s1.isActive());
+        // Xác minh trạng thái User cũng được đồng bộ sang Inactive
+        User updatedUser = mockUserDAO.getByUsername("site_tokyo");
+        assertNotNull(updatedUser);
+        assertFalse(updatedUser.isActive());
+    }
+
     // --- MOCK DAO IMPLEMENTATIONS FOR TESTING ---
     private static class MockSiteDAO implements ISiteDAO {
         List<Site> sites = new ArrayList<>();
@@ -266,6 +329,43 @@ public class SiteServiceTest {
         @Override
         public void updateItemQuantities(int orderItemId, int confirmedQty, int receivedQty) {
             // Không cần mock chi tiết cho test này
+        }
+    }
+
+    private static class MockUserDAO implements IUserDAO {
+        List<User> users = new ArrayList<>();
+
+        @Override
+        public User getById(int id) {
+            return users.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
+        }
+
+        @Override
+        public User getByUsername(String username) {
+            if (username == null) return null;
+            return users.stream().filter(u -> username.equalsIgnoreCase(u.getUsername())).findFirst().orElse(null);
+        }
+
+        @Override
+        public List<User> getAll() {
+            return users;
+        }
+
+        @Override
+        public void insert(User user) {
+            users.add(user);
+        }
+
+        @Override
+        public void update(User user) {
+            User u = getByUsername(user.getUsername());
+            if (u != null) {
+                u.setPasswordHash(user.getPasswordHash());
+                u.setFullName(user.getFullName());
+                u.setRole(user.getRole());
+                u.setSiteCode(user.getSiteCode());
+                u.setActive(user.isActive());
+            }
         }
     }
 }

@@ -118,6 +118,42 @@ public class DatabaseConnection {
             System.err.println("Lỗi khi khởi tạo cơ sở dữ liệu: " + e.getMessage());
             e.printStackTrace();
         }
+
+        // 3. Tự động đồng bộ tài khoản đăng nhập cho tất cả các Site đang có trong CSDL
+        try (Statement stmt = connection.createStatement()) {
+            String findMissingSql = "SELECT s.site_code, s.name FROM sites s " +
+                                    "LEFT JOIN users u ON u.site_code = s.site_code " +
+                                    "WHERE u.id IS NULL AND s.active = 1";
+            try (ResultSet rs = stmt.executeQuery(findMissingSql)) {
+                java.util.List<String[]> missingSites = new java.util.ArrayList<>();
+                while (rs.next()) {
+                    missingSites.add(new String[]{rs.getString("site_code"), rs.getString("name")});
+                }
+                
+                if (!missingSites.isEmpty()) {
+                    System.out.println("Phát hiện " + missingSites.size() + " Site thiếu tài khoản đăng nhập. Đang tự động bổ sung...");
+                    String insertUserSql = "INSERT INTO users (username, password_hash, full_name, role, site_code, active) VALUES (?, ?, ?, ?, ?, ?)";
+                    try (java.sql.PreparedStatement pstmt = connection.prepareStatement(insertUserSql)) {
+                        for (String[] site : missingSites) {
+                            String siteCode = site[0];
+                            String siteName = site[1];
+                            String username = "site_" + siteCode.toLowerCase();
+                            pstmt.setString(1, username);
+                            pstmt.setString(2, "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"); // "123456"
+                            pstmt.setString(3, "Đại diện Site " + siteName);
+                            pstmt.setString(4, "SITE");
+                            pstmt.setString(5, siteCode);
+                            pstmt.setInt(6, 1);
+                            pstmt.addBatch();
+                            System.out.println("Đã tự động tạo tài khoản đăng nhập cho Site: " + siteCode + " (Username: " + username + ")");
+                        }
+                        pstmt.executeBatch();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tự động đồng bộ tài khoản đăng nhập cho Site: " + e.getMessage());
+        }
     }
 
     public void closeConnection() {
