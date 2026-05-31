@@ -9,29 +9,15 @@ import com.nhom18.importorder.service.MerchandiseService;
 import com.nhom18.importorder.service.OrderService;
 import com.nhom18.importorder.service.SiteService;
 import com.nhom18.importorder.util.AlertHelper;
-import com.nhom18.importorder.util.NavigationManager;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Screen;
-import javafx.geometry.Rectangle2D;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -141,360 +127,23 @@ public class CreateFreeRequestController {
         btnSaveAll.setDisable(true);
     }
 
-    private void updateTotalQuantityLabel() {
+    public void updateTotalQuantityLabel() {
         int total = selectedItemsData.stream().mapToInt(ImportRequestItem::getQuantityOrdered).sum();
         lblTotalQuantity.setText("Tổng: " + total + " đơn vị (" + selectedItemsData.size() + " mặt hàng)");
     }
 
-    /**
-     * Mở màn hình Catalog dưới dạng Grid View cao cấp, cho phép lọc tìm kiếm và thêm mặt hàng kèm hiệu ứng.
-     */
     @FXML
     private void handleOpenCatalogGrid() {
         openCatalogGrid(null);
     }
 
-    private void openCatalogGrid(Order targetOrder) {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setTitle(targetOrder == null ? "Catalog Mặt Hàng" : "Thêm Mặt Hàng vào Đơn Hàng");
-        
-        // Tính toán kích thước dialog responsive theo Screen Visual Bounds
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double dialogWidth = Math.min(840, screenBounds.getWidth() * 0.9);
-        double dialogHeight = Math.min(600, screenBounds.getHeight() * 0.85);
-        
-        dialogStage.setMinWidth(600);
-        dialogStage.setMinHeight(450);
-        dialogStage.setWidth(dialogWidth);
-        dialogStage.setHeight(dialogHeight);
-
-        VBox root = new VBox(15);
-        root.setStyle("-fx-padding: 20px; -fx-background-color: #f8fafc;");
-
-        // Header & Search
-        Label title = new Label(targetOrder == null ? "Danh Mục Mặt Hàng Catalog" : "Thêm Mặt Hàng vào Đơn Hàng");
-        title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: -text-primary;");
-
-        TextField txtSearch = new TextField();
-        txtSearch.setPromptText("🔍 Tìm kiếm theo tên hoặc mã mặt hàng...");
-        txtSearch.setPrefWidth(350);
-        txtSearch.setStyle("-fx-background-radius: 6px; -fx-padding: 8px 12px; -fx-border-color: #cbd5e1;");
-
-        HBox header = new HBox(15, title, txtSearch);
-        header.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(title, Priority.ALWAYS);
-        root.getChildren().add(header);
-
-        // ScrollPane & TilePane for GridView
-        ScrollPane scroll = new ScrollPane();
-        scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;");
-        VBox.setVgrow(scroll, Priority.ALWAYS);
-
-        TilePane tilePane = new TilePane();
-        tilePane.setHgap(15);
-        tilePane.setVgap(15);
-        tilePane.setPadding(new Insets(5));
-        tilePane.setPrefColumns(3); // Hiển thị 3 cột
-        scroll.setContent(tilePane);
-        root.getChildren().add(scroll);
-
-        // Hàm render động Grid các Card mặt hàng
-        Runnable renderGrid = () -> {
-            tilePane.getChildren().clear();
-            String query = txtSearch.getText().toLowerCase().trim();
-
-            for (Merchandise m : activeMerchandise) {
-                if (!query.isEmpty() && !m.getName().toLowerCase().contains(query) && !m.getMerchandiseCode().toLowerCase().contains(query)) {
-                    continue; // Ẩn nếu không khớp
-                }
-
-                VBox card = new VBox(8);
-                card.setStyle("-fx-background-color: white; -fx-background-radius: 8px; -fx-border-color: #e2e8f0; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-padding: 15px; -fx-alignment: CENTER;");
-                card.setPrefWidth(225);
-
-                Label name = new Label(m.getName());
-                name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: -text-primary; -fx-alignment: CENTER;");
-                name.setWrapText(true);
-                name.setMinHeight(40);
-
-                Label code = new Label("Mã: " + m.getMerchandiseCode());
-                code.setStyle("-fx-text-fill: -text-secondary; -fx-font-size: 12px;");
-
-                Label price = new Label(String.format("%,.2f USD / %s", m.getPrice(), m.getUnit()));
-                price.setStyle("-fx-text-fill: -accent-indigo; -fx-font-weight: bold; -fx-font-size: 13px;");
-
-                // Ô nhập số lượng và nút Thêm
-                TextField qtyInput = new TextField("1");
-                qtyInput.setPrefWidth(45.0);
-                qtyInput.setStyle("-fx-alignment: CENTER;");
-
-                Button btnAdd = new Button("Thêm");
-                btnAdd.getStyleClass().addAll("button-primary");
-                btnAdd.setStyle("-fx-font-size: 12px; -fx-padding: 4px 12px;");
-                btnAdd.setOnAction(evt -> {
-                    try {
-                        int q = Integer.parseInt(qtyInput.getText().trim());
-                        if (q > 0) {
-                            if (targetOrder == null) {
-                                // THÊM VÀO BÊN TRÁI
-                                boolean duplicate = false;
-                                for (ImportRequestItem item : selectedItemsData) {
-                                    if (item.getMerchandiseCode().equals(m.getMerchandiseCode())) {
-                                        item.setQuantityOrdered(item.getQuantityOrdered() + q);
-                                        duplicate = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!duplicate) {
-                                    ImportRequestItem newItem = new ImportRequestItem();
-                                    newItem.setMerchandiseCode(m.getMerchandiseCode());
-                                    newItem.setMerchandiseName(m.getName());
-                                    newItem.setQuantityOrdered(q);
-                                    newItem.setUnit(m.getUnit());
-                                    newItem.setDesiredDeliveryDate(dpRequiredDate.getValue() != null ? dpRequiredDate.getValue() : LocalDate.now().plusDays(10));
-                                    selectedItemsData.add(newItem);
-                                }
-
-                                tblSelectedItems.refresh();
-                                updateTotalQuantityLabel();
-                            } else {
-                                // THÊM VÀO BÊN PHẢI (Specific Order)
-                                boolean duplicate = false;
-                                for (OrderItem existingItem : targetOrder.getItems()) {
-                                    if (existingItem.getMerchandiseCode().equals(m.getMerchandiseCode())) {
-                                        existingItem.setQuantityOrdered(existingItem.getQuantityOrdered() + q);
-                                        duplicate = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!duplicate) {
-                                    OrderItem newOi = new OrderItem();
-                                    newOi.setMerchandiseCode(m.getMerchandiseCode());
-                                    newOi.setMerchandiseName(m.getName());
-                                    newOi.setQuantityOrdered(q);
-                                    newOi.setQuantityConfirmed(0);
-                                    newOi.setQuantityReceived(0);
-                                    newOi.setUnit(m.getUnit());
-                                    targetOrder.addItem(newOi);
-                                }
-
-                                // Cập nhật UI
-                                renderOrderCards();
-                                isCheckPassed = false;
-                                btnSaveAll.setDisable(true);
-                            }
-
-                            // Đổi màu nút để báo hiệu thành công
-                            btnAdd.setText("✓ Đã Thêm");
-                            btnAdd.setStyle("-fx-background-color: #10b981; -fx-font-size: 12px; -fx-padding: 4px 12px;");
-                            
-                            new Timer().schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    Platform.runLater(() -> {
-                                        btnAdd.setText("Thêm");
-                                        btnAdd.setStyle("");
-                                        btnAdd.getStyleClass().addAll("button-primary");
-                                    });
-                                }
-                            }, 1000);
-
-                        }
-                    } catch (NumberFormatException ignored) {
-                        AlertHelper.showWarning("Lỗi", "Số lượng phải là số nguyên dương.");
-                    }
-                });
-
-                HBox actionBox = new HBox(6, new Label("SL:"), qtyInput, btnAdd);
-                actionBox.setAlignment(Pos.CENTER);
-                
-                card.getChildren().addAll(name, code, price, actionBox);
-                tilePane.getChildren().add(card);
-            }
-        };
-
-        // Lắng nghe tìm kiếm
-        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> renderGrid.run());
-        renderGrid.run();
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
+    public void openCatalogGrid(Order targetOrder) {
+        CatalogGridDialog.show(this, targetOrder);
     }
 
     @FXML
     private void handleOpenBpbhRequestsPopup() {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setTitle("Danh Sách Yêu Cầu Mặt Hàng BPBH (Shortages)");
-
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double dialogWidth = Math.min(840, screenBounds.getWidth() * 0.9);
-        double dialogHeight = Math.min(550, screenBounds.getHeight() * 0.8);
-        
-        dialogStage.setMinWidth(600);
-        dialogStage.setMinHeight(400);
-        dialogStage.setWidth(dialogWidth);
-        dialogStage.setHeight(dialogHeight);
-
-        VBox root = new VBox(15);
-        root.setStyle("-fx-padding: 20px; -fx-background-color: #f8fafc;");
-
-        // Header
-        Label title = new Label("Danh Sách Mặt Hàng BPBH Cần Đặt Hàng Quốc Tế");
-        title.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -text-primary;");
-        
-        Label subtitle = new Label("Đây là lượng thiếu hụt (Shortages) sau khi đã khấu trừ Tồn Kho Nội Bộ tự động.");
-        subtitle.setStyle("-fx-text-fill: -text-secondary; -fx-font-style: italic; -fx-font-size: 12px;");
-
-        root.getChildren().addAll(title, subtitle);
-
-        // Table
-        TableView<ImportRequestItem> table = new TableView<>();
-        VBox.setVgrow(table, Priority.ALWAYS);
-
-        TableColumn<ImportRequestItem, Integer> colReqId = new TableColumn<>("Mã Yêu Cầu");
-        colReqId.setCellValueFactory(new PropertyValueFactory<>("requestId"));
-        colReqId.setPrefWidth(100);
-
-        TableColumn<ImportRequestItem, String> colCode = new TableColumn<>("Mã SP");
-        colCode.setCellValueFactory(new PropertyValueFactory<>("merchandiseCode"));
-        colCode.setPrefWidth(100);
-
-        TableColumn<ImportRequestItem, String> colName = new TableColumn<>("Tên Sản Phẩm");
-        colName.setCellValueFactory(new PropertyValueFactory<>("merchandiseName"));
-        colName.setPrefWidth(220);
-
-        TableColumn<ImportRequestItem, Integer> colShortage = new TableColumn<>("S.Lượng Thiếu");
-        colShortage.setCellValueFactory(cell -> {
-            if (cell.getValue() == null) {
-                return new SimpleIntegerProperty(0).asObject();
-            }
-            int dispQty = cell.getValue().getQuantityShortage() > 0 ? cell.getValue().getQuantityShortage() : cell.getValue().getQuantityOrdered();
-            return new SimpleIntegerProperty(dispQty).asObject();
-        });
-        colShortage.setPrefWidth(120);
-
-        TableColumn<ImportRequestItem, String> colUnit = new TableColumn<>("Đơn Vị");
-        colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
-        colUnit.setPrefWidth(80);
-
-        TableColumn<ImportRequestItem, String> colDate = new TableColumn<>("Hạn Giao");
-        colDate.setCellValueFactory(cell -> {
-            if (cell.getValue() == null || cell.getValue().getDesiredDeliveryDate() == null) {
-                return new SimpleStringProperty("");
-            }
-            return new SimpleStringProperty(cell.getValue().getDesiredDeliveryDate().toString());
-        });
-        colDate.setPrefWidth(120);
-
-        table.getColumns().addAll(colReqId, colCode, colName, colShortage, colUnit, colDate);
-
-        // Load data
-        com.nhom18.importorder.dao.IImportRequestDAO importRequestDAO = new com.nhom18.importorder.dao.impl.SQLiteImportRequestDAO();
-        List<ImportRequestItem> pendingItems = importRequestDAO.getPendingRequestItems();
-        table.setItems(FXCollections.observableArrayList(pendingItems));
-
-        // Add action column with "Thêm" button
-        TableColumn<ImportRequestItem, Void> colAction = new TableColumn<>("Hành Động");
-        colAction.setPrefWidth(100);
-        colAction.setCellFactory(param -> new TableCell<ImportRequestItem, Void>() {
-            private final Button btnAdd = new Button("➕ Chọn");
-            {
-                btnAdd.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px; -fx-cursor: hand; -fx-border-radius: 4px; -fx-background-radius: 4px;");
-                btnAdd.setOnAction(event -> {
-                    ImportRequestItem pendingItem = getTableView().getItems().get(getIndex());
-                    
-                    // Kiểm tra xem đã có trong selectedItemsData chưa
-                    boolean duplicate = false;
-                    for (ImportRequestItem item : selectedItemsData) {
-                        if (item.getId() == pendingItem.getId()) {
-                            duplicate = true;
-                            break;
-                        }
-                    }
-
-                    if (!duplicate) {
-                        ImportRequestItem newItem = new ImportRequestItem();
-                        newItem.setId(pendingItem.getId()); // Ghi nhận link
-                        newItem.setRequestId(pendingItem.getRequestId());
-                        newItem.setMerchandiseCode(pendingItem.getMerchandiseCode());
-                        newItem.setMerchandiseName(pendingItem.getMerchandiseName());
-                        int qty = pendingItem.getQuantityShortage() > 0 ? pendingItem.getQuantityShortage() : pendingItem.getQuantityOrdered();
-                        newItem.setQuantityOrdered(qty);
-                        newItem.setQuantityShortage(qty);
-                        newItem.setUnit(pendingItem.getUnit());
-                        newItem.setDesiredDeliveryDate(pendingItem.getDesiredDeliveryDate());
-                        
-                        selectedItemsData.add(newItem);
-                        tblSelectedItems.refresh();
-                        updateTotalQuantityLabel();
-                        
-                        // Căn ngày mong muốn theo yêu cầu BPBH
-                        if (selectedItemsData.size() == 1) {
-                            dpRequiredDate.setValue(pendingItem.getDesiredDeliveryDate());
-                        }
-                    }
-
-                    btnAdd.setText("✓ Thêm");
-                    btnAdd.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px;");
-                    btnAdd.setDisable(true);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    ImportRequestItem rowItem = getTableView().getItems().get(getIndex());
-                    // Vô hiệu hóa nút nếu đã chọn rồi
-                    boolean exists = false;
-                    for (ImportRequestItem selected : selectedItemsData) {
-                        if (selected.getId() == rowItem.getId()) {
-                            exists = true;
-                            break;
-                        }
-                    }
-                    if (exists) {
-                        btnAdd.setText("✓ Thêm");
-                        btnAdd.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px;");
-                        btnAdd.setDisable(true);
-                    } else {
-                        btnAdd.setText("➕ Chọn");
-                        btnAdd.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4px 10px; -fx-cursor: hand; -fx-border-radius: 4px; -fx-background-radius: 4px;");
-                        btnAdd.setDisable(false);
-                    }
-                    HBox container = new HBox(btnAdd);
-                    container.setStyle("-fx-alignment: CENTER;");
-                    setGraphic(container);
-                }
-            }
-        });
-
-        table.getColumns().add(colAction);
-
-        // Close button
-        Button btnClose = new Button("Đóng");
-        btnClose.getStyleClass().add("button-secondary");
-        btnClose.setStyle("-fx-padding: 8px 18px;");
-        btnClose.setOnAction(e -> dialogStage.close());
-
-        HBox footer = new HBox(btnClose);
-        footer.setStyle("-fx-alignment: CENTER_RIGHT;");
-
-        root.getChildren().addAll(table, footer);
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
+        BpbhShortagesDialog.show(this);
     }
 
     @FXML
@@ -643,7 +292,6 @@ public class CreateFreeRequestController {
             String siteCode = order.getSiteCode();
             String siteName = order.getSiteName();
 
-            // Nếu đơn hàng rỗng hoặc không có mặt hàng nào
             if (order.getItems().isEmpty()) {
                 AlertHelper.showWarning("Đơn hàng rỗng", "Đơn hàng gửi cho Site " + siteName + " chưa có mặt hàng nào!");
                 isCheckPassed = false;
@@ -681,16 +329,11 @@ public class CreateFreeRequestController {
             "Bạn có thể tiến hành lưu toàn bộ đơn hàng.");
     }
 
-    /**
-     * Đồng bộ hóa số lượng mặt hàng từ cột bên phải (các đơn hàng) ngược lại cột bên trái (yêu cầu đặt hàng gốc).
-     * Điều này bảo đảm Two-way Data Synchronization hoàn hảo.
-     */
     private void syncRightToLeft() {
         Map<String, Integer> totalQuantities = new HashMap<>();
         Map<String, String> merchNames = new HashMap<>();
         Map<String, String> merchUnits = new HashMap<>();
 
-        // 1. Tích lũy số lượng trên tất cả các đơn hàng bên phải
         for (Order order : proposedOrdersData) {
             for (OrderItem oi : order.getItems()) {
                 String code = oi.getMerchandiseCode();
@@ -700,11 +343,8 @@ public class CreateFreeRequestController {
             }
         }
 
-        // 2. Đồng bộ hóa sang selectedItemsData bên trái
-        // Xóa những mặt hàng không còn tồn tại bên phải (đã bị xóa sạch)
         selectedItemsData.removeIf(item -> !totalQuantities.containsKey(item.getMerchandiseCode()));
 
-        // Cập nhật số lượng hoặc thêm mới mặt hàng nếu bên phải tự bổ sung thủ công
         for (Map.Entry<String, Integer> entry : totalQuantities.entrySet()) {
             String code = entry.getKey();
             int qty = entry.getValue();
@@ -733,243 +373,50 @@ public class CreateFreeRequestController {
         updateTotalQuantityLabel();
     }
 
-    /**
-     * Hàm vẽ động toàn bộ danh sách đơn hàng sang cột phải dưới dạng các Card sang trọng và binding dữ liệu trực tiếp.
-     */
-    private void renderOrderCards() {
-        vboxOrdersContainer.getChildren().clear();
-        lblOrdersCount.setText("Danh Sách Đơn Hàng Đề Xuất (" + proposedOrdersData.size() + ")");
+    public void renderOrderCards() {
+        OrderCardRenderer.render(this);
+    }
 
-        for (int i = 0; i < proposedOrdersData.size(); i++) {
-            final int index = i;
-            Order order = proposedOrdersData.get(index);
-            
-            // --- 1. Tạo Card Container ---
-            VBox card = new VBox();
-            card.setStyle("-fx-background-color: white; -fx-background-radius: 8px; -fx-border-color: #e2e8f0; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-padding: 15px; -fx-spacing: 12px;");
-            
-            // --- 2. Card Header ---
-            HBox header = new HBox();
-            header.setAlignment(Pos.CENTER_LEFT);
-            Label lblOrderNo = new Label("Đơn Đặt Hàng #" + (index + 1));
-            lblOrderNo.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: -text-primary;");
-            HBox.setHgrow(lblOrderNo, Priority.ALWAYS);
+    public void resetCheckPassed() {
+        isCheckPassed = false;
+        btnSaveAll.setDisable(true);
+    }
 
-            Button btnDeleteOrder = new Button("🗑️ Delete");
-            btnDeleteOrder.getStyleClass().addAll("button-secondary");
-            btnDeleteOrder.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 12px; -fx-padding: 4px 10px;");
-            btnDeleteOrder.setOnAction(event -> {
-                proposedOrdersData.remove(index);
-                renderOrderCards();
-                isCheckPassed = false;
-                btnSaveAll.setDisable(true);
-            });
-            header.getChildren().addAll(lblOrderNo, btnDeleteOrder);
-            card.getChildren().add(header);
+    // --- Package-private Getters để phục vụ Lớp Helper ---
+    
+    List<Merchandise> getActiveMerchandise() {
+        return activeMerchandise;
+    }
 
-            // --- 3. Form Chọn Site & Phương Thức Vận Chuyển ---
-            GridPane formGrid = new GridPane();
-            formGrid.setHgap(15);
-            formGrid.setVgap(10);
+    ObservableList<ImportRequestItem> getSelectedItemsData() {
+        return selectedItemsData;
+    }
 
-            // Label Site
-            Label lblSite = new Label("Site đối tác:");
-            lblSite.setStyle("-fx-font-weight: bold; -fx-text-fill: -text-secondary; -fx-font-size: 12px;");
-            formGrid.add(lblSite, 0, 0);
+    DatePicker getDpRequiredDate() {
+        return dpRequiredDate;
+    }
 
-            // ComboBox Site
-            ComboBox<Site> cbSite = new ComboBox<>(FXCollections.observableArrayList(activeSites));
-            cbSite.setPrefWidth(280.0);
-            // Tìm Site hiện tại của đơn hàng để chọn mặc định
-            for (Site s : activeSites) {
-                if (s.getSiteCode().equals(order.getSiteCode())) {
-                    cbSite.setValue(s);
-                    break;
-                }
-            }
-            cbSite.setConverter(new StringConverter<Site>() {
-                @Override
-                public String toString(Site s) {
-                    return s == null ? "" : s.getName() + " (" + s.getSiteCode() + ")";
-                }
-                @Override
-                public Site fromString(String string) {
-                    return null;
-                }
-            });
-            formGrid.add(cbSite, 1, 0);
+    TableView<ImportRequestItem> getTblSelectedItems() {
+        return tblSelectedItems;
+    }
 
-            // Label Method
-            Label lblMethod = new Label("Vận chuyển:");
-            lblMethod.setStyle("-fx-font-weight: bold; -fx-text-fill: -text-secondary; -fx-font-size: 12px;");
-            formGrid.add(lblMethod, 0, 1);
+    ObservableList<Order> getProposedOrdersData() {
+        return proposedOrdersData;
+    }
 
-            // ComboBox Method
-            ComboBox<String> cbMethod = new ComboBox<>();
-            cbMethod.setPrefWidth(280.0);
-            
-            formGrid.add(cbMethod, 1, 1);
-            card.getChildren().add(formGrid);
+    VBox getVboxOrdersContainer() {
+        return vboxOrdersContainer;
+    }
 
-            // Dòng tóm tắt đơn hàng (Tổng tiền, số mặt hàng, ngày đến dự kiến)
-            Label lblSummary = new Label();
-            lblSummary.setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold; -fx-font-size: 13px;");
-            card.getChildren().add(lblSummary);
+    Label getLblOrdersCount() {
+        return lblOrdersCount;
+    }
 
-            // --- 4. Danh sách các mặt hàng trong đơn hàng ---
-            VBox vboxItems = new VBox();
-            vboxItems.setSpacing(8.0);
-            vboxItems.setStyle("-fx-background-color: rgba(248,250,252,0.6); -fx-background-radius: 6px; -fx-padding: 10px;");
-            
-            // Hàm cập nhật ComboBox Vận Chuyển và thông tin Ngày đến/Tóm tắt đơn hàng
-            Runnable updateOrderMetrics = () -> {
-                Site selectedSite = cbSite.getValue();
-                if (selectedSite != null) {
-                    order.setSiteCode(selectedSite.getSiteCode());
-                    order.setSiteName(selectedSite.getName());
+    List<Site> getActiveSites() {
+        return activeSites;
+    }
 
-                    // Cập nhật danh sách phương án vận chuyển kèm số ngày
-                    cbMethod.setItems(FXCollections.observableArrayList(
-                        "Đường biển (SHIP - " + selectedSite.getShipDays() + " ngày)",
-                        "Đường hàng không (AIR - " + selectedSite.getAirDays() + " ngày)"
-                    ));
-
-                    // Đồng bộ phương thức vận chuyển của đơn hàng
-                    if (order.getDeliveryMethod() == DeliveryMethod.SHIP) {
-                        cbMethod.setValue("Đường biển (SHIP - " + selectedSite.getShipDays() + " ngày)");
-                        order.setEstimatedArrival(LocalDate.now().plusDays(selectedSite.getShipDays()));
-                    } else {
-                        cbMethod.setValue("Đường hàng không (AIR - " + selectedSite.getAirDays() + " ngày)");
-                        order.setEstimatedArrival(LocalDate.now().plusDays(selectedSite.getAirDays()));
-                    }
-                }
-
-                // Tính toán tổng tiền và số mặt hàng
-                double totalVal = 0;
-                int itemsCount = 0;
-                for (OrderItem oi : order.getItems()) {
-                    double pr = merchandisePrices.getOrDefault(oi.getMerchandiseCode(), 0.0);
-                    totalVal += pr * oi.getQuantityOrdered();
-                    itemsCount += oi.getQuantityOrdered();
-                }
-
-                int days = (order.getDeliveryMethod() == DeliveryMethod.SHIP && selectedSite != null) ? selectedSite.getShipDays() : (selectedSite != null ? selectedSite.getAirDays() : 0);
-                lblSummary.setText(String.format("Tổng tiền: %,.2f USD  •  %d sản phẩm  •  Giao hàng: %d ngày (Dự kiến đến: %s)", 
-                    totalVal, itemsCount, days, order.getEstimatedArrival().toString()));
-            };
-
-            // Lắng nghe đổi Site để cập nhật lại thông tin vận chuyển
-            cbSite.valueProperty().addListener((obs, oldSite, newSite) -> {
-                if (newSite != null) {
-                    order.setSiteCode(newSite.getSiteCode());
-                    order.setSiteName(newSite.getName());
-                    updateOrderMetrics.run();
-                    if (oldSite != null) {
-                        isCheckPassed = false;
-                        btnSaveAll.setDisable(true);
-                    }
-                }
-            });
-
-            // Lắng nghe đổi phương thức vận chuyển
-            cbMethod.valueProperty().addListener((obs, oldMethod, newMethod) -> {
-                if (newMethod != null) {
-                    if (newMethod.contains("SHIP")) {
-                        order.setDeliveryMethod(DeliveryMethod.SHIP);
-                    } else {
-                        order.setDeliveryMethod(DeliveryMethod.AIR);
-                    }
-                    updateOrderMetrics.run();
-                    if (oldMethod != null) {
-                        isCheckPassed = false;
-                        btnSaveAll.setDisable(true);
-                    }
-                }
-            });
-
-            // Gọi chạy ban đầu để bind dữ liệu đầy đủ
-            updateOrderMetrics.run();
-
-            // Hàm vẽ danh sách mặt hàng của Card
-            Runnable renderItemsList = new Runnable() {
-                @Override
-                public void run() {
-                    vboxItems.getChildren().clear();
-                    if (order.getItems().isEmpty()) {
-                        vboxItems.getChildren().add(new Label("Chưa có mặt hàng trong đơn hàng này."));
-                    } else {
-                        for (int k = 0; k < order.getItems().size(); k++) {
-                            final int itemIndex = k;
-                            OrderItem item = order.getItems().get(itemIndex);
-
-                            HBox itemRow = new HBox();
-                            itemRow.setAlignment(Pos.CENTER_LEFT);
-                            itemRow.setSpacing(10.0);
-
-                            // Thông tin tên hàng và đơn giá
-                            double unitPrice = merchandisePrices.getOrDefault(item.getMerchandiseCode(), 0.0);
-                            VBox itemInfo = new VBox(2.0);
-                            Label lblName = new Label(item.getMerchandiseName());
-                            lblName.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
-                            
-                            Label lblPriceDetail = new Label(String.format("Mã: %s  •  Đơn giá: %,.2f USD / %s", 
-                                item.getMerchandiseCode(), unitPrice, item.getUnit()));
-                            lblPriceDetail.setStyle("-fx-text-fill: -text-secondary; -fx-font-size: 11px;");
-                            itemInfo.getChildren().addAll(lblName, lblPriceDetail);
-                            HBox.setHgrow(itemInfo, Priority.ALWAYS);
-
-                            // TextField nhập số lượng
-                            TextField txtQtyInput = new TextField(String.valueOf(item.getQuantityOrdered()));
-                            txtQtyInput.setPrefWidth(65.0);
-                            txtQtyInput.setStyle("-fx-alignment: CENTER;");
-                            txtQtyInput.textProperty().addListener((obs, oldVal, newVal) -> {
-                                if (newVal != null && !newVal.trim().isEmpty()) {
-                                    try {
-                                        int newQty = Integer.parseInt(newVal.trim());
-                                        if (newQty > 0) {
-                                            item.setQuantityOrdered(newQty);
-                                            updateOrderMetrics.run();
-                                            isCheckPassed = false;
-                                            btnSaveAll.setDisable(true);
-                                        }
-                                    } catch (NumberFormatException ignored) {}
-                                }
-                            });
-
-                            // Nút xóa dòng hàng
-                            Button btnDeleteItem = new Button("❌");
-                            btnDeleteItem.setStyle("-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand; -fx-font-size: 12px;");
-                            btnDeleteItem.setOnAction(event -> {
-                                order.getItems().remove(itemIndex);
-                                this.run();
-                                updateOrderMetrics.run();
-                                isCheckPassed = false;
-                                btnSaveAll.setDisable(true);
-                            });
-
-                            itemRow.getChildren().addAll(itemInfo, txtQtyInput, btnDeleteItem);
-                            vboxItems.getChildren().add(itemRow);
-                        }
-                    }
-                }
-            };
-
-            // Khởi chạy render mặt hàng ban đầu
-            renderItemsList.run();
-            card.getChildren().add(vboxItems);
-
-            // --- 5. Nút Thêm Mặt Hàng Từ Catalog của Card đơn hàng ---
-            Button btnAddItemToOrder = new Button("➕ Add Item from Catalog");
-            btnAddItemToOrder.getStyleClass().addAll("button-secondary");
-            btnAddItemToOrder.setStyle("-fx-font-size: 12px; -fx-padding: 4px 12px; -fx-background-color: transparent; -fx-border-color: #cbd5e1; -fx-border-radius: 4px;");
-            btnAddItemToOrder.setOnAction(event -> {
-                openCatalogGrid(order);
-            });
-
-            card.getChildren().add(btnAddItemToOrder);
-
-            // Add Card vào VBox Container
-            vboxOrdersContainer.getChildren().add(card);
-        }
+    Map<String, Double> getMerchandisePrices() {
+        return merchandisePrices;
     }
 }
