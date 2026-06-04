@@ -55,7 +55,6 @@ Hệ thống hỗ trợ quy trình nghiệp vụ khép kín từ lập yêu cầ
 ### 1. Tải mã nguồn về máy cục bộ
 ```bash
 git clone https://github.com/doremeto34/2025.2-166155-18.git
-cd "Import System"
 ```
 
 ### 2. Cài đặt các gói phụ thuộc (Dependencies)
