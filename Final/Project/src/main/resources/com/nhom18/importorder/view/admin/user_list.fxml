@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.admin.UserListController"
+      spacing="20" styleClass="content-panel" prefHeight="700.0" prefWidth="1000.0">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="👥 QUẢN LÝ TÀI KHOẢN NHÂN VIÊN" styleClass="title-main" />
+        </VBox>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="➕ Thêm Nhân Viên" onAction="#handleCreateUser" styleClass="button" />
+            <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+        </HBox>
+    </HBox>
+    
+    <!-- Main Splitter -->
+    <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;">
+        <items>
+            
+            <!-- Upper Card: User List Table -->
+            <VBox styleClass="card" spacing="15">
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Tìm kiếm:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtSearch" promptText="Tìm theo họ tên hoặc tên đăng nhập..." styleClass="text-input" prefWidth="250" />
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Vai trò:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <ComboBox fx:id="cbRoleFilter" prefWidth="160" styleClass="text-input" />
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Trạng thái:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <ComboBox fx:id="cbStatusFilter" prefWidth="160" styleClass="text-input" />
+                    </HBox>
+                </HBox>
+                
+                <TableView fx:id="tblUsers" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="Mã NV" prefWidth="80" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colUsername" text="Tên Đăng Nhập" prefWidth="150" style="-fx-alignment: CENTER-LEFT;" />
+                        <TableColumn fx:id="colFullName" text="Họ Và Tên" prefWidth="220" />
+                        <TableColumn fx:id="colRole" text="Vai Trò Hệ Thống" prefWidth="220" style="-fx-alignment: CENTER-LEFT;" />
+                        <TableColumn fx:id="colSiteCode" text="Site Liên Kết" prefWidth="120" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="130" style="-fx-alignment: CENTER;" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Không tìm thấy tài khoản nhân viên nào phù hợp." />
+                    </placeholder>
+                </TableView>
+            </VBox>
+            
+            <!-- Lower Card: User Detail Panel -->
+            <VBox styleClass="card" spacing="15">
+                <Label text="ℹ️ THÔNG TIN CHI TIẾT TÀI KHOẢN" style="-fx-font-size: 15px; -fx-font-weight: bold;" styleClass="label" />
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;" VBox.vgrow="ALWAYS">
+                    <GridPane hgap="20" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            <ColumnConstraints minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        </columnConstraints>
+                        
+                        <rowConstraints>
+                            <RowConstraints minHeight="25" />
+                            <RowConstraints minHeight="25" />
+                            <RowConstraints minHeight="25" />
+                        </rowConstraints>
+                        
+                        <children>
+                            <Label text="Mã số nhân viên:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="lblDetailId" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            
+                            <Label text="Tên đăng nhập:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <Label fx:id="lblDetailUsername" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                            
+                            <Label text="Họ và tên nhân viên:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <Label fx:id="lblDetailFullName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            
+                            <Label text="Vai trò phân quyền:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <Label fx:id="lblDetailRole" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            
+                            <Label text="Trạng thái tài khoản:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="lblDetailStatus" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            
+                            <Label text="Site đối tác liên kết:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <Label fx:id="lblDetailSiteCode" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        </children>
+                    </GridPane>
+                </ScrollPane>
+                
+                <Separator style="-fx-opacity: 0.2;" />
+                
+                <HBox spacing="12" alignment="CENTER_RIGHT">
+                    <Button fx:id="btnEditUser" text="📝 Sửa Thông Tin" onAction="#handleEditUser" styleClass="button-secondary" disable="true" />
+                    <Button fx:id="btnChangePassword" text="🔑 Đổi Mật Khẩu" onAction="#handleChangePassword" styleClass="button-secondary" disable="true" />
+                    <Button fx:id="btnToggleActive" text="🚫 Ngừng Hoạt Động" onAction="#handleToggleActive" styleClass="button" style="-fx-background-color: #ef4444;" disable="true" />
+                </HBox>
+            </VBox>
+            
+        </items>
+    </SplitPane>
+    
+</VBox>

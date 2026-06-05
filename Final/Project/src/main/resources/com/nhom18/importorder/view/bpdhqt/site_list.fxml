@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpdhqt.SiteListController"
+      spacing="20" styleClass="content-panel" prefHeight="700.0" prefWidth="1000.0">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="🏢 QUẢN LÝ ĐỐI TÁC SITE" styleClass="title-main" />
+        </VBox>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="➕ Thêm Site Mới" onAction="#handleCreateSite" styleClass="button" />
+            <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+        </HBox>
+    </HBox>
+    
+    <!-- Main Splitter -->
+    <SplitPane dividerPositions="0.45" orientation="VERTICAL" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;">
+        <items>
+            
+            <!-- Upper Card: Site List Table -->
+            <VBox styleClass="card" spacing="15">
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Tìm kiếm:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtSearch" promptText="Tìm theo mã hoặc tên site..." styleClass="text-input" prefWidth="280" />
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lọc trạng thái:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <ComboBox fx:id="cbStatusFilter" prefWidth="180" styleClass="text-input" />
+                    </HBox>
+                </HBox>
+                
+                <TableView fx:id="tblSites" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colSiteCode" text="Mã Site" prefWidth="120" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colName" text="Tên Đối Tác Site" prefWidth="250" />
+                        <TableColumn fx:id="colShipDays" text="TG Vận Chuyển Biển (ngày)" prefWidth="180" style="-fx-alignment: CENTER-RIGHT;" />
+                        <TableColumn fx:id="colAirDays" text="TG Vận Chuyển Hàng Không (ngày)" prefWidth="220" style="-fx-alignment: CENTER-RIGHT;" />
+                        <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="130" style="-fx-alignment: CENTER;" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Không tìm thấy đối tác Site nào phù hợp." />
+                    </placeholder>
+                </TableView>
+            </VBox>
+            
+            <!-- Lower SplitPane: Details & Order History -->
+            <SplitPane dividerPositions="0.4" orientation="HORIZONTAL" style="-fx-background-color: transparent; -fx-padding: 0;">
+                <items>
+                    
+                    <!-- Left Column: Site Details -->
+                    <VBox spacing="15" style="-fx-padding: 0 10px 0 0;">
+                        <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+                            <Label text="ℹ️ THÔNG TIN CHI TIẾT ĐỐI TÁC" style="-fx-font-size: 15px; -fx-font-weight: bold;" styleClass="label" />
+                            
+                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;" VBox.vgrow="ALWAYS">
+                                <GridPane hgap="12" vgap="12">
+                                    <columnConstraints>
+                                        <ColumnConstraints minWidth="120" prefWidth="130" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                                    </columnConstraints>
+                                    
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="25" />
+                                        <RowConstraints minHeight="25" />
+                                        <RowConstraints minHeight="25" />
+                                        <RowConstraints minHeight="25" />
+                                        <RowConstraints minHeight="25" />
+                                        <RowConstraints minHeight="50" vgrow="ALWAYS" />
+                                    </rowConstraints>
+                                    
+                                    <children>
+                                        <Label text="Mã đối tác:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label fx:id="lblDetailSiteCode" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        
+                                        <Label text="Tên đối tác:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label fx:id="lblDetailName" wrapText="true" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        
+                                        <Label text="Vận chuyển biển:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <Label fx:id="lblDetailShipDays" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        
+                                        <Label text="Vận chuyển bay:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                        <Label fx:id="lblDetailAirDays" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        
+                                        <Label text="Trạng thái:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                        <Label fx:id="lblDetailStatus" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        
+                                        <Label text="Thông tin liên hệ:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                        <Label fx:id="lblDetailOtherInfo" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                    </children>
+                                </GridPane>
+                            </ScrollPane>
+                            
+                            <Separator style="-fx-opacity: 0.2;" />
+                            
+                            <HBox spacing="10" alignment="CENTER_RIGHT">
+                                <Button fx:id="btnEditSite" text="📝 Sửa Thông Tin" onAction="#handleEditSite" styleClass="button-secondary" disable="true" />
+                                <Button fx:id="btnToggleActive" text="🚫 Ngừng Hoạt Động" onAction="#handleToggleActive" styleClass="button" style="-fx-background-color: #ef4444;" disable="true" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                    
+                    <!-- Right Column: Order History -->
+                    <VBox spacing="15" style="-fx-padding: 0 0 0 10px;">
+                        <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="12">
+                            <Label text="📜 LỊCH SỬ ĐƠN HÀNG CUNG ỨNG" style="-fx-font-size: 15px; -fx-font-weight: bold;" styleClass="label" />
+                            
+                            <TableView fx:id="tblOrderHistory" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colOrderId" text="Mã Đơn" prefWidth="90" style="-fx-alignment: CENTER;" />
+                                    <TableColumn fx:id="colReqId" text="Mã Phiếu Yêu Cầu" prefWidth="130" style="-fx-alignment: CENTER;" />
+                                    <TableColumn fx:id="colDeliveryMethod" text="Vận Chuyển" prefWidth="120" style="-fx-alignment: CENTER;" />
+                                    <TableColumn fx:id="colCreatedDate" text="Ngày Tạo" prefWidth="120" style="-fx-alignment: CENTER;" />
+                                    <TableColumn fx:id="colEstArrival" text="Ngày Về Dự Kiến" prefWidth="130" style="-fx-alignment: CENTER;" />
+                                    <TableColumn fx:id="colOrderStatus" text="Trạng Thái" prefWidth="120" style="-fx-alignment: CENTER;" />
+                                </columns>
+                                <placeholder>
+                                    <Label text="Không có lịch sử đơn hàng nào cho đối tác này." />
+                                </placeholder>
+                            </TableView>
+                        </VBox>
+                    </VBox>
+                    
+                </items>
+            </SplitPane>
+            
+        </items>
+    </SplitPane>
+    
+</VBox>

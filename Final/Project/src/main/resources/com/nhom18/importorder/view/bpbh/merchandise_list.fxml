@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpbh.MerchandiseListController"
+      spacing="20" styleClass="content-panel" prefHeight="700.0" prefWidth="1000.0">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="📦 QUẢN LÝ DANH MỤC MẶT HÀNG" styleClass="title-main" />
+        </VBox>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="➕ Thêm Mặt Hàng" onAction="#handleCreateMerchandise" styleClass="button" />
+            <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+        </HBox>
+    </HBox>
+    
+    <!-- Main Splitter -->
+    <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;">
+        <items>
+            
+            <!-- Upper Card: Merchandise Table -->
+            <VBox styleClass="card" spacing="15">
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Tìm kiếm:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtSearch" promptText="Tìm theo mã hàng, tên hoặc mô tả..." styleClass="text-input" prefWidth="300" />
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Trạng thái kinh doanh:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                        <ComboBox fx:id="cbStatusFilter" prefWidth="200" styleClass="text-input" />
+                    </HBox>
+                </HBox>
+                
+                <TableView fx:id="tblMerchandise" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colCode" text="Mã Mặt Hàng" prefWidth="150" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colName" text="Tên Mặt Hàng" prefWidth="250" style="-fx-alignment: CENTER-LEFT;" />
+                        <TableColumn fx:id="colDescription" text="Mô Tả Sản Phẩm" prefWidth="320" style="-fx-alignment: CENTER-LEFT;" />
+                        <TableColumn fx:id="colUnit" text="Đơn Vị Tính" prefWidth="120" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colPrice" text="Đơn Giá ($)" prefWidth="140" style="-fx-alignment: CENTER-RIGHT;" />
+                        <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="150" style="-fx-alignment: CENTER;" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Không tìm thấy mặt hàng nào phù hợp." />
+                    </placeholder>
+                </TableView>
+                <HBox alignment="CENTER_RIGHT">
+                    <Label fx:id="lblTotalItems" text="Tổng số: 0 mặt hàng" styleClass="label-secondary" style="-fx-font-style: italic;" />
+                </HBox>
+            </VBox>
+            
+            <!-- Lower Card: Merchandise Detail Panel -->
+            <VBox styleClass="card" spacing="15">
+                <Label text="ℹ️ THÔNG TIN CHI TIẾT SẢN PHẨM" style="-fx-font-size: 15px; -fx-font-weight: bold;" styleClass="label" />
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;" VBox.vgrow="ALWAYS">
+                    <GridPane hgap="20" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            <ColumnConstraints minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        </columnConstraints>
+                        
+                        <rowConstraints>
+                            <RowConstraints minHeight="25" />
+                            <RowConstraints minHeight="25" />
+                            <RowConstraints minHeight="25" />
+                        </rowConstraints>
+                        
+                        <children>
+                            <Label text="Mã mặt hàng:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="lblDetailCode" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            
+                            <Label text="Tên mặt hàng:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <Label fx:id="lblDetailName" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                            
+                            <Label text="Đơn vị tính:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <Label fx:id="lblDetailUnit" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            
+                            <Label text="Đơn giá hiện tại:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <Label fx:id="lblDetailPrice" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            
+                            <Label text="Trạng thái kinh doanh:" styleClass="label-secondary" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="lblDetailStatus" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            
+                            <Label text="Mô tả sản phẩm:" styleClass="label-secondary" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <Label fx:id="lblDetailDescription" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.rowIndex="2" wrapText="true" />
+                        </children>
+                    </GridPane>
+                </ScrollPane>
+                
+                <Separator style="-fx-opacity: 0.2;" />
+                
+                <HBox spacing="12" alignment="CENTER_RIGHT">
+                    <Button fx:id="btnEditMerchandise" text="📝 Sửa Thông Tin" onAction="#handleEditMerchandise" styleClass="button-secondary" disable="true" />
+                    <Button fx:id="btnToggleActive" text="🚫 Ngừng Kinh Doanh" onAction="#handleToggleActive" styleClass="button" style="-fx-background-color: #ef4444;" disable="true" />
+                </HBox>
+            </VBox>
+            
+        </items>
+    </SplitPane>
+    
+</VBox>

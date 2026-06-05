@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpbh.RequestListController"
+      spacing="20" styleClass="content-panel">
+    
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="📋 XEM YÊU CẦU NHẬP HÀNG" styleClass="title-main" />
+        </VBox>
+        <Button text="➕ Tạo Yêu Cầu Mới" fx:id="btnCreateNew" onAction="#handleCreateNewRequest" styleClass="button" />
+    </HBox>
+    
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label text="Lọc trạng thái:" styleClass="label-secondary" />
+            <ComboBox fx:id="cbStatusFilter" prefWidth="180" styleClass="text-input" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+        </HBox>
+        
+        <TableView fx:id="tblRequests" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="Mã Phiếu" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colCreator" text="Người Tạo" prefWidth="250" />
+                <TableColumn fx:id="colDate" text="Ngày Tạo" prefWidth="200" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="180" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colAction" text="Hành Động" prefWidth="180" style="-fx-alignment: CENTER;" />
+            </columns>
+            <placeholder>
+                <Label text="Không có yêu cầu nhập hàng nào tồn tại." />
+            </placeholder>
+        </TableView>
+    </VBox>
+    
+</VBox>

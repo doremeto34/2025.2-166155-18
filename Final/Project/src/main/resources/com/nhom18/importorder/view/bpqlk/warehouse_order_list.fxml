@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.nhom18.importorder.controller.bpqlk.WarehouseOrderListController"
+      spacing="20" styleClass="content-panel">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="🚚 DANH SÁCH ĐƠN NHẬP KHO" styleClass="title-main" />
+        </VBox>
+        <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="button-secondary" />
+    </HBox>
+    
+    <!-- Search & Filter Card -->
+    <VBox styleClass="card" spacing="15">
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Tìm kiếm nhanh:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                <TextField fx:id="txtSearch" promptText="Nhập Mã Đơn, Tên Site hoặc Mã Sản Phẩm..." styleClass="text-input" />
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label text="Trạng thái nhập kho:" styleClass="label-secondary" style="-fx-font-weight: bold;" />
+                <ComboBox fx:id="cbStatusFilter" prefWidth="180" styleClass="text-input" />
+            </VBox>
+        </HBox>
+    </VBox>
+    
+    <!-- Orders Table Card -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="Đơn hàng chờ kiểm nhận" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: -accent-cyan;" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnInspect" text="🔎 Kiểm hàng &amp; Đối chiếu" onAction="#handleInspectOrder" styleClass="button" />
+        </HBox>
+        
+        <TableView fx:id="tblOrders" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colOrderId" text="Mã Đơn" prefWidth="90" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colReqId" text="Mã Yêu Cầu" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colSiteName" text="Site Nhập Khẩu" prefWidth="280" />
+                <TableColumn fx:id="colDeliveryMethod" text="Vận Chuyển" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colEstArrival" text="Ngày Về Dự Kiến" prefWidth="150" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colStatus" text="Trạng Thái Đơn" prefWidth="130" style="-fx-alignment: CENTER;" />
+            </columns>
+            <placeholder>
+                <Label text="Không tìm thấy đơn hàng nhập kho phù hợp." />
+            </placeholder>
+        </TableView>
+    </VBox>
+    
+</VBox>
