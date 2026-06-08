@@ -14,9 +14,9 @@
 
 | MSSV | Họ tên | Đóng góp |
 |---|---|---:|
-| 20235687 | Nguyễn Trí Dũng | 18% |
-| 20235739 | Đỗ Thành Hưng | 20% |
-| 20235783 | Nguyễn Vũ Minh | 20% |
-| 20235790 | Nguyễn Thiện Nam | 16% |
-| 20235865 | Lê Hoàng Tùng | 18% |
-| 20235826 | Nguyễn Quang Thái | 8% |
+| 20235687 | Nguyễn Trí Dũng | 17.5% |
+| 20235739 | Đỗ Thành Hưng | 19.5% |
+| 20235783 | Nguyễn Vũ Minh | 19.5% |
+| 20235790 | Nguyễn Thiện Nam | 13% |
+| 20235865 | Lê Hoàng Tùng | 17.5% |
+| 20235826 | Nguyễn Quang Thái | 13% |
